@@ -1,0 +1,6 @@
+com/mygdx/game/desktop/ConfigParser.java
+ com.mygdx.game.desktop.ConfigParser
+com/mygdx/game/desktop/GameConfig.java
+ com.mygdx.game.desktop.GameConfig
+com/mygdx/game/desktop/DesktopLauncher.java
+ com.mygdx.game.desktop.DesktopLauncher
