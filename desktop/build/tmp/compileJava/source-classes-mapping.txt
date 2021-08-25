@@ -4,3 +4,6 @@ com/mygdx/game/desktop/GameConfig.java
  com.mygdx.game.desktop.GameConfig
 com/mygdx/game/desktop/DesktopLauncher.java
  com.mygdx.game.desktop.DesktopLauncher
+com/mygdx/game/desktop/OSName.java
+ com.mygdx.game.desktop.OSName
+ com.mygdx.game.desktop.OSName$Name

@@ -65,10 +65,14 @@ public class GameConfig {
         return readConfigFile();
     }
 
+
+
     public static LwjglApplicationConfiguration loadWindowConfiguration(LwjglApplicationConfiguration config, String data)
     {
         ConfigParser cp = new ConfigParser();
-        String[] configArray = data.split("\r\n");
+        OSName os = new OSName();
+        String regex = os.getCurrentRunningOSName();
+        String[] configArray = data.split(regex);
 
         HashMap<String, String> windowData = cp.getWindowData(configArray);
 
