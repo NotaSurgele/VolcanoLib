@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public class GameConfig {
 
-    final static String configPath = /*"/../../.config/"*/"C:\\Users\\alexi\\OneDrive\\Bureau\\Dev\\Dev\\VolcanoLib\\.config\\";
+    final static String configPath = "../../.config/";
 
 
     public GameConfig() {}
