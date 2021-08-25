@@ -7,7 +7,8 @@ import java.util.HashMap;
 
 public class GameConfig {
 
-    final static String configPath = "../../.config/";
+    final static String configPath = /*"/../../.config/"*/"C:\\Users\\alexi\\OneDrive\\Bureau\\Dev\\Dev\\VolcanoLib\\.config\\";
+
 
     public GameConfig() {}
 
@@ -67,7 +68,8 @@ public class GameConfig {
     public static LwjglApplicationConfiguration loadWindowConfiguration(LwjglApplicationConfiguration config, String data)
     {
         ConfigParser cp = new ConfigParser();
-        String[] configArray = data.split("\n");
+        String[] configArray = data.split("\r\n");
+
         HashMap<String, String> windowData = cp.getWindowData(configArray);
 
         if (windowData != null) {
