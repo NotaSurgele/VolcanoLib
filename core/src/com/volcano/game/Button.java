@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import org.jetbrains.annotations.NotNull;
 
 public class Button {
 
@@ -33,6 +34,7 @@ public class Button {
     }
 
     //Private method
+
     private Sprite createSprite()
     {
         Sprite sprite = new Sprite();
@@ -76,32 +78,32 @@ public class Button {
 
 
     //Get static method
-    public static Vector2 getButtonPosition(Button button)
+    public static Vector2 getButtonPosition(@NotNull Button button)
     {
         return button.position;
     }
 
-    public static float getButtonWidth(Button button)
+    public static float getButtonWidth(@NotNull Button button)
     {
         return button.width;
     }
 
-    public static float getButtonHeight(Button button)
+    public static float getButtonHeight(@NotNull Button button)
     {
         return button.height;
     }
 
-    public static Sprite getButtonSprite(Button button)
+    public static Sprite getButtonSprite(@NotNull Button button)
     {
         return button.sprite;
     }
 
-    public static Texture getButtonTexture(Button button)
+    public static Texture getButtonTexture(@NotNull Button button)
     {
         return button.texture;
     }
 
-    public static State getButtonState(Button button)
+    public static State getButtonState(@NotNull Button button)
     {
         return button.state;
     }
