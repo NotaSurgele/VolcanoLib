@@ -1,10 +1,14 @@
 package com.volcano.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import org.jetbrains.annotations.NotNull;
+
+import static com.badlogic.gdx.Gdx.input;
 
 public class Button {
 
@@ -44,6 +48,37 @@ public class Button {
         return sprite;
     }
 
+    private void drawSprite()
+    {
+        this.sprite.draw(this.batch);
+    }
+
+    private boolean isInBox()
+    {
+        float x = input.getX();
+        float y = input.getY();
+        float posX = this.position.x;
+        float posY = this.position.y;
+        float width = this.width;
+        float height = this.height;
+
+        return (x >= posX && x <= (posX + width)) && (y >= posY && y <= (posY + height));
+    }
+
+    private void getButtonState()
+    {
+        boolean isInBox = this.isInBox();
+
+        if (isInBox) {
+            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+                this.state = State.CLICK;
+            } else {
+                this.state = State.HOVER;
+            }
+        } else {
+            this.state = State.NOTHING;
+        }
+    }
 
     // Get Method
     public Vector2 getButtonPosition()
@@ -71,7 +106,7 @@ public class Button {
         return this.texture;
     }
 
-    public State getButtonState()
+    public State getButtonCurrentState()
     {
         return this.state;
     }
@@ -103,7 +138,7 @@ public class Button {
         return button.texture;
     }
 
-    public static State getButtonState(@NotNull Button button)
+    public static State getButtonCurrentState(@NotNull Button button)
     {
         return button.state;
     }
@@ -164,20 +199,16 @@ public class Button {
 
     //Main method
 
-    public void draw()
-    {
-        this.sprite.draw(this.batch);
-    }
-
     public void update()
     {
-        this.render();
+        this.getButtonState();
     }
 
     public void render()
     {
+        this.update();
         this.batch.begin();
-        this.render();
+        this.drawSprite();
         this.batch.end();
     }
 
