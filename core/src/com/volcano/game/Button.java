@@ -218,7 +218,8 @@ public class Button {
 
     public void onHoverSetNewScale(Vector2 newScale)
     {
-        this.setNewScale(newScale);
+        if (this.state == State.HOVER)
+            this.setNewScale(newScale);
     }
 
     public void onHoverSetNewScale(float newWidth, float newHeight)
