@@ -56,7 +56,7 @@ public class Button {
     private boolean isMouseInBox()
     {
         float x = input.getX();
-        float y = input.getY();
+        float y = (Gdx.graphics.getHeight() - Gdx.input.getY());
         float posX = this.position.x;
         float posY = this.position.y;
         float width = this.width;
@@ -212,7 +212,8 @@ public class Button {
 
     public void onHoverSetNewTexture(Texture newTexture)
     {
-        this.setNewTexture(newTexture);
+        if (this.state == State.HOVER)
+            this.setNewTexture(newTexture);
     }
 
     public void onHoverSetNewScale(Vector2 newScale)
@@ -222,7 +223,8 @@ public class Button {
 
     public void onHoverSetNewScale(float newWidth, float newHeight)
     {
-        this.setNewScale(newWidth, newHeight);
+        if (this.state == State.HOVER)
+            this.setNewScale(newWidth, newHeight);
     }
 
     //Boolean method
