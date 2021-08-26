@@ -10,10 +10,9 @@ import java.io.*;
 public class DesktopLauncher {
 
 	public static void main (String[] arg) throws IOException {
-		GameConfig gameConfig = new GameConfig();
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-		config = gameConfig.loadWindowConfiguration(config, gameConfig.loadConfigFile("config.ini"));
+		GameConfig.loadWindowConfiguration(config, GameConfig.loadConfigFile("config.ini"));
 		new LwjglApplication(new MyGdxGame(), config);
 	}
 }

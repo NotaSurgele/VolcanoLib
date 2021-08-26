@@ -46,6 +46,7 @@ public class GameConfig {
     public static String loadConfigFile(String file) throws IOException {
         File config = new File(configPath + file);
 
+        System.out.println("\033[95m" + "Creating " + file + " !" + "\033[0m");
         try {
             if (config.createNewFile()) {
                 String data = readDefaultConfigData();
@@ -55,13 +56,13 @@ public class GameConfig {
                 for (int each = 0; each != data.length(); w.write(data.charAt(each++)));
                 w.close();
             } else {
-                System.out.println(file + " already exist !");
+                System.out.println("\033[93m" + file + " already exist !" + "\033[0m");
             }
         } catch (IOException e) {
             System.err.println("An error occured");
             e.printStackTrace();
         }
-        System.out.println("Loading " + file + " !");
+        System.out.println("\033[93m" + "Loading " + file + " !\033[0m");
         return readConfigFile();
     }
 

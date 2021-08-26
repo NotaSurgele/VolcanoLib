@@ -7,8 +7,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	
-	@Override
+
 	public void create () {
 		batch = new SpriteBatch();
 	}
