@@ -146,8 +146,21 @@ public class Button {
         this.sprite.setBounds(this.position.x, this.position.y, newWidth, newHeight);
     }
 
-    //Boolean method
+    public void setForcedState(State state)
+    {
+        this.state = state;
+    }
 
+    //Boolean method
+    public boolean isClicked()
+    {
+        return (this.state == State.CLICK);
+    }
+
+    public boolean isHovered()
+    {
+        return (this.state == State.HOVER);
+    }
 
     //Main method
 
