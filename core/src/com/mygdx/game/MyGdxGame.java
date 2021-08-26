@@ -8,6 +8,8 @@ import com.volcano.game.Button;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
+	Button btn;
+	Texture texture;
 
 	public void create () {
 		batch = new SpriteBatch();
@@ -17,7 +19,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void render () {
 		ScreenUtils.clear(0, 0, 0, 0);
 		batch.begin();
-
 		batch.end();
 	}
 	

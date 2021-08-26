@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import org.jetbrains.annotations.NotNull;
 
@@ -38,7 +39,6 @@ public class Button {
     }
 
     //Private method
-
     private Sprite createSprite()
     {
         Sprite sprite = new Sprite();
@@ -53,7 +53,7 @@ public class Button {
         this.sprite.draw(this.batch);
     }
 
-    private boolean isInBox()
+    private boolean isMouseInBox()
     {
         float x = input.getX();
         float y = input.getY();
@@ -67,7 +67,7 @@ public class Button {
 
     private void getButtonState()
     {
-        boolean isInBox = this.isInBox();
+        boolean isInBox = this.isMouseInBox();
 
         if (isInBox) {
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -86,6 +86,16 @@ public class Button {
         return this.position;
     }
 
+    public float getButtonPositionX()
+    {
+        return this.position.x;
+    }
+
+    public float getButtonPositionY()
+    {
+        return this.position.y;
+    }
+
     public float getButtonWidth()
     {
         return this.width;
@@ -96,6 +106,11 @@ public class Button {
         return this.height;
     }
 
+    public Vector2 getButtonScale()
+    {
+        return new Vector2(this.width, this.height);
+    }
+
     public Sprite getButtonSprite()
     {
         return this.sprite;
@@ -104,6 +119,11 @@ public class Button {
     public Texture getButtonTexture()
     {
         return this.texture;
+    }
+
+    public TextureRegion getButtonTextureRegion()
+    {
+        return new TextureRegion(this.texture);
     }
 
     public State getButtonCurrentState()
@@ -145,7 +165,6 @@ public class Button {
 
 
 //  Set Method
-
     public void setNewSprite(Sprite newSprite)
     {
         this.sprite = newSprite;
@@ -181,9 +200,29 @@ public class Button {
         this.sprite.setBounds(this.position.x, this.position.y, newWidth, newHeight);
     }
 
+    public void setNewScale(Vector2 newScale)
+    {
+        this.sprite.setBounds(this.position.x, this.position.y, newScale.x, newScale.y);
+    }
+
     public void setForcedState(State state)
     {
         this.state = state;
+    }
+
+    public void onHoverSetNewTexture(Texture newTexture)
+    {
+        this.setNewTexture(newTexture);
+    }
+
+    public void onHoverSetNewScale(Vector2 newScale)
+    {
+        this.setNewScale(newScale);
+    }
+
+    public void onHoverSetNewScale(float newWidth, float newHeight)
+    {
+        this.setNewScale(newWidth, newHeight);
     }
 
     //Boolean method
@@ -197,8 +236,12 @@ public class Button {
         return (this.state == State.HOVER);
     }
 
-    //Main method
+    public boolean isNothing()
+    {
+        return (this.state == State.NOTHING);
+    }
 
+    //Main method
     public void update()
     {
         this.getButtonState();
