@@ -163,7 +163,6 @@ public class Button {
         return button.state;
     }
 
-
 //  Set Method
     public void setNewSprite(Sprite newSprite)
     {

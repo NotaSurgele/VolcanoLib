@@ -1,0 +1,103 @@
+package com.volcano.game;
+
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
+public class Animator {
+
+    Texture texture;
+    Animation<TextureRegion> animation;
+    TextureRegion currentFrame;
+
+    float stateTime;
+
+    public Animator() {}
+
+    //Main method
+    public void createAnimation(Texture t, int FRAME_COLS, int FRAME_ROWS, float frameDuration)
+    {
+        if (t == null) {
+            System.err.println("You should initialise a Texture!!");
+            return;
+        }
+        this.texture = t;
+        TextureRegion[][] tmp = TextureRegion.split(
+                t,
+                t.getWidth() / FRAME_COLS,
+                t.getHeight() / FRAME_ROWS
+        );
+        TextureRegion[] animationFrame = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+        int index = 0;
+        for (int i = 0; i < FRAME_ROWS; i++) {
+            for (int j = 0; j < FRAME_COLS; j++) {
+                animationFrame[index++] = tmp[i][j];
+            }
+        }
+        this.animation = new Animation<TextureRegion>(frameDuration, animationFrame);
+    }
+
+    public void playAnimation(SpriteBatch batch, float stateTime, boolean loop)
+    {
+        this.currentFrame = this.animation.getKeyFrame(stateTime, loop);
+        batch.draw(this.currentFrame, 0, 0);
+    }
+
+    public void stopAnimation(float stateTime)
+    {
+        this.animation.getKeyFrame(stateTime, false);
+    }
+
+    //Set method
+    public void setNewFrameDuration(float newFrameDuration)
+    {
+        this.animation.setFrameDuration(newFrameDuration);
+    }
+
+    public void setFrameToSprite(Sprite sprite, TextureRegion toSet)
+    {
+        sprite.setRegion(toSet);
+    }
+
+    //Get method
+    public int getAnimationFramesNumb()
+    {
+        return this.animation.getKeyFrames().length;
+    }
+
+    public TextureRegion[] getAnimationFrames()
+    {
+        return this.animation.getKeyFrames();
+    }
+
+    public TextureRegion getCurrentAnimationFrame(float stateTime)
+    {
+        return this.animation.getKeyFrame(stateTime);
+    }
+
+    public TextureRegion getCurrentAnimationFrame(float stateTime, boolean loop)
+    {
+        return this.animation.getKeyFrame(stateTime, loop);
+    }
+
+    public float getAnimationDuration()
+    {
+        return this.animation.getAnimationDuration();
+    }
+
+    public float getCurrentFrameWidth(float stateTime, boolean isLooping)
+    {
+        TextureRegion currentFrame = this.animation.getKeyFrame(stateTime, isLooping);
+
+        return currentFrame.getRegionWidth();
+    }
+
+    public float getCurrentFrameHeight(float stateTime, boolean isLooping)
+    {
+        TextureRegion currentFrame = this.animation.getKeyFrame(stateTime, isLooping);
+
+        return currentFrame.getRegionHeight();
+    }
+}
