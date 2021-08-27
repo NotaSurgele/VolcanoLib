@@ -12,8 +12,6 @@ public class Animator {
     Animation<TextureRegion> animation;
     TextureRegion currentFrame;
 
-    float stateTime;
-
     public Animator() {}
 
     //Main method
@@ -61,6 +59,16 @@ public class Animator {
         sprite.setRegion(toSet);
     }
 
+    public void setFrameBoundsToSprite(TextureRegion currentFrame, Sprite sprite)
+    {
+        float x = sprite.getX();
+        float y = sprite.getY();
+        float w = this.getFrameWidth(currentFrame);
+        float h = this.getFrameHeight(currentFrame);
+
+        sprite.setBounds(x, y, w, h);
+    }
+
     //Get method
     public int getAnimationFramesNumb()
     {
@@ -99,5 +107,15 @@ public class Animator {
         TextureRegion currentFrame = this.animation.getKeyFrame(stateTime, isLooping);
 
         return currentFrame.getRegionHeight();
+    }
+
+    public float getFrameWidth(TextureRegion frame)
+    {
+        return frame.getRegionWidth();
+    }
+
+    public float getFrameHeight(TextureRegion frame)
+    {
+        return frame.getRegionHeight();
     }
 }
