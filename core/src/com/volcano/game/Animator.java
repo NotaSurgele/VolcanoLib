@@ -46,6 +46,8 @@ public class Animator {
     public void stopAnimation(float stateTime)
     {
         this.animation.getKeyFrame(stateTime, false);
+        this.currentFrame = null;
+        stateTime = 0f;
     }
 
     //Set method
