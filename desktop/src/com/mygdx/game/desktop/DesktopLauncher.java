@@ -1,5 +1,7 @@
 package com.mygdx.game.desktop;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.MyGdxGame;
@@ -13,6 +15,7 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		GameConfig.loadWindowConfiguration(config, GameConfig.loadConfigFile("config.ini"));
+
 		new LwjglApplication(new MyGdxGame(), config);
 	}
 }

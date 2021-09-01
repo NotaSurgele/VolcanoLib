@@ -9,7 +9,7 @@ public class ConfigParser {
 
     public ConfigParser() {}
 
-    public HashMap<String, String> getKeyData(String[] data, String toGet)
+    public static HashMap<String, String> getKeyData(String[] data, String toGet)
     {
         for (int each = 0; each != data.length; each++) {
             if (data[each].equals(toGet)) {
@@ -27,7 +27,7 @@ public class ConfigParser {
         return null;
     }
 
-    public HashMap<String, String> getWindowData(String[] data)
+    public static HashMap<String, String> getWindowData(String[] data)
     {
         HashMap<String, String> windowData = getKeyData(data, "[Game Window]");
 
@@ -39,7 +39,6 @@ public class ConfigParser {
 
     public HashMap<String, String> getSysData(String[] data)
     {
-        HashMap<String, String> sysData = getKeyData(data, "[System Info]");
-        return sysData;
+        return getKeyData(data, "[System Info]");
     }
 }

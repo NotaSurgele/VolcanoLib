@@ -70,12 +70,11 @@ public class GameConfig {
 
     public static LwjglApplicationConfiguration loadWindowConfiguration(LwjglApplicationConfiguration config, String data)
     {
-        ConfigParser cp = new ConfigParser();
         OSName os = new OSName();
         String regex = os.getCurrentRunningOSName();
         String[] configArray = data.split(regex);
 
-        HashMap<String, String> windowData = cp.getWindowData(configArray);
+        HashMap<String, String> windowData = ConfigParser.getWindowData(configArray);
 
         if (windowData != null) {
             config.title = windowData.get("Window_name");

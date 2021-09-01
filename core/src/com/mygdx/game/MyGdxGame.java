@@ -32,6 +32,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		sprite.setBounds(500, 200, 100, 100);
 	}
 
+
 	@Override
 	public void render () {
 		ScreenUtils.clear(0, 0, 0, 0);

@@ -3,5 +3,9 @@ com/volcano/game/Button.java
  com.volcano.game.Button$State
 com/volcano/game/Animator.java
  com.volcano.game.Animator
+com/mygdx/game/Player.java
+ com.mygdx.game.Player
+com/volcano/game/Players.java
+ com.volcano.game.Players
 com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame
