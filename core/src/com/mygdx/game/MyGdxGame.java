@@ -21,7 +21,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	public void initAnimation()
 	{
-		idle.createAnimation(new Texture("B_witch_idle.png"), 1, 6, 0.1f);
+		idle.createAnimation(new Texture("noBKG_KnightIdle_strip.png"), 15, 1, 0.1f);
 	}
 
 	public void create () {
@@ -29,6 +29,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		idle = new Animator();
 		initAnimation();
 		sprite = new Sprite();
+		sprite.setBounds(500, 200, 100, 100);
 	}
 
 	@Override
@@ -38,7 +39,6 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.begin();
 		TextureRegion currentFrame = idle.getCurrentAnimationFrame(stateTime, true);
 		idle.setFrameToSprite(sprite, currentFrame);
-		idle.setFrameBoundsToSprite(currentFrame, sprite);
 		sprite.draw(batch);
 		batch.end();
 	}
