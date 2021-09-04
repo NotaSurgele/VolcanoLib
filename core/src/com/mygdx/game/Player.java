@@ -16,6 +16,6 @@ public class Player extends Players {
 
     public void update()
     {
-        this.Move(true, 200f);
+        this.Move(false, 200f);
     }
 }

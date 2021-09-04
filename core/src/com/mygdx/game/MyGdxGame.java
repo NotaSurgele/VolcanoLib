@@ -40,8 +40,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		ScreenUtils.clear(0, 0, 0, 0);
 		stateTime += Gdx.graphics.getDeltaTime();
 		batch.begin();
-		TextureRegion currentFrame = idle.getCurrentAnimationFrame(stateTime, true);
-		idle.setFrameToSprite(sprite, currentFrame);
+		idle.playAnimationToSprite(sprite, stateTime, true);
 		player.update();
 		sprite.draw(batch);
 		batch.end();
