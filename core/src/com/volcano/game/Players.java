@@ -73,10 +73,12 @@ public class Players {
     public void setPositionX(float newX)
     {
         this.position.x = newX;
+        this.sprite.setPosition(this.position.x, this.position.y);
     }
 
     public void setPositionY(float newY)
     {
         this.position.y = newY;
+        this.sprite.setPosition(this.position.x, this.position.y);
     }
 }
