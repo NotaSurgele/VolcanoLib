@@ -14,8 +14,8 @@ public class Player extends Players {
         super(sprite, position);
     }
 
-    public void test()
+    public void update()
     {
-        System.out.println(this.position);
+        this.Move(true, 200f);
     }
 }

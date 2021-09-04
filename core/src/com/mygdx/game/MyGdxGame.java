@@ -18,6 +18,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	Animator idle;
 	Sprite sprite;
 	float stateTime;
+	Player player;
 
 	public void initAnimation()
 	{
@@ -30,6 +31,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		initAnimation();
 		sprite = new Sprite();
 		sprite.setBounds(500, 200, 100, 100);
+		player = new Player(sprite, 50, 50);
 	}
 
 
@@ -40,6 +42,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		batch.begin();
 		TextureRegion currentFrame = idle.getCurrentAnimationFrame(stateTime, true);
 		idle.setFrameToSprite(sprite, currentFrame);
+		player.update();
 		sprite.draw(batch);
 		batch.end();
 	}
