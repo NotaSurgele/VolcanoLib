@@ -17,22 +17,15 @@ import com.volcano.game.Button;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Animator idle;
 	Sprite sprite;
 	float stateTime;
 	Player player;
 
-	public void initAnimation()
-	{
-		idle.createAnimation(new Texture("noBKG_KnightIdle_strip.png"), 15, 1, 0.1f);
-	}
 
 	public void create () {
 		batch = new SpriteBatch();
-		idle = new Animator();
-		initAnimation();
 		sprite = new Sprite();
-		sprite.setBounds(500, 200, 100, 100);
+		sprite.setBounds(500, 200, 70, 70);
 		player = new Player(sprite, 50, 50);
 	}
 
@@ -41,7 +34,6 @@ public class MyGdxGame extends ApplicationAdapter {
 		ScreenUtils.clear(0, 0, 0, 0);
 		stateTime += Gdx.graphics.getDeltaTime();
 		batch.begin();
-		idle.playAnimationToSprite(player.sprite, stateTime, true);
 		player.update(batch);
 		batch.end();
 

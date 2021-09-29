@@ -127,4 +127,14 @@ public class Animator {
     {
         return frame.getRegionHeight();
     }
+
+    //Static method
+
+    public static Animator initializeAnimation(Animator animation, String texturePath, int FRAME_COLS, int FRAME_ROWS, float frameDuration)
+    {
+        animation = new Animator();
+        animation.createAnimation(new Texture(texturePath), FRAME_COLS, FRAME_ROWS, frameDuration);
+
+        return animation;
+    }
 }

@@ -14,6 +14,8 @@ public class Players {
 
     public Sprite sprite;
     public Vector2 position;
+    public boolean qwertyCheck;
+
     ShapeRenderer hitboxShape;
 
     public Players(Sprite sprite, float x, float y) {
@@ -33,8 +35,9 @@ public class Players {
     public void Move(boolean qwert, float moveSpeed)
     {
         Vector2 direction = new Vector2(this.position);
+        this.qwertyCheck = qwert;
 
-        if (!qwert) {
+        if (!this.qwertyCheck) {
             direction.y += (Gdx.input.isKeyPressed(Input.Keys.Z)) ? moveSpeed * Gdx.graphics.getDeltaTime(): 0;
             direction.y += (Gdx.input.isKeyPressed(Input.Keys.S)) ? -moveSpeed * Gdx.graphics.getDeltaTime(): 0;
             direction.x += (Gdx.input.isKeyPressed(Input.Keys.Q)) ? -moveSpeed * Gdx.graphics.getDeltaTime(): 0;
@@ -109,5 +112,17 @@ public class Players {
     {
         this.position.y = newY;
         this.sprite.setPosition(this.position.x, this.position.y);
+    }
+
+    // Boolean method
+    public boolean isMoving()
+    {
+        if (!this.qwertyCheck) {
+            return (Gdx.input.isKeyPressed(Input.Keys.Z) || Gdx.input.isKeyPressed(Input.Keys.Q) ||
+                    Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.D)) ? true: false;
+        } else {
+            return (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.A) ||
+                    Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.D)) ? true: false;
+        }
     }
 }

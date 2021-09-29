@@ -70,11 +70,7 @@ public class Button {
         boolean isInBox = this.isMouseInBox();
 
         if (isInBox) {
-            if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-                this.state = State.CLICK;
-            } else {
-                this.state = State.HOVER;
-            }
+            this.state = (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) ? State.CLICK: State.HOVER;
         } else {
             this.state = State.NOTHING;
         }
