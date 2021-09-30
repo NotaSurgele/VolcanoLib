@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.volcano.game.Animator;
+import com.volcano.game.Cursor;
 import com.volcano.game.Players;
 
 public class Player extends Players {
@@ -32,10 +33,10 @@ public class Player extends Players {
 
     //Main method
 
-    public void flipPlayerWithMouse()
+    public void flipPlayerWithMouse(Cursor cursor)
     {
-        float mouseX = Gdx.input.getX();
-        float positionX = this.sprite.getX();
+        float mouseX = cursor.getCursorX();
+        float positionX = this.position.x;
         float characterWidth = this.getWidth();
         boolean isFlipped = this.sprite.isFlipX();
 
@@ -80,14 +81,14 @@ public class Player extends Players {
             this.idle.playAnimationToSprite(this.sprite, this.stateTime, true);
     }
 
-    public void update(SpriteBatch batch)
+    public void update(SpriteBatch batch, Cursor cursor)
     {
         this.stateTime += Gdx.graphics.getDeltaTime();
         deltaTime = Gdx.graphics.getDeltaTime();
 
         this.animationController();
         this.Move(false, 100f, deltaTime);
-        this.flipPlayerWithMouse();
+        this.flipPlayerWithMouse(cursor);
         this.flipPlayerWithKeyboard();
         this.sprite.draw(batch);
     }

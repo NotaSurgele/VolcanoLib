@@ -95,6 +95,11 @@ public class Players {
         this.sprite.setPosition(this.position.x, this.position.y);
     }
 
+    public void setPosition(Vector2 position)
+    {
+        this.position = position;
+    }
+
     public void setPosition(float newX, float newY)
     {
         this.position.x = newX;

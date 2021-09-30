@@ -53,10 +53,10 @@ public class Button {
         this.sprite.draw(this.batch);
     }
 
-    private boolean isMouseInBox()
+    private boolean isMouseInBox(Cursor cursor)
     {
-        float x = input.getX();
-        float y = (Gdx.graphics.getHeight() - Gdx.input.getY());
+        float x = cursor.getCursorX();
+        float y = cursor.getCursorY();
         float posX = this.position.x;
         float posY = this.position.y;
         float width = this.width;
@@ -65,9 +65,9 @@ public class Button {
         return (x >= posX && x <= (posX + width)) && (y >= posY && y <= (posY + height));
     }
 
-    private void getButtonState()
+    private void getButtonState(Cursor cursor)
     {
-        boolean isInBox = this.isMouseInBox();
+        boolean isInBox = this.isMouseInBox(cursor);
 
         if (isInBox) {
             this.state = (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) ? State.CLICK: State.HOVER;
@@ -240,14 +240,14 @@ public class Button {
     }
 
     //Main method
-    public void update()
+    public void update(Cursor cursor)
     {
-        this.getButtonState();
+        this.getButtonState(cursor);
     }
 
-    public void render()
+    public void render(Cursor cursor)
     {
-        this.update();
+        this.update(cursor);
         this.batch.begin();
         this.drawSprite();
         this.batch.end();

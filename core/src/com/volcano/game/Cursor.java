@@ -38,18 +38,31 @@ public class Cursor {
         float windowHeight = Gdx.graphics.getHeight();
 
         this.sprite = new Sprite();
+        this.position = new Vector2();
         this.sprite.setRegion(t);
         this.sprite.setBounds(0, 0, t.getWidth(), t.getHeight());
         this.setCursorCoordinate();
-        Gdx.input.setCursorPosition((int)windowWidth / 2, (int)windowHeight / 2);
+        this.position.x = this.sprite.getX();
+        this.position.y = this.sprite.getY();
     }
 
     public void setCursor(Texture t, float width, float height)
     {
         this.sprite = new Sprite();
+        this.position = new Vector2();
         this.sprite.setRegion(t);
         this.sprite.setBounds(0, 0, width, height);
         this.setCursorCoordinate();
+        this.position.x = this.sprite.getX();
+        this.position.y = this.sprite.getY();
+    }
+
+    public void setCursor(Texture t, float width, float height, float mouseSensivity)
+    {
+        this.sprite = new Sprite();
+        this.sprite.setRegion(t);
+        this.sprite.setBounds(0, 0, width, height);
+        this.setCursorCoordinate(mouseSensivity);
     }
 
     public void setCustomPosition(Vector2 toSet)
@@ -71,8 +84,17 @@ public class Cursor {
     {
         float x = Gdx.input.getX() - this.sprite.getWidth() / 2;
         float y = (Gdx.graphics.getHeight() - Gdx.input.getY()) - (this.sprite.getHeight() / 2);
-
         this.sprite.setPosition(x, y);
+    }
+
+    private void setCursorCoordinate(float mouseSensivity)
+    {
+        float x = Gdx.input.getX() - this.sprite.getWidth() / 2;
+        float y = (Gdx.graphics.getHeight() - Gdx.input.getY()) - (this.sprite.getHeight() / 2);
+
+        this.sprite.setPosition(x * mouseSensivity, y * mouseSensivity);
+        this.position.x = this.sprite.getX();
+        this.position.y = this.sprite.getY();
     }
 
     // Get Method
@@ -92,7 +114,6 @@ public class Cursor {
         return this.position;
     }
 
-
     // Main method
 
     public void hideDefaultCursor(boolean hide)
@@ -107,7 +128,7 @@ public class Cursor {
 
     public void update(SpriteBatch batch)
     {
-        this.setCursorCoordinate();
+        this.setCursorCoordinate(1.5f);
         this.draw(batch);
     }
 

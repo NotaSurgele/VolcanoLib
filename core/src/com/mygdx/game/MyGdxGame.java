@@ -34,7 +34,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void render () {
 		ScreenUtils.clear(0, 0, 0, 0);
 		batch.begin();
-		player.update(batch);
+		player.update(batch, cursor);
 		cursor.update(batch);
 		batch.end();
 	}
