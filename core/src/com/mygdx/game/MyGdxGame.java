@@ -14,29 +14,29 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.volcano.game.Animator;
 import com.volcano.game.Button;
+import com.volcano.game.Cursor;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Sprite sprite;
-	float stateTime;
 	Player player;
-
+	Cursor cursor;
 
 	public void create () {
 		batch = new SpriteBatch();
 		sprite = new Sprite();
 		sprite.setBounds(500, 200, 70, 70);
 		player = new Player(sprite, 50, 50);
+		cursor = new Cursor(new Texture("ui (new)/crosshair_1.png"), 25, 25, true);
 	}
 
 	@Override
 	public void render () {
 		ScreenUtils.clear(0, 0, 0, 0);
-		stateTime += Gdx.graphics.getDeltaTime();
 		batch.begin();
 		player.update(batch);
+		cursor.update(batch);
 		batch.end();
-
 	}
 	
 	@Override

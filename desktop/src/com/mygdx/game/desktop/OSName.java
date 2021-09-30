@@ -28,6 +28,6 @@ public class OSName {
             osName = Name.MAC;
             return "\n";
         }
-        return null;
+        return "\n";
     }
 }

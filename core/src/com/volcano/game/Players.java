@@ -32,21 +32,21 @@ public class Players {
 
     //Main method
 
-    public void Move(boolean qwert, float moveSpeed)
+    public void Move(boolean qwert, float moveSpeed, float deltaTime)
     {
         Vector2 direction = new Vector2(this.position);
         this.qwertyCheck = qwert;
 
         if (!this.qwertyCheck) {
-            direction.y += (Gdx.input.isKeyPressed(Input.Keys.Z)) ? moveSpeed * Gdx.graphics.getDeltaTime(): 0;
-            direction.y += (Gdx.input.isKeyPressed(Input.Keys.S)) ? -moveSpeed * Gdx.graphics.getDeltaTime(): 0;
-            direction.x += (Gdx.input.isKeyPressed(Input.Keys.Q)) ? -moveSpeed * Gdx.graphics.getDeltaTime(): 0;
-            direction.x += (Gdx.input.isKeyPressed(Input.Keys.D)) ? moveSpeed * Gdx.graphics.getDeltaTime(): 0;
+            direction.y += (Gdx.input.isKeyPressed(Input.Keys.Z)) ? moveSpeed * deltaTime: 0;
+            direction.y += (Gdx.input.isKeyPressed(Input.Keys.S)) ? -moveSpeed * deltaTime: 0;
+            direction.x += (Gdx.input.isKeyPressed(Input.Keys.Q)) ? -moveSpeed * deltaTime: 0;
+            direction.x += (Gdx.input.isKeyPressed(Input.Keys.D)) ? moveSpeed * deltaTime: 0;
         } else {
-            direction.y += (Gdx.input.isKeyPressed(Input.Keys.W)) ? moveSpeed * Gdx.graphics.getDeltaTime(): 0;
-            direction.y += (Gdx.input.isKeyPressed(Input.Keys.S)) ? -moveSpeed * Gdx.graphics.getDeltaTime(): 0;
-            direction.x += (Gdx.input.isKeyPressed(Input.Keys.A)) ? -moveSpeed * Gdx.graphics.getDeltaTime(): 0;
-            direction.x += (Gdx.input.isKeyPressed(Input.Keys.D)) ? moveSpeed * Gdx.graphics.getDeltaTime(): 0;
+            direction.y += (Gdx.input.isKeyPressed(Input.Keys.W)) ? moveSpeed * deltaTime: 0;
+            direction.y += (Gdx.input.isKeyPressed(Input.Keys.S)) ? -moveSpeed * deltaTime: 0;
+            direction.x += (Gdx.input.isKeyPressed(Input.Keys.A)) ? -moveSpeed * deltaTime: 0;
+            direction.x += (Gdx.input.isKeyPressed(Input.Keys.D)) ? moveSpeed * deltaTime: 0;
         }
         this.setPositionVector(direction);
     }

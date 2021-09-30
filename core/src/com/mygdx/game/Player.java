@@ -16,6 +16,7 @@ public class Player extends Players {
     Animator idle;
     Animator moving;
     float stateTime;
+    float deltaTime;
 
     public Player(Sprite sprite, float x, float y) {
         super(sprite, x, y);
@@ -34,14 +35,15 @@ public class Player extends Players {
     public void flipPlayerWithMouse()
     {
         float mouseX = Gdx.input.getX();
+        float positionX = this.sprite.getX();
+        float characterWidth = this.getWidth();
+        boolean isFlipped = this.sprite.isFlipX();
 
-        if (mouseX < this.sprite.getX())
+        if (mouseX < positionX + (characterWidth / 2))
         {
-            if (!this.sprite.isFlipX())
-                this.sprite.flip(true, false);
+            if (!isFlipped) this.sprite.flip(true, false);
         } else {
-            if (this.sprite.isFlipX())
-                this.sprite.flip(false, false);
+            if (isFlipped) this.sprite.flip(false, false);
         }
     }
 
@@ -53,8 +55,8 @@ public class Player extends Players {
                     this.sprite.flip(true, false);
             }
             if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                if (!this.sprite.isFlipX())
-                    this.sprite.flip(false, false);
+                if (this.sprite.isFlipX())
+                    this.sprite.flip(true, false);
             }
         } else {
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -71,21 +73,22 @@ public class Player extends Players {
     public void animationController()
     {
         boolean isMoving = this.isMoving();
-        TextureRegion currentFrame;
 
-        if (isMoving) {
-            currentFrame = this.moving.playAnimationToSprite(this.sprite, this.stateTime, true);
-        } else {
-            currentFrame = this.idle.playAnimationToSprite(this.sprite, this.stateTime, true);
-        }
+        if (isMoving)
+            this.moving.playAnimationToSprite(this.sprite, this.stateTime, true);
+        else
+            this.idle.playAnimationToSprite(this.sprite, this.stateTime, true);
     }
 
     public void update(SpriteBatch batch)
     {
         this.stateTime += Gdx.graphics.getDeltaTime();
+        deltaTime = Gdx.graphics.getDeltaTime();
+
         this.animationController();
-        this.Move(false, 200f);
+        this.Move(false, 100f, deltaTime);
         this.flipPlayerWithMouse();
+        this.flipPlayerWithKeyboard();
         this.sprite.draw(batch);
     }
 }
