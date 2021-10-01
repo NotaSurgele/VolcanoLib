@@ -50,6 +50,26 @@ public class Players {
         }
         this.setPositionVector(direction);
     }
+    public void Move(boolean qwert, float moveSpeed, float runningSpeed, float deltaTime)
+    {
+        Vector2 direction = new Vector2(this.position);
+        this.qwertyCheck = qwert;
+        boolean isRunning = this.isRunning();
+
+        moveSpeed = isRunning ? moveSpeed += runningSpeed : moveSpeed;
+        if (!this.qwertyCheck) {
+            direction.y += (Gdx.input.isKeyPressed(Input.Keys.Z)) ? moveSpeed * deltaTime: 0;
+            direction.y += (Gdx.input.isKeyPressed(Input.Keys.S)) ? -moveSpeed * deltaTime: 0;
+            direction.x += (Gdx.input.isKeyPressed(Input.Keys.Q)) ? -moveSpeed * deltaTime: 0;
+            direction.x += (Gdx.input.isKeyPressed(Input.Keys.D)) ? moveSpeed * deltaTime: 0;
+        } else {
+            direction.y += (Gdx.input.isKeyPressed(Input.Keys.W)) ? moveSpeed * deltaTime: 0;
+            direction.y += (Gdx.input.isKeyPressed(Input.Keys.S)) ? -moveSpeed * deltaTime: 0;
+            direction.x += (Gdx.input.isKeyPressed(Input.Keys.A)) ? -moveSpeed * deltaTime: 0;
+            direction.x += (Gdx.input.isKeyPressed(Input.Keys.D)) ? moveSpeed * deltaTime: 0;
+        }
+        this.setPositionVector(direction);
+    }
 
     public void drawHitbox(boolean toShow, Color hitboxColor)
     {
@@ -123,11 +143,21 @@ public class Players {
     public boolean isMoving()
     {
         if (!this.qwertyCheck) {
-            return (Gdx.input.isKeyPressed(Input.Keys.Z) || Gdx.input.isKeyPressed(Input.Keys.Q) ||
-                    Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.D)) ? true: false;
+            return  Gdx.input.isKeyPressed(Input.Keys.Z) || Gdx.input.isKeyPressed(Input.Keys.Q) ||
+                    Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.D);
         } else {
-            return (Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.A) ||
-                    Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.D)) ? true: false;
+            return  Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.A) ||
+                    Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.D);
         }
+    }
+
+    public boolean isRunning()
+    {
+        boolean isMoving = this.isMoving();
+
+        if (isMoving) {
+            return (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT));
+        }
+        return false;
     }
 }

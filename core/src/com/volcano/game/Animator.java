@@ -129,7 +129,6 @@ public class Animator {
     }
 
     //Static method
-
     public static Animator initializeAnimation(Animator animation, String texturePath, int FRAME_COLS, int FRAME_ROWS, float frameDuration)
     {
         animation = new Animator();

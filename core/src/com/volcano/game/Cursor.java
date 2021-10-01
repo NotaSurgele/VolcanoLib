@@ -10,7 +10,7 @@ public class Cursor {
 
     Texture texture;
     Vector2 position;
-    Sprite sprite;
+    public Sprite sprite;
 
     public Cursor(Texture t, float width, float height) {
         this.setCursor(t, width, height);
@@ -34,9 +34,6 @@ public class Cursor {
 
     public void setCursor(Texture t)
     {
-        float windowWidth = Gdx.graphics.getWidth();
-        float windowHeight = Gdx.graphics.getHeight();
-
         this.sprite = new Sprite();
         this.position = new Vector2();
         this.sprite.setRegion(t);
@@ -85,14 +82,16 @@ public class Cursor {
         float x = Gdx.input.getX() - this.sprite.getWidth() / 2;
         float y = (Gdx.graphics.getHeight() - Gdx.input.getY()) - (this.sprite.getHeight() / 2);
         this.sprite.setPosition(x, y);
+        this.position.x = this.sprite.getX();
+        this.position.y = this.sprite.getY();
     }
 
-    private void setCursorCoordinate(float mouseSensivity)
+    private void setCursorCoordinate(float mouseSensitivity)
     {
         float x = Gdx.input.getX() - this.sprite.getWidth() / 2;
         float y = (Gdx.graphics.getHeight() - Gdx.input.getY()) - (this.sprite.getHeight() / 2);
 
-        this.sprite.setPosition(x * mouseSensivity, y * mouseSensivity);
+        this.sprite.setPosition(x * mouseSensitivity, y * mouseSensitivity);
         this.position.x = this.sprite.getX();
         this.position.y = this.sprite.getY();
     }
@@ -128,7 +127,7 @@ public class Cursor {
 
     public void update(SpriteBatch batch)
     {
-        this.setCursorCoordinate(1.5f);
+        this.setCursorCoordinate();
         this.draw(batch);
     }
 

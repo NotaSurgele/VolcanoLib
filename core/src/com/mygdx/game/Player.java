@@ -16,13 +16,20 @@ public class Player extends Players {
 
     Animator idle;
     Animator moving;
+    Weapon sword;
+
     float stateTime;
     float deltaTime;
+
+    //Movement System
+    float moveSpeed = 150f;
+    float runningSpeed = 100f;
 
     public Player(Sprite sprite, float x, float y) {
         super(sprite, x, y);
         this.idle = Animator.initializeAnimation(this.idle, "heroes/knight/knight_idle_spritesheet.png", 6, 1, 0.07f);
         this.moving = Animator.initializeAnimation(this.idle, "heroes/knight/knight_run_spritesheet.png", 6, 1, 0.07f);
+        this.sword = new Weapon(new Texture("heroes/knight/weapon_sword_1.png"), 50, 50, (this.getPositionX() + this.getWidth() / 2), (this.getPositionY() + this.getHeight() / 2) - 10f);
     }
 
     public Player(Sprite sprite, Vector2 position) {
@@ -87,9 +94,12 @@ public class Player extends Players {
         deltaTime = Gdx.graphics.getDeltaTime();
 
         this.animationController();
-        this.Move(false, 100f, deltaTime);
+        this.Move(false, this.moveSpeed, runningSpeed, deltaTime);
         this.flipPlayerWithMouse(cursor);
         this.flipPlayerWithKeyboard();
         this.sprite.draw(batch);
+        this.sword.update(batch);
+        this.sword.rotateAroundMouse(cursor);
+        this.sword.setWeaponPosition(new Vector2((this.getPositionX() + this.getWidth() / 2), (this.getPositionY() + this.getHeight() / 2) - 10f));
     }
 }
