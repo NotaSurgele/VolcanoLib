@@ -29,8 +29,6 @@ public class Sword extends Weapons {
     {
         angle = MathUtils.lerp(angle, goTo, 0.2f);
         if ((int)angle <= (int)goTo) {
-            angle = this.sprite.getRotation() + 70f;
-            goTo = angle - 130;
             this.isSlashing = false;
         }
         this.sprite.setRotation(angle);
@@ -38,8 +36,11 @@ public class Sword extends Weapons {
 
     public void update(SpriteBatch batch)
     {
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT))
+        if (!this.isSlashing && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+            this.angle = this.sprite.getRotation() + 70f;
+            this.goTo = this.angle - 130f;
             this.isSlashing = true;
+        }
         if (this.isSlashing)
             this.swordSlash();
         this.draw(batch);

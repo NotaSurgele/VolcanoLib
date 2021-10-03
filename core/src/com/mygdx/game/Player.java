@@ -45,8 +45,6 @@ public class Player extends Players {
         float characterWidth = this.getWidth();
         boolean isFlipped = this.sprite.isFlipX();
 
-
-        System.out.println(isFlipped);
         if (mouseX < positionX + (characterWidth / 2))
         {
             if (!isFlipped) this.sprite.flip(true, false);

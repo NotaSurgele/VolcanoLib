@@ -9,9 +9,9 @@ com/volcano/game/Cursor.java
  com.volcano.game.Cursor
 com/volcano/game/Players.java
  com.volcano.game.Players
-com/mygdx/game/Sword.java
- com.mygdx.game.Sword
 com/mygdx/game/Player.java
  com.mygdx.game.Player
 com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame
+com/mygdx/game/Sword.java
+ com.mygdx.game.Sword
