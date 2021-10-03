@@ -15,6 +15,7 @@ public class Sword extends Weapons {
     float goTo = angle + 130;
 
     public boolean isSlashing = false;
+    public boolean isUltimate = false;
 
     public Sword(Texture t, float w, float h, float x, float y) {
         super(t, w, h, x, y);
@@ -27,11 +28,20 @@ public class Sword extends Weapons {
     //Attack methods
     public void swordSlash()
     {
-        angle = MathUtils.lerp(angle, goTo, 0.2f);
-        if ((int)angle <= (int)goTo) {
+        this.angle = MathUtils.lerp(this.angle, this.goTo, 0.2f);
+        if ((int)this.angle <= (int)this.goTo) {
             this.isSlashing = false;
         }
-        this.sprite.setRotation(angle);
+        this.sprite.setRotation(this.angle);
+    }
+
+    public void ultimate()
+    {
+        this.angle = MathUtils.lerp(this.angle, this.goTo, 0.2f);
+        if ((int) this.angle <= (int) this.goTo) {
+            this.isUltimate = false;
+        }
+        this.sprite.setRotation(this.angle);
     }
 
     public void update(SpriteBatch batch)
@@ -43,6 +53,13 @@ public class Sword extends Weapons {
         }
         if (this.isSlashing)
             this.swordSlash();
+        if (!this.isUltimate && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
+            this.angle = this.sprite.getRotation();
+            this.goTo = this.angle - 360f;
+            this.isUltimate = true;
+        }
+        if (this.isUltimate)
+            this.ultimate();
         this.draw(batch);
     }
 
