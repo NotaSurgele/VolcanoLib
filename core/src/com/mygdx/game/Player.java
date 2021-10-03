@@ -2,11 +2,9 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.volcano.game.Animator;
 import com.volcano.game.Cursor;
@@ -16,7 +14,7 @@ public class Player extends Players {
 
     Animator idle;
     Animator moving;
-    Weapon sword;
+    Sword sword;
 
     float stateTime;
     float deltaTime;
@@ -29,7 +27,7 @@ public class Player extends Players {
         super(sprite, x, y);
         this.idle = Animator.initializeAnimation(this.idle, "heroes/knight/knight_idle_spritesheet.png", 6, 1, 0.07f);
         this.moving = Animator.initializeAnimation(this.idle, "heroes/knight/knight_run_spritesheet.png", 6, 1, 0.07f);
-        this.sword = new Weapon(new Texture("heroes/knight/weapon_sword_1.png"), 50, 50, (this.getPositionX() + this.getWidth() / 2), (this.getPositionY() + this.getHeight() / 2) - 10f);
+        this.sword = new Sword(new Texture("heroes/knight/weapon_sword_1.png"), 70, 70, (this.getPositionX() + this.getWidth() / 2), (this.getPositionY() + this.getHeight() / 2) - 10f);
     }
 
     public Player(Sprite sprite, Vector2 position) {
@@ -47,6 +45,8 @@ public class Player extends Players {
         float characterWidth = this.getWidth();
         boolean isFlipped = this.sprite.isFlipX();
 
+
+        System.out.println(isFlipped);
         if (mouseX < positionX + (characterWidth / 2))
         {
             if (!isFlipped) this.sprite.flip(true, false);
@@ -91,7 +91,7 @@ public class Player extends Players {
     public void update(SpriteBatch batch, Cursor cursor)
     {
         this.stateTime += Gdx.graphics.getDeltaTime();
-        deltaTime = Gdx.graphics.getDeltaTime();
+        this.deltaTime = Gdx.graphics.getDeltaTime();
 
         this.animationController();
         this.Move(false, this.moveSpeed, runningSpeed, deltaTime);

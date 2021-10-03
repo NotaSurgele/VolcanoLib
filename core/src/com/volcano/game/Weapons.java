@@ -105,18 +105,12 @@ public class Weapons {
 
     //Main method
 
-    public void rotateAround(Vector2 point)
+    public void rotateAroundMouse(Cursor cursor)
     {
-        return;
-    }
+        Vector2 lookAt = cursor.getCursorPosition();
+        lookAt.x = lookAt.x - cursor.sprite.getWidth();
 
-    public void rotateAroundX(float pointX)
-    {
-        return;
-    }
-
-    public void rotateAroundY(float pointY)
-    {
-        return;
+        float angle = lookAt.sub(this.position).angleDeg() - 45f;
+        this.sprite.setRotation(angle);
     }
 }
