@@ -102,7 +102,7 @@ public class Player extends Players {
         this.flipPlayerWithKeyboard();
         this.sprite.draw(batch);
         this.sword.update(batch);
-        this.sword.rotateAroundMouse(cursor);
+        this.sword.lookAtCursor(cursor);
         this.sword.setWeaponPosition(new Vector2((this.getPositionX() + this.getWidth() / 2), (this.getPositionY() + this.getHeight() / 2) - 10f));
     }
 }
