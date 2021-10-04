@@ -6,20 +6,22 @@ com/volcano/game/Animator.java
  com.volcano.game.Animator
 com/volcano/game/Cursor.java
  com.volcano.game.Cursor
-com/mygdx/game/MyGdxGame.java
- com.mygdx.game.MyGdxGame
-com/mygdx/game/Menu.java
- com.mygdx.game.Menu
+com/mygdx/game/Player.java
+ com.mygdx.game.Player
+com/mygdx/game/Sword.java
+ com.mygdx.game.Sword
 com/volcano/game/Button.java
  com.volcano.game.Button
  com.volcano.game.Button$State
+com/mygdx/game/Game.java
+ com.mygdx.game.Game
+com/volcano/game/Room.java
+ com.volcano.game.Room
+com/mygdx/game/MyGdxGame.java
+ com.mygdx.game.MyGdxGame
 com/volcano/game/Scene.java
  com.volcano.game.Scene
  com.volcano.game.Scene$1
  com.volcano.game.Scene$SCENES
-com/mygdx/game/Player.java
- com.mygdx.game.Player
-com/mygdx/game/Game.java
- com.mygdx.game.Game
-com/mygdx/game/Sword.java
- com.mygdx.game.Sword
+com/mygdx/game/Menu.java
+ com.mygdx.game.Menu
