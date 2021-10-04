@@ -16,18 +16,14 @@ public class Players {
     public Vector2 position;
     public boolean qwertyCheck;
 
-    ShapeRenderer hitboxShape;
-
     public Players(Sprite sprite, float x, float y) {
         this.sprite = sprite;
         this.position = new Vector2(x, y);
-        this.hitboxShape = new ShapeRenderer();
     }
 
     public Players(Sprite sprite, Vector2 position) {
         this.sprite = sprite;
         this.position = new Vector2(position);
-        this.hitboxShape = new ShapeRenderer();
     }
 
     //Main method
@@ -69,17 +65,6 @@ public class Players {
             direction.x += (Gdx.input.isKeyPressed(Input.Keys.D)) ? moveSpeed * deltaTime: 0;
         }
         this.setPositionVector(direction);
-    }
-
-    public void drawHitbox(boolean toShow, Color hitboxColor)
-    {
-        if (toShow) {
-            this.hitboxShape.setColor(hitboxColor);
-            this.hitboxShape.setAutoShapeType(true);
-            this.hitboxShape.begin();
-            this.hitboxShape.rect(this.getPositionX(), this.getPositionY(), this.getWidth(), this.getHeight());
-            this.hitboxShape.end();
-        }
     }
 
     // Get Method

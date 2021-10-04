@@ -1,14 +1,13 @@
 package com.volcano.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Game;
 import com.mygdx.game.Menu;
 
-public class Scene {
+import java.util.ArrayList;
 
-    public Scene() {
-        this.scenes = SCENES.MENU;
-    }
+public class Scene {
 
     public enum SCENES {
         MENU,
@@ -17,6 +16,10 @@ public class Scene {
     }
 
     public SCENES scenes;
+
+    public Scene() {
+        this.scenes = SCENES.MENU;
+    }
 
     // Main method
     public SCENES getCurrentScene()
