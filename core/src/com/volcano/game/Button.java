@@ -8,14 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import org.jetbrains.annotations.NotNull;
-
-import static com.badlogic.gdx.Gdx.input;
+import com.volcano.game.Scene.SCENES;
 
 public class Button {
 
     SpriteBatch batch;
     Sprite sprite;
     Texture texture;
+    Texture oldTexture;
     Vector2 position;
     float width;
     float height;
@@ -30,6 +30,18 @@ public class Button {
         this.name = n;
         this.batch = new SpriteBatch();
         this.sprite = this.createSprite();
+        this.oldTexture = t;
+    }
+
+    public Button(Texture t, float x, float y, float w, float h, String n) {
+        this.texture = t;
+        this.position = new Vector2(x, y);
+        this.width = w;
+        this.height = h;
+        this.name = n;
+        this.batch = new SpriteBatch();
+        this.sprite = this.createSprite();
+        this.oldTexture = t;
     }
 
     enum State {
@@ -207,8 +219,11 @@ public class Button {
 
     public void onHoverSetNewTexture(Texture newTexture)
     {
-        if (this.state == State.HOVER)
+        if (this.state == State.HOVER) {
             this.setNewTexture(newTexture);
+        } else if (this.state == State.NOTHING) {
+            this.setNewTexture(this.oldTexture);
+        }
     }
 
     public void onHoverSetNewScale(Vector2 newScale)
@@ -221,6 +236,12 @@ public class Button {
     {
         if (this.state == State.HOVER)
             this.setNewScale(newWidth, newHeight);
+    }
+
+    public void onClickChangeScene(Scene currentScene, SCENES changeTo)
+    {
+        if (this.state == State.CLICK)
+            currentScene.setScenes(changeTo);
     }
 
     //Boolean method
@@ -240,7 +261,7 @@ public class Button {
     }
 
     //Main method
-    public void update(Cursor cursor)
+    private void update(Cursor cursor)
     {
         this.getButtonState(cursor);
     }

@@ -81,6 +81,7 @@ public class Cursor {
     {
         float x = Gdx.input.getX() - this.sprite.getWidth() / 2;
         float y = (Gdx.graphics.getHeight() - Gdx.input.getY()) - (this.sprite.getHeight() / 2);
+
         this.sprite.setPosition(x, y);
         this.position.x = this.sprite.getX();
         this.position.y = this.sprite.getY();
@@ -133,6 +134,6 @@ public class Cursor {
 
     public void dispose()
     {
-        this.texture.dispose();
+
     }
 }

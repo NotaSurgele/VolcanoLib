@@ -15,32 +15,35 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.volcano.game.Animator;
 import com.volcano.game.Button;
 import com.volcano.game.Cursor;
+import com.volcano.game.Scene;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Sprite sprite;
-	Player player;
 	Cursor cursor;
+	Game game;
+	Menu menu;
+	Scene scene;
 
 	public void create () {
 		batch = new SpriteBatch();
-		sprite = new Sprite();
-		sprite.setBounds(500, 200, 70, 70);
-		player = new Player(sprite, 50, 50);
 		cursor = new Cursor(new Texture("ui (new)/crosshair_1.png"), 25, 25, true);
+		game = new Game();
+		menu = new Menu();
+		scene = new Scene();
 	}
 
 	@Override
 	public void render () {
 		ScreenUtils.clear(0, 0, 0, 0);
 		batch.begin();
-		player.update(batch, cursor);
 		cursor.update(batch);
+		scene.update(menu, game, cursor);
 		batch.end();
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
+		cursor.dispose();
 	}
 }

@@ -86,6 +86,11 @@ public class Player extends Players {
             this.idle.playAnimationToSprite(this.sprite, this.stateTime, true);
     }
 
+    public void test(Players player)
+    {
+        return;
+    }
+
     public void update(SpriteBatch batch, Cursor cursor)
     {
         this.stateTime += Gdx.graphics.getDeltaTime();
