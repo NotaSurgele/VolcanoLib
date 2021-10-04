@@ -3,6 +3,7 @@ package com.volcano.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -21,6 +22,10 @@ public class Button {
     float height;
     String name;
     State state;
+    BitmapFont buttonName;
+
+    float nameX;
+    float nameY;
 
     public Button(Texture t, Vector2 p, float w, float h, String n) {
         this.texture = t;
@@ -31,6 +36,9 @@ public class Button {
         this.batch = new SpriteBatch();
         this.sprite = this.createSprite();
         this.oldTexture = t;
+        this.buttonName = new BitmapFont();
+        this.nameX = this.position.x + ((this.width / 2) / 2);
+        this.nameY = this.position.y + ((this.height / 2) / 2);
     }
 
     public Button(Texture t, float x, float y, float w, float h, String n) {
@@ -42,6 +50,9 @@ public class Button {
         this.batch = new SpriteBatch();
         this.sprite = this.createSprite();
         this.oldTexture = t;
+        this.buttonName = new BitmapFont();
+        this.nameX = this.position.x + ((this.width / 2) / 2);
+        this.nameY = this.position.y + ((this.height / 2) / 2);
     }
 
     enum State {
@@ -271,10 +282,11 @@ public class Button {
         this.update(cursor);
         this.batch.begin();
         this.drawSprite();
+        this.buttonName.draw(this.batch, this.name, this.nameX, this.nameY);
         this.batch.end();
     }
 
-    public void dipose()
+    public void dispose()
     {
         this.texture.dispose();
         this.batch.dispose();

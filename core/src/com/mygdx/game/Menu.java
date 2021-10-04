@@ -20,6 +20,11 @@ public class Menu extends Scene {
         this.batch = new SpriteBatch();
     }
 
+    public void load()
+    {
+
+    }
+
     //Main method
     public void play(Cursor cursor, Scene scene)
     {
@@ -36,5 +41,7 @@ public class Menu extends Scene {
     public void dispose()
     {
         this.batch.dispose();
+        this.play.dispose();
+        this.quit.dispose();
     }
 }

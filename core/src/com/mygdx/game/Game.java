@@ -18,6 +18,12 @@ public class Game extends Scene {
 		this.batch = new SpriteBatch();
     }
 
+    //load everything
+    public void load()
+    {
+
+    }
+
     public void play(Cursor cursor)
     {
         this.batch.begin();
