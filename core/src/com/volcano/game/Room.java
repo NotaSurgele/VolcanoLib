@@ -51,33 +51,15 @@ public class Room {
 
     private void setTilesId(int line, int cell, int w, int h)
     {
-        if (line == 0) {
-            this.layer[line][cell] = -1;
-        }
-        if (line == h - 1) {
-            this.layer[line][cell] = -3;
-        }
-        if (cell == 0) {
-            this.layer[line][cell] = -4;
-        }
-        if (cell == w - 1) {
-            this.layer[line][cell] = -2;
-        }
-        if (line > 0 && line < (h - 1) &&  cell > 0 && cell < (w - 1)) {
-            this.layer[line][cell] = 1;
-        }
-        if (line == 0 && cell == 0) {
-            this.layer[line][cell] = -5;
-        }
-        if (line == 0 && cell == w - 1) {
-            this.layer[line][cell] = -6;
-        }
-        if (line == h - 1 && cell == w - 1) {
-            this.layer[line][cell] = -7;
-        }
-        if (line == h - 1 && cell == 0) {
-            this.layer[line][cell] = -8;
-        }
+        if (line == 0)      this.layer[line][cell] = -1;
+        if (line == h - 1)  this.layer[line][cell] = -3;
+        if (cell == 0)      this.layer[line][cell] = -4;
+        if (cell == w - 1)  this.layer[line][cell] = -2;
+        if (line > 0 && line < (h - 1) &&  cell > 0 && cell < (w - 1))  this.layer[line][cell] = 1;
+        if (line == 0 && cell == 0)         this.layer[line][cell] = -5;
+        if (line == 0 && cell == w - 1)     this.layer[line][cell] = -6;
+        if (line == h - 1 && cell == w - 1) this.layer[line][cell] = -7;
+        if (line == h - 1 && cell == 0)     this.layer[line][cell] = -8;
     }
 
     private void loadLayer()
@@ -86,7 +68,6 @@ public class Room {
         int h = this.height;
 
         for (int line = 0; line != h; line++) {
-            int id = -1;
             for (int cell = 0; cell != w; cell++) {
                 this.setTilesId(line, cell, w, h);
             }
@@ -112,12 +93,12 @@ public class Room {
         for (int line = 0; line != h; line++) {
             for (int each = 0; each != w; each++) {
                 switch (this.layer[line][each]) {
-                    case -1: batch.draw(this.wallDown, this.x, this.y); break;
-                    case -2: batch.draw(this.wallRight, this.x, this.y); break;
-                    case -3: batch.draw(this.wallTop, this.x, this.y); break;
-                    case -4: batch.draw(this.wallLeft, this.x, this.y); break;
-                    case 1: batch.draw(this.floor, this.x, this.y); break;
-                    default: break;
+                    case -1: batch.draw(this.wallDown, this.x, this.y);     break;
+                    case -2: batch.draw(this.wallRight, this.x, this.y);    break;
+                    case -3: batch.draw(this.wallTop, this.x, this.y);      break;
+                    case -4: batch.draw(this.wallLeft, this.x, this.y);     break;
+                    case  1: batch.draw(this.floor, this.x, this.y);        break;
+                    default:                                                break;
                 }
                 this.x += this.tileSize;
             }
@@ -131,7 +112,6 @@ public class Room {
     private void setRoomSize()
     {
         this.width = MathUtils.random(this.minWidth, this.maxWidth);
-
         this.height = MathUtils.random(this.minHeight, this.maxHeight);
     }
 

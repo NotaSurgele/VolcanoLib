@@ -11,11 +11,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.volcano.game.Animator;
-import com.volcano.game.Button;
-import com.volcano.game.Cursor;
-import com.volcano.game.Scene;
+import com.volcano.game.*;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
@@ -23,6 +21,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	Game game;
 	Menu menu;
 	Scene scene;
+	Debug debug;
 
 	public void create () {
 		batch = new SpriteBatch();
@@ -30,13 +29,15 @@ public class MyGdxGame extends ApplicationAdapter {
 		game = new Game();
 		menu = new Menu();
 		scene = new Scene();
+		debug = new Debug();
 	}
 
 	@Override
 	public void render () {
 		ScreenUtils.clear(0, 0, 0, 0);
 		batch.begin();
-		cursor.update(batch);
+		debug.update(batch);
+		cursor.update(batch, game.camera);
 		scene.update(menu, game, cursor);
 		batch.end();
 	}

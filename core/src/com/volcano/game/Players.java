@@ -4,16 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class Players {
 
     public Sprite sprite;
     public Vector2 position;
+
+    Vector3 cameraPosition;
+
     public boolean qwertyCheck;
 
     public Players(Sprite sprite, float x, float y) {
@@ -65,6 +70,21 @@ public class Players {
             direction.x += (Gdx.input.isKeyPressed(Input.Keys.D)) ? moveSpeed * deltaTime: 0;
         }
         this.setPositionVector(direction);
+    }
+
+    public void cameraFollowPlayer(OrthographicCamera camera)
+    {
+        Vector2 cameraPosition = new Vector2(this.position.x + (this.getWidth() / 2), this.position.y + (this.getHeight() / 2));
+        camera.position.set(cameraPosition, 0);
+    }
+
+    public void smoothCameraPlayerFollow(OrthographicCamera camera, float smoothness)
+    {
+        Vector3 playerPosition = new Vector3(this.position, 0);
+        this.cameraPosition = new Vector3(camera.position);
+
+        this.cameraPosition.slerp(playerPosition, smoothness * Gdx.graphics.getDeltaTime());
+        camera.position.set(this.cameraPosition);
     }
 
     // Get Method

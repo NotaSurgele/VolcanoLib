@@ -1,16 +1,19 @@
 package com.volcano.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 public class Cursor {
 
     Texture texture;
     Vector2 position;
     public Sprite sprite;
+    public Vector3 position3D;
 
     public Cursor(Texture t, float width, float height) {
         this.setCursor(t, width, height);
@@ -41,12 +44,14 @@ public class Cursor {
         this.setCursorCoordinate();
         this.position.x = this.sprite.getX();
         this.position.y = this.sprite.getY();
+        this.position3D = new Vector3(this.position, 0);
     }
 
     public void setCursor(Texture t, float width, float height)
     {
         this.sprite = new Sprite();
         this.position = new Vector2();
+        this.position3D = new Vector3(this.position, 0);
         this.sprite.setRegion(t);
         this.sprite.setBounds(0, 0, width, height);
         this.setCursorCoordinate();
@@ -75,6 +80,17 @@ public class Cursor {
     public void setCustomPositionY(float toSetY)
     {
         this.position.y = toSetY;
+    }
+
+    private void setCursorCoordinate(OrthographicCamera camera)
+    {
+        Vector3 mouseCoord = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+        float x = mouseCoord.x - this.sprite.getWidth() / 2;
+        float y = mouseCoord.y - (this.sprite.getHeight() / 2);
+
+        this.sprite.setPosition(x, y);
+        this.position.x = this.sprite.getX();
+        this.position.y = this.sprite.getY();
     }
 
     private void setCursorCoordinate()
@@ -124,6 +140,12 @@ public class Cursor {
     public void draw(SpriteBatch batch)
     {
         this.sprite.draw(batch);
+    }
+
+    public void update(SpriteBatch batch, OrthographicCamera camera)
+    {
+        this.setCursorCoordinate(camera);
+        this.draw(batch);
     }
 
     public void update(SpriteBatch batch)
