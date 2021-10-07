@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 
+import java.util.ArrayList;
+
 public class Room {
 
     int width;
@@ -33,6 +35,7 @@ public class Room {
     SpriteBatch batch;
 
     int[][] layer;
+
 
     String floorPath = "tiles/floor/";
     String wallPath = "tiles/wall/";

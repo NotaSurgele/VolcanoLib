@@ -53,6 +53,7 @@ public class Animator {
     public TextureRegion playAnimationToSprite(Sprite sprite, float stateTime, boolean loop)
     {
         TextureRegion currentFrame = this.animation.getKeyFrame(stateTime, loop);
+
         this.setFrameToSprite(sprite, currentFrame);
         return currentFrame;
     }

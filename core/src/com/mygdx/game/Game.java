@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.volcano.game.Cursor;
+import com.volcano.game.MazeGenerator;
 import com.volcano.game.Room;
 import com.volcano.game.Scene;
 
@@ -21,15 +22,17 @@ public class Game extends Scene {
     OrthographicCamera camera;
 
     //DUNGEON PART
-    Room room;
+    Dungeon dj;
+    MazeGenerator maze;
 
-    public Game() {
-        this.camera = this.setCamera(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+    public Game(float viewportWidth, float viewportHeight) {
+        this.camera = this.setCamera(false, viewportWidth, viewportHeight);
         this.sprite = new Sprite();
 		this.sprite.setBounds(500, 200, 70, 70);
 		this.player = new Player(this.sprite, 50, 50);
 		this.batch = new SpriteBatch();
-		this.room = new Room();
+		this.dj = new Dungeon();
+		this.maze = new MazeGenerator(10, 11);
     }
 
     public OrthographicCamera setCamera(boolean ortho, float viewPortW, float viewPortH)
@@ -40,9 +43,9 @@ public class Game extends Scene {
         return camera;
     }
 
-    public void handleCamera(Cursor cursor)
+    public void cameraHandler()
     {
-        this.player.smoothCameraPlayerFollow(this.camera, 10f);
+        this.player.smoothCameraPlayerFollow(this.camera, 5f);
         this.camera.update();
     }
 
@@ -56,10 +59,11 @@ public class Game extends Scene {
     {
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
-        this.room.update(this.batch);
+        this.dj.update(batch);
         this.player.update(this.batch, cursor);
         this.camera.update();
-        this.handleCamera(cursor);
+        maze.update();
+        this.cameraHandler();
         this.batch.end();
         //this.player.sword.showHitbox();
     }

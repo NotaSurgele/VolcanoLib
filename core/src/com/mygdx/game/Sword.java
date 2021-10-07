@@ -75,15 +75,13 @@ public class Sword extends Weapons {
             this.goTo = this.angle - 130f;
             this.isSlashing = true;
         }
-        if (this.isSlashing)
-            this.swordSlash();
+        if (this.isSlashing) this.swordSlash();
         if (!this.isSlashing && !this.isUltimate && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
             this.angle = this.sprite.getRotation();
             this.goTo = this.angle - 360f;
             this.isUltimate = true;
         }
-        if (this.isUltimate)
-            this.ultimate();
+        if (this.isUltimate)  this.ultimate();
         this.setHitbox();
         this.draw(batch);
     }

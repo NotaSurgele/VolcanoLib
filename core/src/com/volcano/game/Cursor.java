@@ -85,7 +85,7 @@ public class Cursor {
     private void setCursorCoordinate(OrthographicCamera camera)
     {
         Vector3 mouseCoord = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-        float x = mouseCoord.x - this.sprite.getWidth() / 2;
+        float x = mouseCoord.x - (this.sprite.getWidth() / 2);
         float y = mouseCoord.y - (this.sprite.getHeight() / 2);
 
         this.sprite.setPosition(x, y);
