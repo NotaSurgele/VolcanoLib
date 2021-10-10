@@ -23,7 +23,7 @@ public class MazeGenerator {
         this.filledMaze(this.maze, this.width, this.height);
         this.coordTrack = new ArrayList<Vector2>();
         this.possibility = new ArrayList<Vector2>();
-        while (!this.algorithm());
+        this.algorithm();
     }
 
     public void filledMaze(int[][] maze, int w, int h)
@@ -43,7 +43,7 @@ public class MazeGenerator {
         this.maze[h - 1][w - 3] = 3;
     }
 
-    public int checkCellsAround(int line, int cell)
+    private int checkCellsAround(int line, int cell)
     {
         int possibility = 0;
 
@@ -66,12 +66,12 @@ public class MazeGenerator {
         return possibility;
     }
 
-    public void addCoordToStack(int line, int cell)
+    private void addCoordToStack(int line, int cell)
     {
         this.coordTrack.add(new Vector2(line, cell));
     }
 
-    public int random(int choice)
+    private int random(int choice)
     {
         int random = 0;
 
@@ -79,7 +79,7 @@ public class MazeGenerator {
         return random;
     }
 
-    public void setPath(int line, int cell, int oldLine, int oldCell)
+    private void setPath(int line, int cell, int oldLine, int oldCell)
     {
         if (line > oldLine)
             this.maze[oldLine + 1][cell] = 3;
@@ -90,6 +90,15 @@ public class MazeGenerator {
         if (cell < oldCell)
             this.maze[oldLine][oldCell - 1] = 3;
         this.maze[line][cell] = 3;
+    }
+
+    private int complexity(int choice, int random)
+    {
+        int t = MathUtils.random(1, 6);
+
+        if (t % 2 == 0)
+            random = MathUtils.random(1, choice) - 1;
+        return random;
     }
 
     public boolean algorithm()
@@ -110,6 +119,7 @@ public class MazeGenerator {
                 choice = this.checkCellsAround(line, cell);
             }
             int r = this.random(choice);
+            r = this.complexity(choice, r);
             this.addCoordToStack(line, cell);
             int oldLine = line;
             int oldCell = cell;

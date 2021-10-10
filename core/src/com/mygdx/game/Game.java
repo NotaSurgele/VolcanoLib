@@ -32,7 +32,7 @@ public class Game extends Scene {
 		this.player = new Player(this.sprite, 50, 50);
 		this.batch = new SpriteBatch();
 		this.dj = new Dungeon();
-		this.maze = new MazeGenerator(10, 11);
+		this.maze = new MazeGenerator(10, 10);
     }
 
     public OrthographicCamera setCamera(boolean ortho, float viewPortW, float viewPortH)

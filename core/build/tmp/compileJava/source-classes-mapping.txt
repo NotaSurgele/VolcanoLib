@@ -16,6 +16,8 @@ com/mygdx/game/Dungeon.java
  com.mygdx.game.Dungeon
 com/volcano/game/Animator.java
  com.volcano.game.Animator
+com/volcano/game/MazeGenerator.java
+ com.volcano.game.MazeGenerator
 com/volcano/game/Button.java
  com.volcano.game.Button
  com.volcano.game.Button$State
@@ -29,5 +31,3 @@ com/volcano/game/Scene.java
  com.volcano.game.Scene$SCENES
 com/mygdx/game/Menu.java
  com.mygdx.game.Menu
-com/volcano/game/MazeGenerator.java
- com.volcano.game.MazeGenerator
