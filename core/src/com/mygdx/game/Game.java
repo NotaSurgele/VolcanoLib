@@ -62,7 +62,7 @@ public class Game extends Scene {
         this.dj.update(batch);
         this.player.update(this.batch, cursor);
         this.camera.update();
-        maze.update();
+        this.maze.update();
         this.cameraHandler();
         this.batch.end();
         //this.player.sword.showHitbox();
