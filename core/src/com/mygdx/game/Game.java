@@ -5,10 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.volcano.game.Cursor;
-import com.volcano.game.MazeGenerator;
-import com.volcano.game.Room;
-import com.volcano.game.Scene;
+import com.volcano.game.*;
 
 public class Game extends Scene {
 
@@ -20,6 +17,7 @@ public class Game extends Scene {
     //SYSTEM PART
     SpriteBatch batch;
     OrthographicCamera camera;
+    Debug debug;
 
     //DUNGEON PART
     Dungeon dj;
@@ -32,7 +30,7 @@ public class Game extends Scene {
 		this.player = new Player(this.sprite, 50, 50);
 		this.batch = new SpriteBatch();
 		this.dj = new Dungeon();
-		this.maze = new MazeGenerator(10, 5);
+		this.debug = new Debug();
     }
 
     public OrthographicCamera setCamera(boolean ortho, float viewPortW, float viewPortH)
@@ -60,9 +58,9 @@ public class Game extends Scene {
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
         this.dj.update(batch);
+        this.debug.cameraZoom(this.camera);
         this.player.update(this.batch, cursor);
         this.camera.update();
-        this.maze.update();
         this.cameraHandler();
         this.batch.end();
         //this.player.sword.showHitbox();

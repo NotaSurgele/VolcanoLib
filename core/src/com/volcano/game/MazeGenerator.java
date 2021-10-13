@@ -145,7 +145,7 @@ public class MazeGenerator {
     public void update()
     {
 
-        this.displayMaze(this.maze, this.width, this.height);
+        //this.displayMaze(this.maze, this.width, this.height);
 
     }
 }

@@ -105,7 +105,7 @@ public class Weapons {
 
     //Main method
 
-    public void lookAtCursor(Cursor cursor)
+    public void lookAtCursor(Cursor cursor, SpriteBatch batch)
     {
         Vector2 lookAt = cursor.getCursorPosition();
         lookAt.x = lookAt.x - cursor.sprite.getWidth();
