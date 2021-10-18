@@ -6,17 +6,20 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.volcano.game.Animator;
 import com.volcano.game.Cursor;
 import com.volcano.game.Players;
+import com.volcano.game.TriggerUI;
 
 public class Player extends Players {
 
     Animator idle;
     Animator moving;
     Sword sword;
+    TriggerUI triggerUI;
 
     float stateTime;
     float deltaTime;
@@ -30,6 +33,7 @@ public class Player extends Players {
         this.idle = Animator.initializeAnimation(this.idle, "heroes/knight/knight_idle_spritesheet.png", 6, 1, 0.07f);
         this.moving = Animator.initializeAnimation(this.idle, "heroes/knight/knight_run_spritesheet.png", 6, 1, 0.07f);
         this.sword = new Sword(new Texture("heroes/knight/weapon_sword_1.png"), 70, 70, (this.getPositionX() + this.getWidth() / 2), (this.getPositionY() + this.getHeight() / 2) - 10f);
+        this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 50, 50, "F", "Press F to use !");
     }
 
     public Player(Sprite sprite, Vector2 position) {
@@ -93,13 +97,20 @@ public class Player extends Players {
         this.stateTime += Gdx.graphics.getDeltaTime();
         this.deltaTime = Gdx.graphics.getDeltaTime();
 
+
         this.animationController();
         this.Move(false, this.moveSpeed, runningSpeed, deltaTime);
         this.flipPlayerWithMouse(cursor);
         this.flipPlayerWithKeyboard();
         this.sprite.draw(batch);
-        this.sword.lookAtCursor(cursor, batch);
+        this.sword.lookAtCursor(cursor, 45f);
         this.sword.setWeaponPosition(new Vector2((this.getPositionX() + this.getWidth() / 2), (this.getPositionY() + this.getHeight() / 2) - 10f));
         this.sword.update(batch);
+    }
+
+    public void dispose()
+    {
+        this.triggerUI.dispose();
+        this.dispose();
     }
 }

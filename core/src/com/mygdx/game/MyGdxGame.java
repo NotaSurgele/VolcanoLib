@@ -25,9 +25,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	public void create () {
 		batch = new SpriteBatch();
-		cursor = new Cursor(new Texture("ui (new)/crosshair_1.png"), 25, 25, true);
+		cursor = new Cursor(new Texture("ui (new)/crosshair_1.png"), 16, 16, true);
 		game = new Game(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		menu = new Menu();
+		menu = new Menu(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		scene = new Scene();
 		debug = new Debug();
 	}

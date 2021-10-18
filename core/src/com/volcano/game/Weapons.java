@@ -105,12 +105,12 @@ public class Weapons {
 
     //Main method
 
-    public void lookAtCursor(Cursor cursor, SpriteBatch batch)
+    public void lookAtCursor(Cursor cursor, float adjust)
     {
         Vector2 lookAt = cursor.getCursorPosition();
         lookAt.x = lookAt.x - cursor.sprite.getWidth();
 
-        float angle = lookAt.sub(this.position).angleDeg() - 45f;
+        float angle = lookAt.sub(this.position).angleDeg() - adjust;
         this.sprite.setRotation(angle);
     }
 }

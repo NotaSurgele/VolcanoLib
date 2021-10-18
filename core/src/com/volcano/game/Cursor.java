@@ -40,7 +40,7 @@ public class Cursor {
         this.sprite = new Sprite();
         this.position = new Vector2();
         this.sprite.setRegion(t);
-        this.sprite.setBounds(0, 0, t.getWidth(), t.getHeight());
+        this.sprite.setBounds(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), t.getWidth(), t.getHeight());
         this.setCursorCoordinate();
         this.position.x = this.sprite.getX();
         this.position.y = this.sprite.getY();
@@ -59,12 +59,30 @@ public class Cursor {
         this.position.y = this.sprite.getY();
     }
 
+    public void setCursorSize(float newWidth, float newHeight)
+    {
+        this.sprite.setBounds(this.sprite.getX(), this.sprite.getY(), newWidth, newHeight);
+    }
+
     public void setCursor(Texture t, float width, float height, float mouseSensivity)
     {
         this.sprite = new Sprite();
         this.sprite.setRegion(t);
         this.sprite.setBounds(0, 0, width, height);
         this.setCursorCoordinate(mouseSensivity);
+    }
+
+    public Cursor lockCursorOnCameraViewport(OrthographicCamera camera)
+    {
+        if (this.getCursorX() > (camera.position.x + camera.viewportWidth))
+            this.setCustomPositionX(camera.position.x + camera.viewportWidth);
+        if (this.getCursorX() < camera.position.x)
+            this.setCustomPositionY(camera.position.y);
+        if (this.getCursorY() > (camera.position.y + camera.viewportHeight))
+            this.setCustomPositionY(camera.position.y + camera.viewportHeight);
+        if (this.getCursorY() < camera.position.y)
+            this.setCustomPositionY(camera.position.y);
+        return this;
     }
 
     public void setCustomPosition(Vector2 toSet)
@@ -75,11 +93,13 @@ public class Cursor {
     public void setCustomPositionX(float toSetX)
     {
         this.position.x = toSetX;
+        this.sprite.setPosition(this.position.x, this.position.y);
     }
 
     public void setCustomPositionY(float toSetY)
     {
         this.position.y = toSetY;
+        this.sprite.setPosition(this.position.x, this.position.y);
     }
 
     private void setCursorCoordinate(OrthographicCamera camera)

@@ -12,25 +12,37 @@ public class Room {
     int width;
     int height;
 
-    int minWidth = 16;
-    int minHeight = 16;
+    int minWidth = 26;
+    int minHeight = 26;
 
     int maxWidth = 56;
     int maxHeight = 56;
 
-    float startX = 300f;
-    float startY = 100f;
+    float startX = 0f;
+    float startY = 0f;
 
     public int isRoomAdded = 0;
 
     float x = startX;
     float y = startY;
 
+    int roomX = 0;
+    int roomY = 0;
+
     int[][] layer;
 
     public Room() {
         this.setRoomSize();
         this.layer = new int[this.height][this.width];
+        this.loadLayer();
+    }
+
+    public Room(int startX, int startY)
+    {
+        this.setRoomSize();
+        this.layer = new int[this.height][this.width];
+        this.startX = startX;
+        this.startY = startY;
         this.loadLayer();
     }
 
@@ -57,6 +69,15 @@ public class Room {
                 this.setTilesId(line, cell, w, h);
             }
         }
+        this.setExtract();
+    }
+
+    private void setExtract()
+    {
+        int x = MathUtils.random(2, this.width - 1) - 1;
+        int y = MathUtils.random(2, this.height - 1) - 1;
+
+        this.layer[y][x] = 2;
     }
 
     private boolean isNotOverlapping(int[][] map, int startX, int startY, int roomWidth, int roomHeight)
@@ -81,6 +102,26 @@ public class Room {
         return false;
     }
 
+    public int getRoomX()
+    {
+        return this.roomX;
+    }
+
+    public int getRoomY()
+    {
+        return this.roomY;
+    }
+
+    public int getWidth()
+    {
+        return this.width;
+    }
+
+    public int getHeight()
+    {
+        return this.height;
+    }
+
     public int[][] addRoomInMap(int[][] map, int width, int height)
     {
         int x = MathUtils.random(0, width - 1);
@@ -93,6 +134,8 @@ public class Room {
         if (this.isNotOverTheEdges(x, y, roomWidth, roomHeight, width, height)
             || this.isNotOverlapping(map, x, y, roomWidth, roomHeight))
             return map;
+        this.roomX = x;
+        this.roomY = y;
         for (int i = y; i != (y + roomHeight); i++) {
             for (int j = x; j != (x + roomWidth); j++) {
                 map[i][j] = this.layer[localY][localX];
