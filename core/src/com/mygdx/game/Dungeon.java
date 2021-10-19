@@ -1,9 +1,13 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.volcano.game.MazeGenerator;
 import com.volcano.game.Room;
+import com.volcano.game.TriggerUI;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,7 +25,7 @@ public class Dungeon {
     Texture wallDown;
     Texture extract;
 
-    final int tileSize = 50;
+    public static final int tileSize = 32;
     int width = 300;
     int height = 300;
 
@@ -69,6 +73,35 @@ public class Dungeon {
         return false;
     }
 
+    public void checkStairs(Player player, SpriteBatch batch, TriggerUI triggerUI)
+    {
+        float TriggerUIX = player.getPositionX() + player.getWidth() + 10f;
+        float TriggerUIY = player.getPositionY() + (player.getHeight() / 2);
+
+        if (this.stairsCheck(
+                (int)(player.getPositionY() + (player.getHeight() / 2) - 16f) / Dungeon.tileSize,
+                (int)(player.getPositionX() + (player.getWidth() / 2)) / Dungeon.tileSize,
+                    this.map
+        )) {
+            triggerUI.draw(batch, TriggerUIX, TriggerUIY);
+            this.stairsInput(player);
+        }
+    }
+
+    public void stairsInput(Player player)
+    {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
+            this.currentRoom += 1;
+            if (this.currentRoom >= this.rooms.size())
+                return;
+            Room r = this.rooms.get(this.currentRoom);
+            if (r != null) {
+                Vector2 v = r.getSpawnPoint();
+                player.setPosition(v);
+            }
+        }
+    }
+
     public void draw(SpriteBatch batch)
     {
         int h = this.height;
@@ -79,23 +112,24 @@ public class Dungeon {
         for (int line = 0; line != h; line++) {
             for (int each = 0; each != w; each++) {
                 switch (this.map[line][each]) {
-                    case -2: batch.draw(this.wallDown, x, y, this.tileSize, this.tileSize);     break;
-                    case -3: batch.draw(this.wallRight, x, y, this.tileSize, this.tileSize);    break;
-                    case -4: batch.draw(this.wallTop, x, y, this.tileSize, this.tileSize);      break;
-                    case -5: batch.draw(this.wallLeft, x, y, this.tileSize, this.tileSize);     break;
-                    case  1: batch.draw(this.floor, x, y, this.tileSize, this.tileSize);        break;
-                    case  2: batch.draw(this.extract, x, y, this.tileSize, this.tileSize);      break;
-                    default:                                      break;
+                    case -2: batch.draw(this.wallDown, x, y, tileSize, tileSize);     break;
+                    case -3: batch.draw(this.wallRight, x, y, tileSize, tileSize);    break;
+                    case -4: batch.draw(this.wallTop, x, y, tileSize, tileSize);      break;
+                    case -5: batch.draw(this.wallLeft, x, y, tileSize, tileSize);     break;
+                    case  1: batch.draw(this.floor, x, y, tileSize, tileSize);        break;
+                    case  2: batch.draw(this.extract, x, y, tileSize, tileSize);      break;
+                    default:                                                          break;
                 }
-                x += this.tileSize;
+                x += tileSize;
             }
-            y += this.tileSize;
+            y += tileSize;
             x = 0;
         }
     }
 
-    public void update(SpriteBatch batch)
+    public void update(SpriteBatch batch, Player player, TriggerUI triggerUI)
     {
         this.draw(batch);
+        this.checkStairs(player, batch, triggerUI);
     }
 }

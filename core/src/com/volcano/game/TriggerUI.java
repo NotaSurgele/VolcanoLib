@@ -17,10 +17,12 @@ public class TriggerUI {
     String inputButton;
     String action;
 
+    float scale;
+
     BitmapFont inputButtonBitMapFont;
     BitmapFont actionBitMapFont;
 
-    public TriggerUI(Texture t, float w, float h, String inputButton, String action) {
+    public TriggerUI(Texture t, float w, float h, String inputButton, String action, float fontSize) {
         this.texture = t;
         this.x = x;
         this.y = y;
@@ -30,12 +32,14 @@ public class TriggerUI {
         this.inputButtonBitMapFont = new BitmapFont();
         this.action = action;
         this.actionBitMapFont = new BitmapFont();
+        this.scale = fontSize;
     }
 
      public void draw(SpriteBatch batch, float x, float y)
      {
         batch.draw(this.texture, x, y, this.w, this.h);
-        this.inputButtonBitMapFont.draw(batch, this.inputButton, x + (w / 2.3f), y + (h / 1.7f));
+        this.inputButtonBitMapFont.getData().setScale(this.scale);
+        this.inputButtonBitMapFont.draw(batch, this.inputButton, x + (w / 2.3f), y + (h / 1.5f));
         this.actionBitMapFont.draw(batch, this.action, x + w + 10, y + h / 2);
      }
 

@@ -32,7 +32,7 @@ public class Game extends Scene {
 		this.player = new Player(this.sprite, 70, 70);
 		this.batch = new SpriteBatch();
 		this.dj = new Dungeon();
-        this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 50, 50, "F", "Press F to use !");
+        this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 24, 24, "F", "Press F to use !", 0.8f);
         this.debug = new Debug();
     }
 
@@ -56,31 +56,15 @@ public class Game extends Scene {
 
     }
 
-    public void checkStairs()
-    {
-        float TriggerUIX = this.player.getPositionX() + this.player.getWidth() + 10f;
-        float TriggerUIY = this.player.getPositionY() + (this.player.getHeight() / 2);
-        if (this.dj.stairsCheck(
-                 (int)(this.player.getPositionY() + (this.player.getHeight() / 2)) / 50,
-                (int)(this.player.getPositionX() + (this.player.getWidth() / 2)) / 50,
-                      this.dj.map
-            )
-        )
-            this.triggerUI.draw(batch, TriggerUIX, TriggerUIY);
-
-    }
-
     public void play(Cursor cursor)
     {
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
-        this.dj.update(batch);
+        this.dj.update(this.batch, this.player, this.triggerUI);
         this.debug.cameraZoom(this.camera);
         this.player.update(this.batch, cursor);
         this.cameraHandler();
-        this.checkStairs();
         this.batch.end();
-        //this.player.sword.showHitbox();
     }
 
     public void dispose()

@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Dungeon;
 
 import java.util.ArrayList;
 
@@ -20,6 +22,8 @@ public class Room {
 
     float startX = 0f;
     float startY = 0f;
+
+    Vector2 spawnPoint;
 
     public int isRoomAdded = 0;
 
@@ -64,6 +68,7 @@ public class Room {
         int w = this.width;
         int h = this.height;
 
+        this.spawnPoint = new Vector2();
         for (int line = 0; line != h; line++) {
             for (int cell = 0; cell != w; cell++) {
                 this.setTilesId(line, cell, w, h);
@@ -78,6 +83,19 @@ public class Room {
         int y = MathUtils.random(2, this.height - 1) - 1;
 
         this.layer[y][x] = 2;
+    }
+
+    public Vector2 getSpawnPoint()
+    {
+        return this.spawnPoint;
+    }
+
+    public void setRoomSpawnPoint()
+    {
+        float worldX = (this.roomX + this.width / 2f)  * Dungeon.tileSize;
+        float worldY = (this.roomY + this.height / 2f) * Dungeon.tileSize;
+
+        this.spawnPoint = new Vector2(worldX, worldY);
     }
 
     private boolean isNotOverlapping(int[][] map, int startX, int startY, int roomWidth, int roomHeight)
@@ -136,6 +154,7 @@ public class Room {
             return map;
         this.roomX = x;
         this.roomY = y;
+        this.setRoomSpawnPoint();
         for (int i = y; i != (y + roomHeight); i++) {
             for (int j = x; j != (x + roomWidth); j++) {
                 map[i][j] = this.layer[localY][localX];
