@@ -9,10 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.volcano.game.Animator;
-import com.volcano.game.Cursor;
-import com.volcano.game.Players;
-import com.volcano.game.TriggerUI;
+import com.volcano.game.*;
 
 public class Player extends Players {
 
@@ -20,6 +17,9 @@ public class Player extends Players {
     Animator moving;
     Sword sword;
     TriggerUI triggerUI;
+
+    float oldX;
+    float oldY;
 
     float stateTime;
     float deltaTime;
@@ -92,19 +92,35 @@ public class Player extends Players {
             this.idle.playAnimationToSprite(this.sprite, this.stateTime, true);
     }
 
-    public void update(SpriteBatch batch, Cursor cursor)
+    public void collisionCheckPoint(LayerData layerData)
+    {
+        layerData.setLayerCoordinate((int)this.getPositionX() / Dungeon.tileSize, (int)(this.sprite.getY() + (this.getHeight() / 2)) / Dungeon.tileSize);
+        this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX + 3f, this.oldY, this.position);
+        layerData.setLayerCoordinate((int)(this.getPositionX() + this.getWidth()) / Dungeon.tileSize, (int)(this.getPositionY() + (this.getHeight() / 2)) / Dungeon.tileSize);
+        this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX - 3f, this.oldY, this.position);
+        layerData.setLayerCoordinate((int)(this.getPositionX() + (this.getWidth() / 2)) / Dungeon.tileSize, (int)(this.getPositionY() + (this.getHeight())) / Dungeon.tileSize);
+        this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY - 3f, this.position);
+        layerData.setLayerCoordinate((int)(this.getPositionX() + (this.getWidth() / 2)) / Dungeon.tileSize, (int)(this.getPositionY()) / Dungeon.tileSize);
+        this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY + 3f, this.position);
+    }
+
+    public void update(SpriteBatch batch, Cursor cursor, LayerData layerData)
     {
         this.stateTime += Gdx.graphics.getDeltaTime();
         this.deltaTime = Gdx.graphics.getDeltaTime();
 
-
+        if (!this.collider.isColliding(layerData)) {
+            this.oldX = this.position.x;
+            this.oldY = this.position.y;
+        }
         this.animationController();
         this.Move(false, this.moveSpeed, runningSpeed, deltaTime);
+        this.collisionCheckPoint(layerData);
         this.flipPlayerWithMouse(cursor);
         this.flipPlayerWithKeyboard();
         this.sprite.draw(batch);
         this.sword.lookAtCursor(cursor, 45f);
-        this.sword.setWeaponPosition(new Vector2((this.getPositionX() + this.getWidth() / 2), (this.getPositionY() + this.getHeight() / 2) - 10f));
+        this.sword.setWeaponPosition(new Vector2((this.sprite.getX() + this.getWidth() / 2), (this.sprite.getY() + this.getHeight() / 2) - 10f));
         this.sword.update(batch);
     }
 

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.volcano.game.LayerData;
 import com.volcano.game.MazeGenerator;
 import com.volcano.game.Room;
 import com.volcano.game.TriggerUI;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 public class Dungeon {
 
     int[][] map;
+    public LayerData layerData;
 
     Texture floor;
     Texture wallLeft;
@@ -63,6 +65,7 @@ public class Dungeon {
                 this.rooms.add(r);
             }
         }
+        this.layerData = new LayerData(this.map);
     }
 
     public boolean stairsCheck(int line, int each, int[][]layer)
@@ -100,6 +103,11 @@ public class Dungeon {
                 player.setPosition(v);
             }
         }
+    }
+
+    public Vector2 getChoosenRoomSpawnPoint(int get)
+    {
+        return this.rooms.get(get).getSpawnPoint();
     }
 
     public void draw(SpriteBatch batch)

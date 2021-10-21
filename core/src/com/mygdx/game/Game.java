@@ -34,6 +34,7 @@ public class Game extends Scene {
 		this.dj = new Dungeon();
         this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 24, 24, "F", "Press F to use !", 0.8f);
         this.debug = new Debug();
+        this.player.spawnPoint(this.dj.getChoosenRoomSpawnPoint(0));
     }
 
     public OrthographicCamera setCamera(boolean ortho, float viewPortW, float viewPortH)
@@ -62,7 +63,7 @@ public class Game extends Scene {
         this.batch.begin();
         this.dj.update(this.batch, this.player, this.triggerUI);
         this.debug.cameraZoom(this.camera);
-        this.player.update(this.batch, cursor);
+        this.player.update(this.batch, cursor, this.dj.layerData);
         this.cameraHandler();
         this.batch.end();
     }

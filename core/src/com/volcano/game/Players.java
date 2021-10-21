@@ -11,11 +11,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.Dungeon;
 
 public class Players {
 
     public Sprite sprite;
     public Vector2 position;
+    public Collision collider;
 
     Vector3 cameraPosition;
 
@@ -24,11 +26,13 @@ public class Players {
     public Players(Sprite sprite, float x, float y) {
         this.sprite = sprite;
         this.position = new Vector2(x, y);
+        this.collider = new Collision();
     }
 
     public Players(Sprite sprite, Vector2 position) {
         this.sprite = sprite;
         this.position = new Vector2(position);
+        this.collider = new Collision();
     }
 
     //Main method
@@ -51,6 +55,7 @@ public class Players {
         }
         this.setPositionVector(direction);
     }
+
     public void Move(boolean qwert, float moveSpeed, float runningSpeed, float deltaTime)
     {
         Vector2 direction = new Vector2(this.position);
@@ -80,7 +85,7 @@ public class Players {
 
     public void smoothCameraPlayerFollow(OrthographicCamera camera, float smoothness)
     {
-        Vector3 playerPosition = new Vector3(this.position, 0);
+        Vector3 playerPosition = new Vector3(this.sprite.getX(), this.sprite.getY(), 0);
         this.cameraPosition = new Vector3(camera.position);
 
         this.cameraPosition.slerp(playerPosition, smoothness * Gdx.graphics.getDeltaTime());
@@ -113,6 +118,14 @@ public class Players {
         return this.sprite.getHeight();
     }
 
+    public Vector2 getPlayerPositionInLayer()
+    {
+        int x = (int)(this.position.x + this.getWidth() / 2) / Dungeon.tileSize;
+        int y = (int)(this.position.y + this.getHeight() / 2) / Dungeon.tileSize;
+
+        return new Vector2(x, y);
+    }
+
     // Set Method
     public void setPositionVector(Vector2 newPosition)
     {
@@ -142,6 +155,11 @@ public class Players {
     {
         this.position.y = newY;
         this.sprite.setPosition(this.position.x, this.position.y);
+    }
+
+    public void spawnPoint(Vector2 point)
+    {
+        this.setPositionVector(point);
     }
 
     // Boolean method
