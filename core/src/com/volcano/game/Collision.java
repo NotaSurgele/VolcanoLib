@@ -24,7 +24,6 @@ public class Collision {
         if (isColliding) {
             entity.setPosition(oldX, oldY);
             System.out.println(layerData.layer[layerData.posY][layerData.posX]);
-
         }
     }
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.volcano.game.Button;
 import com.volcano.game.Cursor;
 import com.volcano.game.Scene;
+import com.volcano.game.Weapons;
 
 public class Menu extends Scene {
 

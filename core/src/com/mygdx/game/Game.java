@@ -17,13 +17,16 @@ public class Game extends Scene {
 
     //SYSTEM PART
     SpriteBatch batch;
-    OrthographicCamera camera;
+    public static OrthographicCamera camera;
     Debug debug;
 
     TriggerUI triggerUI;
 
     //DUNGEON PART
     Dungeon dj;
+
+    //UTILS
+    public static float slowTime = 0.2f;
 
     public Game(float viewportWidth, float viewportHeight) {
         this.camera = this.setCamera(false, viewportWidth, viewportHeight);
@@ -59,11 +62,15 @@ public class Game extends Scene {
 
     public void play(Cursor cursor)
     {
+        float deltaTime = Gdx.graphics.getDeltaTime();
+
+        if (Inventory.inventoryIsOpen)
+            deltaTime *= Game.slowTime;
         this.batch.setProjectionMatrix(this.camera.combined);
         this.batch.begin();
-        this.dj.update(this.batch, this.player, this.triggerUI);
         this.debug.cameraZoom(this.camera);
-        this.player.update(this.batch, cursor, this.dj.layerData);
+        this.dj.update(this.batch, this.player, this.triggerUI);
+        this.player.update(this.batch, deltaTime, cursor, this.dj.layerData);
         this.cameraHandler();
         this.batch.end();
     }

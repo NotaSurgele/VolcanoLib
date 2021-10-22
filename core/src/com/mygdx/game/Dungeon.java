@@ -33,7 +33,7 @@ public class Dungeon {
 
     ArrayList<Room> rooms;
     int currentRoom = 0;
-    int howMuchRoom = 15;
+    int howMuchRoom = 12;
 
     final String floorPath = "tiles/floor/";
     final String wallPath = "tiles/wall/";
@@ -65,6 +65,7 @@ public class Dungeon {
                 this.rooms.add(r);
             }
         }
+
         this.layerData = new LayerData(this.map);
     }
 
@@ -95,8 +96,7 @@ public class Dungeon {
     {
         if (Gdx.input.isKeyJustPressed(Input.Keys.A)) {
             this.currentRoom += 1;
-            if (this.currentRoom >= this.rooms.size())
-                return;
+            if (this.currentRoom >= this.rooms.size()) return;
             Room r = this.rooms.get(this.currentRoom);
             if (r != null) {
                 Vector2 v = r.getSpawnPoint();

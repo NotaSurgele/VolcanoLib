@@ -9,7 +9,6 @@ public class GameConfig {
 
     final static String configPath = "../../.config/";
 
-
     public GameConfig() {}
 
     public static String readDefaultConfigData() throws IOException {

@@ -61,6 +61,7 @@ public class Room {
         if (line == 0 && cell == w - 1)     this.layer[line][cell] = -6;
         if (line == h - 1 && cell == w - 1) this.layer[line][cell] = -7;
         if (line == h - 1 && cell == 0)     this.layer[line][cell] = -8;
+        if (line == 0 && cell == 0)         this.layer[line][cell] = -9;
     }
 
     private void loadLayer()
@@ -88,6 +89,17 @@ public class Room {
     public Vector2 getSpawnPoint()
     {
         return this.spawnPoint;
+    }
+
+    public void printRooms()
+    {
+        for (int i = 0; i != this.layer.length; i++) {
+            for (int j = 0; j != this.layer[i].length; j++) {
+                System.out.print(this.layer[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("_____________________________________________________________________");
     }
 
     public void setRoomSpawnPoint()

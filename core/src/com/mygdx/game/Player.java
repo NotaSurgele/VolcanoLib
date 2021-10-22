@@ -15,14 +15,15 @@ public class Player extends Players {
 
     Animator idle;
     Animator moving;
-    Sword sword;
     TriggerUI triggerUI;
+    Inventory inv;
+
+    Weapons currentWeapon;
 
     float oldX;
     float oldY;
 
     float stateTime;
-    float deltaTime;
 
     //Movement System
     float moveSpeed = 150f;
@@ -32,14 +33,16 @@ public class Player extends Players {
         super(sprite, x, y);
         this.idle = Animator.initializeAnimation(this.idle, "heroes/knight/knight_idle_spritesheet.png", 6, 1, 0.07f);
         this.moving = Animator.initializeAnimation(this.idle, "heroes/knight/knight_run_spritesheet.png", 6, 1, 0.07f);
-        this.sword = new Sword(new Texture("heroes/knight/weapon_sword_1.png"), 70, 70, (this.getPositionX() + this.getWidth() / 2), (this.getPositionY() + this.getHeight() / 2) - 10f);
         this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 50, 50, "F", "Press F to use !", 0.2f);
+        this.inv = new Inventory(new Texture("ui (new)/Inventory_notSelected.png"), 0, 0, 400, 400);
     }
 
     public Player(Sprite sprite, Vector2 position) {
         super(sprite, position);
         this.idle = Animator.initializeAnimation(this.idle, "heroes/knight/knight_idle_spritesheet.png", 6, 1, 0.07f);
         this.moving = Animator.initializeAnimation(this.idle, "heroes/knight/knight_run_spritesheet.png", 6, 1, 0.07f);
+        this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 50, 50, "F", "Press F to use !", 0.2f);
+        this.inv = new Inventory(new Texture("ui (new)/Inventory_notSelected.png"), 0, 0, 100, 100);
     }
 
     //Main method
@@ -104,10 +107,20 @@ public class Player extends Players {
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY + 3f, this.position);
     }
 
-    public void update(SpriteBatch batch, Cursor cursor, LayerData layerData)
+    public void checkWeapons(SpriteBatch batch, Cursor cursor)
+    {
+        this.currentWeapon = Inventory.inventory.get(Inventory.currentWeapon);
+
+        if (this.currentWeapon instanceof Sword) {
+            this.currentWeapon.lookAtCursor(cursor, 45f);
+            this.currentWeapon.setWeaponPosition(new Vector2((this.sprite.getX() + this.getWidth() / 2), (this.sprite.getY() + this.getHeight() / 2) - 10f));
+            ((Sword) this.currentWeapon).update(batch);
+        }
+    }
+
+    public void update(SpriteBatch batch, float deltaTime, Cursor cursor, LayerData layerData)
     {
         this.stateTime += Gdx.graphics.getDeltaTime();
-        this.deltaTime = Gdx.graphics.getDeltaTime();
 
         if (!this.collider.isColliding(layerData)) {
             this.oldX = this.position.x;
@@ -119,14 +132,12 @@ public class Player extends Players {
         this.flipPlayerWithMouse(cursor);
         this.flipPlayerWithKeyboard();
         this.sprite.draw(batch);
-        this.sword.lookAtCursor(cursor, 45f);
-        this.sword.setWeaponPosition(new Vector2((this.sprite.getX() + this.getWidth() / 2), (this.sprite.getY() + this.getHeight() / 2) - 10f));
-        this.sword.update(batch);
+        this.checkWeapons(batch, cursor);
+        this.inv.update(batch, this.getPositionVector(), cursor);
     }
 
     public void dispose()
     {
         this.triggerUI.dispose();
-        this.dispose();
     }
 }

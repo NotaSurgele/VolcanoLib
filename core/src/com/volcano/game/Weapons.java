@@ -13,9 +13,13 @@ public class Weapons {
 
     boolean rotateAround = false;
 
+    public int weaponsID;
+
     public Weapons(Texture t, float w, float h, float x, float y) {
         this.setWeaponsData(t, w, h, x, y);
     }
+
+    public Weapons() {}
 
     //Main method
     public void setWeaponsData(Texture t, float w, float h, float x, float y)
