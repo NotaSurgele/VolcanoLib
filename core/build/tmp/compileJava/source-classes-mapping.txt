@@ -6,8 +6,8 @@ com/volcano/game/TriggerUI.java
  com.volcano.game.TriggerUI
 com/volcano/game/Debug.java
  com.volcano.game.Debug
-com/volcano/game/Room.java
- com.volcano.game.Room
+com/mygdx/game/Menu.java
+ com.mygdx.game.Menu
 com/volcano/game/LayerData.java
  com.volcano.game.LayerData
 com/mygdx/game/Sword.java
@@ -33,7 +33,7 @@ com/volcano/game/Scene.java
  com.volcano.game.Scene
  com.volcano.game.Scene$1
  com.volcano.game.Scene$SCENES
+com/volcano/game/Room.java
+ com.volcano.game.Room
 com/mygdx/game/Dungeon.java
  com.mygdx.game.Dungeon
-com/mygdx/game/Menu.java
- com.mygdx.game.Menu

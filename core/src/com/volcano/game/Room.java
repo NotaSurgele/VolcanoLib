@@ -79,8 +79,8 @@ public class Room {
 
     private void setExtract()
     {
-        int x = MathUtils.random(2, this.width - 1) - 1;
-        int y = MathUtils.random(2, this.height - 1) - 1;
+        int x = MathUtils.random(3, this.width - 2) - 1;
+        int y = MathUtils.random(3, this.height - 2) - 1;
 
         this.layer[y][x] = 2;
     }
