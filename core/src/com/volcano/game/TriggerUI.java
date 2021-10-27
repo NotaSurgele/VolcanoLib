@@ -46,6 +46,8 @@ public class TriggerUI {
      public void dispose()
      {
          this.inputButtonBitMapFont.dispose();
+         this.actionBitMapFont.dispose();
+         this.texture.dispose();
      }
 }
 

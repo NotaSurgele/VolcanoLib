@@ -29,7 +29,7 @@ public class Game extends Scene {
     public static float slowTime = 0.2f;
 
     public Game(float viewportWidth, float viewportHeight) {
-        this.camera = this.setCamera(false, viewportWidth, viewportHeight);
+        camera = this.setCamera(false, viewportWidth, viewportHeight);
         this.sprite = new Sprite();
 		this.sprite.setBounds(500, 200, 70, 70);
 		this.player = new Player(this.sprite, 70, 70);
@@ -50,8 +50,8 @@ public class Game extends Scene {
 
     public void cameraHandler()
     {
-        this.player.smoothCameraPlayerFollow(this.camera, 5f);
-        this.camera.update();
+        this.player.smoothCameraPlayerFollow(camera, 5f);
+        camera.update();
     }
 
     //load everything
@@ -66,9 +66,9 @@ public class Game extends Scene {
 
         if (Inventory.inventoryIsOpen)
             deltaTime *= Game.slowTime;
-        this.batch.setProjectionMatrix(this.camera.combined);
+        this.batch.setProjectionMatrix(camera.combined);
         this.batch.begin();
-        this.debug.cameraZoom(this.camera);
+        this.debug.cameraZoom(camera);
         this.dj.update(this.batch, this.player, this.triggerUI);
         this.player.update(this.batch, deltaTime, cursor, this.dj.layerData);
         this.cameraHandler();
@@ -78,6 +78,8 @@ public class Game extends Scene {
     public void dispose()
     {
         this.player.dispose();
+        this.dj.dispose();
+        this.debug.dispose();
         this.batch.dispose();
     }
 }

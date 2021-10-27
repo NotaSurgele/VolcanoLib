@@ -28,6 +28,7 @@ public class Inventory {
     Texture basic;
 
     Sword sword;
+    BasicGun basicGun;
 
     public static int inventorySize = 4;
     public static ArrayList<Weapons> inventory;
@@ -48,8 +49,9 @@ public class Inventory {
         this.botRight = new Texture(this.uiPath + "Inventory_select_bottom_right.png");
         this.screenPosition = new Vector3();
         this.sword = new Sword(new Texture("heroes/knight/weapon_sword_1.png"), 70, 70, 0, 0);
+        this.basicGun = new BasicGun(new Texture("Weapons/BasicGun.png"), 50, 50, 0, 0);
         Inventory.inventory = new ArrayList<>();
-        Inventory.inventory.add(this.sword);
+        Inventory.inventory.add(this.basicGun);
         this.basic = t;
     }
 

@@ -138,12 +138,12 @@ public class Cursor {
 
     public float getCursorX()
     {
-        return this.position.x;
+        return this.sprite.getX();
     }
 
     public float getCursorY()
     {
-        return this.position.y;
+        return this.sprite.getY();
     }
 
     public Vector2 getCursorPosition()

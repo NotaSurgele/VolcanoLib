@@ -110,11 +110,15 @@ public class Player extends Players {
     public void checkWeapons(SpriteBatch batch, Cursor cursor)
     {
         this.currentWeapon = Inventory.inventory.get(Inventory.currentWeapon);
+        this.currentWeapon.setWeaponX((this.sprite.getX() + this.getWidth() / 2));
+        this.currentWeapon.setWeaponY((this.sprite.getY() + this.getHeight() / 2) - 10f);
 
         if (this.currentWeapon instanceof Sword) {
             this.currentWeapon.lookAtCursor(cursor, 45f);
-            this.currentWeapon.setWeaponPosition(new Vector2((this.sprite.getX() + this.getWidth() / 2), (this.sprite.getY() + this.getHeight() / 2) - 10f));
             ((Sword) this.currentWeapon).update(batch);
+        } else if (this.currentWeapon instanceof BasicGun) {
+            this.currentWeapon.lookAtCursor(cursor, 20f);
+            ((BasicGun) this.currentWeapon).update(batch, cursor);
         }
     }
 
@@ -139,5 +143,7 @@ public class Player extends Players {
     public void dispose()
     {
         this.triggerUI.dispose();
+        this.idle.dispose();
+        this.moving.dispose();
     }
 }

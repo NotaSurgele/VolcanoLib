@@ -36,7 +36,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	public void render () {
 		ScreenUtils.clear(0, 0, 0, 0);
 		batch.begin();
-		cursor.update(batch, game.camera);
+		cursor.update(batch, Game.camera);
 		scene.update(menu, game, cursor);
 		batch.end();
 		batch.begin();
@@ -47,6 +47,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		scene.dispose(menu, game);
+		debug.dispose();
 		cursor.dispose();
 	}
 }

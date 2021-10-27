@@ -77,13 +77,14 @@ public class Weapons {
 
     public void setWeaponX(float newX)
     {
+        this.position.set(newX, this.position.y);
         this.position.x = newX;
         this.sprite.setPosition(this.position.x, this.position.y);
     }
 
     public void setWeaponY(float newY)
     {
-        this.position.y = newY;
+        this.position.set(this.position.x, newY);
         this.sprite.setPosition(this.position.x, this.position.y);
     }
 
@@ -115,6 +116,15 @@ public class Weapons {
         lookAt.x = lookAt.x - cursor.sprite.getWidth();
 
         float angle = lookAt.sub(this.position).angleDeg() - adjust;
+        this.sprite.setRotation(angle);
+    }
+
+    public void lookAtCursor(Cursor cursor)
+    {
+        Vector2 lookAt = cursor.getCursorPosition();
+        lookAt.x = lookAt.x - cursor.sprite.getWidth();
+
+        float angle = lookAt.sub(this.position).angleDeg();
         this.sprite.setRotation(angle);
     }
 }
