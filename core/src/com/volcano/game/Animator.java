@@ -137,4 +137,9 @@ public class Animator {
 
         return animation;
     }
+
+    public void dispose()
+    {
+        this.texture.dispose();
+    }
 }

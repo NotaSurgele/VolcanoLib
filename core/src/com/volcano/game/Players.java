@@ -183,4 +183,14 @@ public class Players {
         }
         return false;
     }
+
+    public boolean isFlipX()
+    {
+        return this.sprite.isFlipX();
+    }
+
+    public boolean isFlipY()
+    {
+        return this.sprite.isFlipY();
+    }
 }

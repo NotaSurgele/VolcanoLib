@@ -11,9 +11,9 @@ public class Weapons {
     public Sprite sprite;
     public Vector2 position;
 
-    boolean rotateAround = false;
+    Texture inventoryShow;
 
-    public int weaponsID;
+    boolean rotateAround = false;
 
     public Weapons(Texture t, float w, float h, float x, float y) {
         this.setWeaponsData(t, w, h, x, y);
@@ -29,6 +29,7 @@ public class Weapons {
         this.sprite.setBounds(x, y, w, h);
         this.sprite.setRegion(t);
         this.sprite.setPosition(this.position.x, this.position.y);
+        this.inventoryShow = t;
     }
 
     //Get method
@@ -67,6 +68,11 @@ public class Weapons {
         return this.sprite;
     }
 
+    public Texture getInventoryShow()
+    {
+        return this.inventoryShow;
+    }
+
     //Set method
 
     public void setWeaponPosition(Vector2 newPosition)
@@ -77,13 +83,14 @@ public class Weapons {
 
     public void setWeaponX(float newX)
     {
+        this.position.set(newX, this.position.y);
         this.position.x = newX;
         this.sprite.setPosition(this.position.x, this.position.y);
     }
 
     public void setWeaponY(float newY)
     {
-        this.position.y = newY;
+        this.position.set(this.position.x, newY);
         this.sprite.setPosition(this.position.x, this.position.y);
     }
 
@@ -112,9 +119,36 @@ public class Weapons {
     public void lookAtCursor(Cursor cursor, float adjust)
     {
         Vector2 lookAt = cursor.getCursorPosition();
-        lookAt.x = lookAt.x - cursor.sprite.getWidth();
+        lookAt.x = lookAt.x - (cursor.sprite.getWidth() / 2);
 
         float angle = lookAt.sub(this.position).angleDeg() - adjust;
         this.sprite.setRotation(angle);
+    }
+
+    public void lookAtCursor(Cursor cursor)
+    {
+        Vector2 lookAt = cursor.getCursorPosition();
+        lookAt.x = lookAt.x - (cursor.sprite.getWidth() / 2);
+
+        float angle = lookAt.sub(this.position).angleDeg();
+        this.sprite.setRotation(angle);
+    }
+
+    public void flipWeapon(Cursor cursor)
+    {
+        float mouseX = cursor.getWorldCursorX();
+        float positionX = this.sprite.getX();
+        boolean isFlippedY = this.sprite.isFlipY();
+
+        if (mouseX < positionX)
+        {
+            this.setWeaponY(this.getWeaponY() + (this.sprite.getHeight() / 2));
+            if (!isFlippedY)
+                this.sprite.flip(false, true);
+        } else {
+            if (isFlippedY) {
+                this.sprite.flip(false, true);
+            }
+        }
     }
 }

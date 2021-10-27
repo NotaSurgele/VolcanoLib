@@ -28,8 +28,8 @@ public class Dungeon {
     Texture extract;
 
     public static final int tileSize = 32;
-    int width = 300;
-    int height = 300;
+    int width = 250;
+    int height = 250;
 
     ArrayList<Room> rooms;
     int currentRoom = 0;
@@ -119,14 +119,13 @@ public class Dungeon {
 
         for (int line = 0; line != h; line++) {
             for (int each = 0; each != w; each++) {
-                switch (this.map[line][each]) {
-                    case -2: batch.draw(this.wallDown, x, y, tileSize, tileSize);     break;
-                    case -3: batch.draw(this.wallRight, x, y, tileSize, tileSize);    break;
-                    case -4: batch.draw(this.wallTop, x, y, tileSize, tileSize);      break;
-                    case -5: batch.draw(this.wallLeft, x, y, tileSize, tileSize);     break;
-                    case  1: batch.draw(this.floor, x, y, tileSize, tileSize);        break;
-                    case  2: batch.draw(this.extract, x, y, tileSize, tileSize);      break;
-                    default:                                                          break;
+                if (this.map[line][each] != -1) {
+                    if (this.map[line][each] == -2) batch.draw(this.wallDown, x, y, tileSize, tileSize);
+                    else if (this.map[line][each] == -3) batch.draw(this.wallRight, x, y, tileSize, tileSize);
+                    else if (this.map[line][each] == -4) batch.draw(this.wallTop, x, y, tileSize, tileSize);
+                    else if (this.map[line][each] == -5) batch.draw(this.wallLeft, x, y, tileSize, tileSize);
+                    else if (this.map[line][each] == 1) batch.draw(this.floor, x, y, tileSize, tileSize);
+                    else if (this.map[line][each] == 2) batch.draw(this.extract, x, y, tileSize, tileSize);
                 }
                 x += tileSize;
             }
@@ -139,5 +138,14 @@ public class Dungeon {
     {
         this.draw(batch);
         this.checkStairs(player, batch, triggerUI);
+    }
+
+    public void dispose()
+    {
+        this.wallDown.dispose();
+        this.wallRight.dispose();
+        this.wallLeft.dispose();
+        this.floor.dispose();
+        this.extract.dispose();
     }
 }

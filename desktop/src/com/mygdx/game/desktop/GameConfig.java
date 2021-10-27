@@ -27,7 +27,7 @@ public class GameConfig {
     }
 
     public static String readConfigFile() throws IOException {
-        String data = new String();
+        String data = "";
         FileReader r = null;
 
         try {

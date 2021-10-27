@@ -14,7 +14,6 @@ public class Menu extends Scene {
     Button quit;
     SpriteBatch batch;
 
-
     String uiFolder = "ui (new)/";
 
     public Menu (float viewportWidth, float viewportHeight) {

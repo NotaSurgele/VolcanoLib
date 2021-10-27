@@ -93,6 +93,6 @@ public class Sword extends Weapons {
 
     public void dispose()
     {
-
+        this.sprite.getTexture().dispose();
     }
 }

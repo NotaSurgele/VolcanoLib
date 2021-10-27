@@ -136,6 +136,16 @@ public class Cursor {
 
     // Get Method
 
+    public float getWorldCursorX()
+    {
+        return this.sprite.getX();
+    }
+
+    public float getWorldCursorY()
+    {
+        return this.sprite.getY();
+    }
+
     public float getCursorX()
     {
         return this.position.x;

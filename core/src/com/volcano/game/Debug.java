@@ -29,4 +29,9 @@ public class Debug {
     {
         this.FPS.draw(batch, String.valueOf(Gdx.graphics.getFramesPerSecond()), 50, 50);
     }
+
+    public void dispose()
+    {
+        this.FPS.dispose();
+    }
 }
