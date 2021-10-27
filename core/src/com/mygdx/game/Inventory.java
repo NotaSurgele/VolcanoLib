@@ -30,7 +30,7 @@ public class Inventory {
     Sword sword;
     BasicGun basicGun;
 
-    public static int inventorySize = 4;
+    public static int inventoryMaxSize = 4;
     public static ArrayList<Weapons> inventory;
     public static int currentWeapon = 0;
     public static boolean inventoryIsOpen = false;
@@ -50,25 +50,25 @@ public class Inventory {
         this.screenPosition = new Vector3();
         this.sword = new Sword(new Texture("heroes/knight/weapon_sword_1.png"), 70, 70, 0, 0);
         this.basicGun = new BasicGun(new Texture("Weapons/BasicGun.png"), 50, 50, 0, 0);
-        Inventory.inventory = new ArrayList<>();
-        Inventory.inventory.add(this.basicGun);
+        this.addGame();
         this.basic = t;
     }
 
-    public void render(SpriteBatch batch, Cursor cursor)
+    public void addGame()
     {
-        if (Inventory.inventoryIsOpen) {
-            this.sprite.draw(batch);
-        }
+        Inventory.inventory = new ArrayList<>();
+        Inventory.inventory.add(this.sword);
+        Inventory.inventory.add(this.basicGun);
+        Inventory.inventory.add(this.sword);
+        Inventory.inventory.add(this.basicGun);
     }
 
     public void checkCursorPosition(Cursor cursor)
     {
-        float cursorX = cursor.getCursorX();
-        float cursorY = cursor.getCursorY();
-        Vector3 screenCoordinate = Game.camera.project(new Vector3(this.sprite.getX() - 500f, this.sprite.getY() - 200f, 0));
-        float middleX = screenCoordinate.x;
-        float middleY = screenCoordinate.y;
+        float cursorX = cursor.getWorldCursorX();
+        float cursorY = cursor.getWorldCursorY();
+        float middleX = this.sprite.getX() + (this.sprite.getWidth() / 2);
+        float middleY = this.sprite.getY() + (this.sprite.getHeight() / 2);
 
         if (cursorX < middleX && cursorY > middleY) {
             this.sprite.setRegion(this.topLeft);
@@ -81,13 +81,77 @@ public class Inventory {
         }
     }
 
+    public Weapons getCurrentWeapons()
+    {
+        return Inventory.inventory.get(Inventory.currentWeapon);
+    }
+
+    private void setCurrentWeapon()
+    {
+        Texture t = this.sprite.getTexture();
+        int oldValue = Inventory.currentWeapon;
+
+        if (t == this.topRight)      Inventory.currentWeapon = 0;
+        else if (t == this.botRight) Inventory.currentWeapon = 1;
+        else if (t == this.botLeft)  Inventory.currentWeapon = 2;
+        else if (t == this.topLeft)  Inventory.currentWeapon = 3;
+
+        try {
+            Inventory.inventory.get(Inventory.currentWeapon);
+        } catch ( IndexOutOfBoundsException e ) {
+            Inventory.currentWeapon = oldValue;
+        }
+    }
+
+    public void renderInventoryItems(SpriteBatch batch)
+    {
+        for (int i = Inventory.inventory.size(); i != 0; i--) {
+            float middleX = this.sprite.getX() + (this.sprite.getWidth() / 2);
+            float middleY = this.sprite.getY() + (this.sprite.getHeight() / 2);
+
+            if (i == 4) {
+                float x = middleX - (this.sprite.getWidth() / 2) / 2;
+                float y = middleY + (this.sprite.getHeight() / 2) / 2 - 60f;
+                Weapons w = Inventory.inventory.get(i - 1);
+
+                batch.draw(w.getInventoryShow(), x, y, w.getWeaponWidth(), w.getWeaponHeight());
+            } else if (i == 3) {
+                float x = middleX - (this.sprite.getWidth() / 2) / 2 ;
+                float y = middleY - (this.sprite.getHeight() / 2) / 2;
+
+                Weapons w = Inventory.inventory.get(i - 1);
+                batch.draw(w.getInventoryShow(), x, y, w.getWeaponWidth(), w.getWeaponHeight());
+            } else if (i == 2) {
+                float x = middleX + (this.sprite.getWidth() / 2) / 2 - 60f;
+                float y = middleY - (this.sprite.getHeight() / 2) / 2;
+
+                Weapons w = Inventory.inventory.get(i - 1);
+                batch.draw(w.getInventoryShow(), x, y, w.getWeaponWidth(), w.getWeaponHeight());
+            } else if (i == 1) {
+                float x = middleX + (this.sprite.getWidth() / 2) / 2 - 60f;
+                float y = middleY + (this.sprite.getHeight() / 2) / 2 - 60f;
+
+                Weapons w = Inventory.inventory.get(0);
+                batch.draw(w.getInventoryShow(), x, y, w.getWeaponWidth(), w.getWeaponHeight());
+            }
+        }
+    }
+
+    public void render(SpriteBatch batch)
+    {
+        this.sprite.draw(batch);
+        this.renderInventoryItems(batch);
+    }
+
     public void update(SpriteBatch batch, Vector2 position, Cursor cursor)
     {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB))
-            Inventory.inventoryIsOpen = !Inventory.inventoryIsOpen;
-        this.sprite.setPosition(position.x, position.y - 100f);
-        this.checkCursorPosition(cursor);
-        this.render(batch, cursor);
+        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB)) Inventory.inventoryIsOpen = !Inventory.inventoryIsOpen;
+        if (Inventory.inventoryIsOpen) {
+            this.setCurrentWeapon();
+            this.sprite.setPosition(position.x, position.y - 100f);
+            this.checkCursorPosition(cursor);
+            this.render(batch);
+        }
     }
 
     public void dispose()

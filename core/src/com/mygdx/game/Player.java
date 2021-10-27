@@ -16,7 +16,7 @@ public class Player extends Players {
     Animator idle;
     Animator moving;
     TriggerUI triggerUI;
-    Inventory inv;
+    Inventory inventory;
 
     Weapons currentWeapon;
 
@@ -34,7 +34,7 @@ public class Player extends Players {
         this.idle = Animator.initializeAnimation(this.idle, "heroes/knight/knight_idle_spritesheet.png", 6, 1, 0.07f);
         this.moving = Animator.initializeAnimation(this.idle, "heroes/knight/knight_run_spritesheet.png", 6, 1, 0.07f);
         this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 50, 50, "F", "Press F to use !", 0.2f);
-        this.inv = new Inventory(new Texture("ui (new)/Inventory_notSelected.png"), 0, 0, 400, 400);
+        this.inventory = new Inventory(new Texture("ui (new)/Inventory_notSelected.png"), 0, 0, 400, 400);
     }
 
     public Player(Sprite sprite, Vector2 position) {
@@ -42,7 +42,7 @@ public class Player extends Players {
         this.idle = Animator.initializeAnimation(this.idle, "heroes/knight/knight_idle_spritesheet.png", 6, 1, 0.07f);
         this.moving = Animator.initializeAnimation(this.idle, "heroes/knight/knight_run_spritesheet.png", 6, 1, 0.07f);
         this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 50, 50, "F", "Press F to use !", 0.2f);
-        this.inv = new Inventory(new Texture("ui (new)/Inventory_notSelected.png"), 0, 0, 100, 100);
+        this.inventory = new Inventory(new Texture("ui (new)/Inventory_notSelected.png"), 0, 0, 100, 100);
     }
 
     //Main method
@@ -109,9 +109,10 @@ public class Player extends Players {
 
     public void checkWeapons(SpriteBatch batch, Cursor cursor)
     {
-        this.currentWeapon = Inventory.inventory.get(Inventory.currentWeapon);
+        this.currentWeapon = this.inventory.getCurrentWeapons();
+        if (this.currentWeapon == null) return;
         this.currentWeapon.setWeaponX((this.sprite.getX() + this.getWidth() / 2));
-        this.currentWeapon.setWeaponY((this.sprite.getY() + this.getHeight() / 2) - 10f);
+        this.currentWeapon.setWeaponY((this.sprite.getY() + (this.getHeight() / 2)) - 10f);
 
         if (this.currentWeapon instanceof Sword) {
             this.currentWeapon.lookAtCursor(cursor, 45f);
@@ -137,7 +138,7 @@ public class Player extends Players {
         this.flipPlayerWithKeyboard();
         this.sprite.draw(batch);
         this.checkWeapons(batch, cursor);
-        this.inv.update(batch, this.getPositionVector(), cursor);
+        this.inventory.update(batch, this.getPositionVector(), cursor);
     }
 
     public void dispose()

@@ -17,24 +17,6 @@ public class BasicGun extends Weapons {
         this.originY = this.sprite.getOriginY() + 0.5f;
     }
 
-    public void flipWeaponDraw(Cursor cursor)
-    {
-        float mouseX = cursor.getCursorX();
-        float positionX = this.sprite.getX();
-        boolean isFlippedY = this.sprite.isFlipY();
-
-        if (mouseX < positionX)
-        {
-            this.setWeaponY(this.getWeaponY() + (this.sprite.getHeight() / 2));
-            if (!isFlippedY)
-                this.sprite.flip(false, true);
-        } else {
-            if (isFlippedY) {
-                this.sprite.flip(false, true);
-            }
-        }
-    }
-
     public void update(SpriteBatch batch, Cursor cursor)
     {
         this.render(batch, cursor);
@@ -42,7 +24,7 @@ public class BasicGun extends Weapons {
 
     public void render(SpriteBatch batch, Cursor cursor)
     {
-        this.flipWeaponDraw(cursor);
+        this.flipWeapon(cursor);
         this.sprite.draw(batch);
     }
 
