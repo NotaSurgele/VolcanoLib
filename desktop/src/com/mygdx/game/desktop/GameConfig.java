@@ -3,11 +3,13 @@ package com.mygdx.game.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class GameConfig {
 
-    final static String configPath = "../../.config/";
+    final static String configPath = ".config/";
 
     public GameConfig() {}
 
