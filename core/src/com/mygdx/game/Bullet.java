@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.volcano.game.Cursor;
+import com.volcano.game.LayerData;
 import com.volcano.game.Weapons;
 import org.graalvm.compiler.loop.MathUtil;
 
@@ -20,7 +21,7 @@ public class Bullet {
 
     Vector2 origin;
 
-    float bulletSpeed = 0.2f;
+    float bulletSpeed = 0.5f;
 
     float lifeTime;
     float maxLifeTime = 1.0f;
@@ -44,20 +45,26 @@ public class Bullet {
         this.bulletMoving(c);
     }
 
-    public void destroyBullet(Bullet bullet)
+    public void destroyBullet(LayerData layerData)
     {
+        this.destroyOnWalls(layerData);
         if (this.lifeTime >= maxLifeTime) {
             this.isDead = true;
         }
     }
 
-    private void rotateAroundOrigin(Weapons w)
+    public void destroyOnWalls(LayerData layerData)
     {
-        this.origin.set(w.getWeaponOriginX(), w.getWeaponOriginY());
+        int x1 = (int)(this.position.x - Dungeon.tileSize) / Dungeon.tileSize;
+        int y1 = (int)(this.position.y - Dungeon.tileSize) / Dungeon.tileSize;
 
-        float angle = this.origin.sub(this.position).angleDeg();
-        this.sprite.setOrigin(this.origin.x, this.origin.y);
-        this.sprite.setRotation(angle);
+        int x2 = (int)(this.position.x + Dungeon.tileSize) / Dungeon.tileSize;
+        int y2 = (int)(this.position.y + Dungeon.tileSize) / Dungeon.tileSize;
+
+        if (layerData.layer[y1][x1] < 0)
+            this.isDead = true;
+        else if (layerData.layer[y2][x2] < 0)
+            this.isDead = true;
     }
 
     public void setBulletPosition()
@@ -69,7 +76,8 @@ public class Bullet {
 
         this.position.x = wPosition.x + weaponWidth;
         this.position.y = wPosition.y + (weaponHeight / 2);
-        if (w.isFlipY()) this.position.set(this.position.x, this.position.y - 16f);
+        if (w.isFlipY())
+            this.position.set(this.position.x, this.position.y - 16f);
         Vector2 endPos = position.cpy().sub(wPosition.x, wPosition.y).rotateDeg(w.getWeaponRotation()).add(wPosition.x, wPosition.y);
         this.position = endPos;
         this.sprite.setPosition(endPos.x, endPos.y);
@@ -78,14 +86,13 @@ public class Bullet {
 
     public void bulletMoving(Cursor cursor)
     {
-        this.direction.set(this.position.x - cursor.getCursorX(), this.position.y - cursor.getCursorY());
-        this.direction.rotateDeg(this.sprite.getRotation() - 60f);
+        this.direction.set(this.position.x - cursor.getCursorX(), this.position.y - cursor.getCursorY()).setAngleDeg(this.sprite.getRotation());
     }
 
-    public void update(Bullet bullet, SpriteBatch batch)
+    public void update(SpriteBatch batch, LayerData layerData)
     {
         this.lifeTime += Game.deltaTime;
-        this.destroyBullet(bullet);
+        this.destroyBullet(layerData);
         this.position.add(this.direction.x * this.bulletSpeed * Game.deltaTime, this.direction.y * this.bulletSpeed * Game.deltaTime);
         this.sprite.setPosition(this.position.x, this.position.y);
         this.sprite.draw(batch);

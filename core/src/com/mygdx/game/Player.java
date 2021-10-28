@@ -107,7 +107,7 @@ public class Player extends Players {
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY + 3f, this.position);
     }
 
-    public void checkWeapons(SpriteBatch batch, Cursor cursor)
+    public void checkWeapons(SpriteBatch batch, Cursor cursor, LayerData layerData)
     {
         this.currentWeapon = this.inventory.getCurrentWeapons();
         if (this.currentWeapon == null) return;
@@ -119,7 +119,7 @@ public class Player extends Players {
             ((Sword) this.currentWeapon).update(batch);
         } else if (this.currentWeapon instanceof BasicGun) {
             this.currentWeapon.lookAtCursor(cursor, 0f);
-            ((BasicGun) this.currentWeapon).update(batch, cursor);
+            ((BasicGun) this.currentWeapon).update(batch, cursor, layerData);
         }
     }
 
@@ -142,7 +142,7 @@ public class Player extends Players {
         this.flipPlayerWithMouse(cursor);
         this.flipPlayerWithKeyboard();
         this.sprite.draw(batch);
-        this.checkWeapons(batch, cursor);
+        this.checkWeapons(batch, cursor, layerData);
         this.inventory.update(batch, this.getPositionVector(), cursor);
     }
 
