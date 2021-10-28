@@ -73,6 +73,21 @@ public class Weapons {
         return this.inventoryShow;
     }
 
+    public float getWeaponRotation()
+    {
+        return this.sprite.getRotation();
+    }
+
+    public float getWeaponOriginX()
+    {
+        return this.sprite.getOriginX();
+    }
+
+    public float getWeaponOriginY()
+    {
+        return this.sprite.getOriginY();
+    }
+
     //Set method
 
     public void setWeaponPosition(Vector2 newPosition)
@@ -132,6 +147,16 @@ public class Weapons {
 
         float angle = lookAt.sub(this.position).angleDeg();
         this.sprite.setRotation(angle);
+    }
+
+    public boolean isFlipX()
+    {
+        return this.sprite.isFlipX();
+    }
+
+    public boolean isFlipY()
+    {
+        return this.sprite.isFlipY();
     }
 
     public void flipWeapon(Cursor cursor)

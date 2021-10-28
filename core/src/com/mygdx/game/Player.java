@@ -118,9 +118,14 @@ public class Player extends Players {
             this.currentWeapon.lookAtCursor(cursor, 45f);
             ((Sword) this.currentWeapon).update(batch);
         } else if (this.currentWeapon instanceof BasicGun) {
-            this.currentWeapon.lookAtCursor(cursor, 20f);
+            this.currentWeapon.lookAtCursor(cursor, 0f);
             ((BasicGun) this.currentWeapon).update(batch, cursor);
         }
+    }
+
+    public Weapons getCurrentWeapon()
+    {
+        return this.inventory.getCurrentWeapons();
     }
 
     public void update(SpriteBatch batch, float deltaTime, Cursor cursor, LayerData layerData)

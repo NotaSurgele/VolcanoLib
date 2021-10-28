@@ -86,6 +86,11 @@ public class Inventory {
         return Inventory.inventory.get(Inventory.currentWeapon);
     }
 
+    public static Weapons getCurrentWeapon()
+    {
+        return Inventory.inventory.get(Inventory.currentWeapon);
+    }
+
     private void setCurrentWeapon()
     {
         Texture t = this.sprite.getTexture();
