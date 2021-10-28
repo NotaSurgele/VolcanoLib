@@ -25,7 +25,7 @@ public class BasicGun extends Weapons {
     public void update(SpriteBatch batch, Cursor cursor, LayerData layerData)
     {
         this.render(batch, cursor, layerData);
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             Bullet b = new Bullet(new Texture("Weapons/Bullet.png"), 16, 16, cursor);
             this.bulletLoader.add(b);
         }

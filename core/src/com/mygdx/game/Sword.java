@@ -38,7 +38,7 @@ public class Sword extends Weapons {
     //Attack methods
     public void swordSlash()
     {
-        this.angle = MathUtils.lerp(this.angle, this.goTo, 30f * Gdx.graphics.getDeltaTime());
+        this.angle = MathUtils.lerp(this.angle, this.goTo, 30f * Game.deltaTime);
         if ((int)this.angle <= (int)this.goTo) {
             this.isSlashing = false;
         }
@@ -47,7 +47,7 @@ public class Sword extends Weapons {
 
     public void ultimate()
     {
-        this.angle = MathUtils.lerp(this.angle, this.goTo, 20f * Gdx.graphics.getDeltaTime());
+        this.angle = MathUtils.lerp(this.angle, this.goTo, 20f * Game.deltaTime);
         if ((int) this.angle <= (int) this.goTo) {
             this.isUltimate = false;
         }
