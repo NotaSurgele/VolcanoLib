@@ -26,6 +26,8 @@ public class Game extends Scene {
     //DUNGEON PART
     Dungeon dj;
 
+    Slime slime;
+
     //UTILS
     public static float slowTime = 0.2f;
 
@@ -39,6 +41,7 @@ public class Game extends Scene {
         this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 24, 24, "F", "Press F to use !", 0.8f);
         this.debug = new Debug();
         this.player.spawnPoint(this.dj.getChoosenRoomSpawnPoint(0));
+        this.slime = new Slime(new Texture("enemies/slime/slime_idle_anim_f0.png"), 32, 32, 5f, this.player.getPositionX(), this.player.getPositionY());
     }
 
     public OrthographicCamera setCamera(boolean ortho, float viewPortW, float viewPortH)
@@ -72,6 +75,7 @@ public class Game extends Scene {
         this.debug.cameraZoom(camera);
         this.dj.update(this.batch, this.player, this.triggerUI);
         this.player.update(this.batch, Game.deltaTime, cursor, this.dj.layerData);
+        this.slime.update(this.batch, this.player);
         this.cameraHandler();
         this.batch.end();
     }

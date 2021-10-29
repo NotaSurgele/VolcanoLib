@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.volcano.game.Collision;
 import com.volcano.game.Cursor;
 import com.volcano.game.LayerData;
 import com.volcano.game.Weapons;
@@ -18,13 +19,12 @@ public class Bullet {
     Sprite sprite;
     Vector2 position;
     Vector2 direction;
-
     Vector2 origin;
 
     float bulletSpeed = 0.5f;
 
     float lifeTime;
-    float maxLifeTime = 1.0f;
+    float maxLifeTime = 2.0f;
     boolean isDead = false;
 
     Rectangle hitbox;
@@ -55,11 +55,11 @@ public class Bullet {
 
     public void destroyOnWalls(LayerData layerData)
     {
-        int x1 = (int)(this.position.x - Dungeon.tileSize) / Dungeon.tileSize;
-        int y1 = (int)(this.position.y - Dungeon.tileSize) / Dungeon.tileSize;
+        int x1 = (int)(this.position.x - Dungeon.tileSize - 16f) / Dungeon.tileSize;
+        int y1 = (int)(this.position.y - Dungeon.tileSize - 16f) / Dungeon.tileSize;
 
-        int x2 = (int)(this.position.x + Dungeon.tileSize) / Dungeon.tileSize;
-        int y2 = (int)(this.position.y + Dungeon.tileSize) / Dungeon.tileSize;
+        int x2 = (int)(this.position.x + Dungeon.tileSize + 16f) / Dungeon.tileSize;
+        int y2 = (int)(this.position.y + Dungeon.tileSize + 16f) / Dungeon.tileSize;
 
         if (layerData.layer[y1][x1] < 0)
             this.isDead = true;
@@ -74,7 +74,7 @@ public class Bullet {
         float weaponWidth = w.getWeaponWidth();
         float weaponHeight = w.getWeaponHeight();
 
-        this.position.x = wPosition.x + weaponWidth;
+        this.position.x = wPosition.x + weaponWidth - 16f;
         this.position.y = wPosition.y + (weaponHeight / 2);
         if (w.isFlipY())
             this.position.set(this.position.x, this.position.y - 16f);

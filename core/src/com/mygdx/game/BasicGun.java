@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector3;
 import com.volcano.game.Cursor;
 import com.volcano.game.LayerData;
 import com.volcano.game.Weapons;
@@ -25,9 +22,10 @@ public class BasicGun extends Weapons {
     public void update(SpriteBatch batch, Cursor cursor, LayerData layerData)
     {
         this.render(batch, cursor, layerData);
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             Bullet b = new Bullet(new Texture("Weapons/Bullet.png"), 16, 16, cursor);
             this.bulletLoader.add(b);
+            b = null;
         }
     }
 
