@@ -50,4 +50,16 @@ public class Enemies {
         this.position.set(position.x, position.y);
         this.sprite.setPosition(this.position.x, this.position.y);
     }
+
+
+    //Get method
+    public float getWidth()
+    {
+        return this.sprite.getWidth();
+    }
+
+    public float getHeight()
+    {
+        return this.sprite.getHeight();
+    }
 }
