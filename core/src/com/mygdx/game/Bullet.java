@@ -55,11 +55,11 @@ public class Bullet {
 
     public void destroyOnWalls(LayerData layerData)
     {
-        int x1 = (int)(this.position.x - Dungeon.tileSize - 16f) / Dungeon.tileSize;
-        int y1 = (int)(this.position.y - Dungeon.tileSize - 16f) / Dungeon.tileSize;
+        int x1 = (int)(this.position.x - Dungeon.tileSize) / Dungeon.tileSize;
+        int y1 = (int)(this.position.y - Dungeon.tileSize) / Dungeon.tileSize;
 
-        int x2 = (int)(this.position.x + Dungeon.tileSize + 16f) / Dungeon.tileSize;
-        int y2 = (int)(this.position.y + Dungeon.tileSize + 16f) / Dungeon.tileSize;
+        int x2 = (int)(this.position.x + Dungeon.tileSize) / Dungeon.tileSize;
+        int y2 = (int)(this.position.y + Dungeon.tileSize) / Dungeon.tileSize;
 
         if (layerData.layer[y1][x1] < 0)
             this.isDead = true;

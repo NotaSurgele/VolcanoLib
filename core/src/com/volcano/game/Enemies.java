@@ -1,14 +1,16 @@
-package com.mygdx.game;
+package com.volcano.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.Game;
+import com.mygdx.game.Player;
 
-public class Enemies {
+public abstract class Enemies {
 
-    Sprite sprite;
-    Vector2 position;
+    public Sprite sprite;
+    public Vector2 position;
 
     Vector2 direction;
 
@@ -33,6 +35,7 @@ public class Enemies {
     public void followPlayer(Player player)
     {
         Vector2 playerPos = player.position;
+
         this.direction.set(playerPos.x - this.position.x, playerPos.y - this.position.y);
         this.position.add(this.direction.x * this.moveSpeed * Game.deltaTime, this.direction.y * this.moveSpeed * Game.deltaTime);
         this.sprite.setPosition(this.position.x, this.position.y);
@@ -51,7 +54,6 @@ public class Enemies {
         this.sprite.setPosition(this.position.x, this.position.y);
     }
 
-
     //Get method
     public float getWidth()
     {
@@ -62,4 +64,21 @@ public class Enemies {
     {
         return this.sprite.getHeight();
     }
+
+    public float getDirectionX()
+    {
+        return this.direction.x;
+    }
+
+    public float getDirectionY()
+    {
+        return this.direction.y;
+    }
+
+    public Vector2 getDirectionVector()
+    {
+        return this.direction;
+    }
+
+    public abstract void update(SpriteBatch batch, Player player);
 }

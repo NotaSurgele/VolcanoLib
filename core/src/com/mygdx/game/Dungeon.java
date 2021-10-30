@@ -101,6 +101,7 @@ public class Dungeon {
             if (r != null) {
                 Vector2 v = r.getSpawnPoint();
                 player.setPosition(v);
+                Game.STATE = Game.State.CHANGE;
             }
         }
     }
@@ -108,6 +109,11 @@ public class Dungeon {
     public Vector2 getChoosenRoomSpawnPoint(int get)
     {
         return this.rooms.get(get).getSpawnPoint();
+    }
+
+    public Room getCurrentRoom()
+    {
+        return this.rooms.get(this.currentRoom);
     }
 
     public void draw(SpriteBatch batch)
