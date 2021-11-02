@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.volcano.game.Cursor;
+import com.volcano.game.Enemies;
 import com.volcano.game.Weapons;
 
 public class Sword extends Weapons {
@@ -20,6 +21,8 @@ public class Sword extends Weapons {
 
     public boolean isSlashing = false;
     public boolean isUltimate = false;
+
+    final float weaponDamage = 10f;
 
     Polygon hitbox;
     ShapeRenderer hitboxRenderer;
@@ -38,6 +41,7 @@ public class Sword extends Weapons {
     //Attack methods
     public void swordSlash()
     {
+        this.hitEnemies();
         this.angle = MathUtils.lerp(this.angle, this.goTo, 30f * Game.deltaTime);
         if ((int)this.angle <= (int)this.goTo) {
             this.isSlashing = false;
@@ -45,8 +49,18 @@ public class Sword extends Weapons {
         this.sprite.setRotation(this.angle);
     }
 
+    public void hitEnemies()
+    {
+        for (Enemies e : MobSpawner.spawner) {
+            if (this.hitbox.contains(e.getPosition().x, e.getPosition().y)) {
+                e.takeDamage(this.weaponDamage);
+            }
+        }
+    }
+
     public void ultimate()
     {
+        this.hitEnemies();
         this.angle = MathUtils.lerp(this.angle, this.goTo, 20f * Game.deltaTime);
         if ((int) this.angle <= (int) this.goTo) {
             this.isUltimate = false;
@@ -70,12 +84,13 @@ public class Sword extends Weapons {
 
     public void update(SpriteBatch batch)
     {
-        if (!this.isUltimate && !this.isSlashing && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+        if (!this.isUltimate && !this.isSlashing && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             this.angle = this.sprite.getRotation() + 70f;
             this.goTo = this.angle - 130f;
             this.isSlashing = true;
         }
-        if (this.isSlashing) this.swordSlash();
+        if (this.isSlashing)
+            this.swordSlash();
         if (!this.isSlashing && !this.isUltimate && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
             this.angle = this.sprite.getRotation();
             this.goTo = this.angle - 360f;

@@ -3,6 +3,7 @@ package com.volcano.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
 import com.mygdx.game.Player;
@@ -11,6 +12,8 @@ public abstract class Enemies {
 
     public Sprite sprite;
     public Vector2 position;
+    public Rectangle hitbox;
+    public float health = 100;
 
     Vector2 direction;
 
@@ -47,6 +50,11 @@ public abstract class Enemies {
         this.direction.set(playerPos.x - this.position.x, playerPos.y - this.position.y);
         this.position.add(this.direction.x * this.moveSpeed * Game.deltaTime, this.direction.y * this.moveSpeed * Game.deltaTime);
         this.sprite.setPosition(this.position.x, this.position.y);
+    }
+
+    public void takeDamage(float dmg)
+    {
+        this.health -= dmg;
     }
 
     //Set function
@@ -91,6 +99,11 @@ public abstract class Enemies {
     public Vector2 getPosition()
     {
         return this.position;
+    }
+
+    public float getHealth()
+    {
+        return this.health;
     }
 
     public abstract void update(SpriteBatch batch, Player player);

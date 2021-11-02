@@ -12,11 +12,11 @@ import java.util.ArrayList;
 public class MobSpawner {
 
     final int MAXENTITY = 5;
-    ArrayList<Enemies> spawner;
+    public static ArrayList<Enemies> spawner;
     Dungeon dj;
 
     public MobSpawner(Dungeon dj) {
-        this.spawner = new ArrayList<>();
+        spawner = new ArrayList<>();
         this.entityCreator();
         this.dj = dj;
     }
@@ -26,7 +26,7 @@ public class MobSpawner {
         for (int i = this.MAXENTITY; i != 0; i--) {
             Slime s = new Slime(new Texture("enemies/slime/slime_idle_anim_f0.png"), 32, 32, 1f);
 
-            this.spawner.add(s);
+            spawner.add(s);
         }
     }
 
@@ -51,8 +51,8 @@ public class MobSpawner {
     public void onChangeSpawnMob()
     {
         if (Game.STATE == State.CHANGE) {
-            for (int i = this.spawner.size() - 1; i >= 0; i--) {
-                Enemies e = this.spawner.get(i);
+            for (int i = spawner.size() - 1; i >= 0; i--) {
+                Enemies e = spawner.get(i);
 
                 this.setRandomSpawn(e);
             }
@@ -63,10 +63,12 @@ public class MobSpawner {
     public void update(SpriteBatch batch, Player player)
     {
         this.onChangeSpawnMob();
-        for (int i = this.spawner.size() - 1; i >= 0; i--) {
-            Enemies e = this.spawner.get(i);
+        for (int i = spawner.size() - 1; i >= 0; i--) {
+            Enemies e = spawner.get(i);
 
             e.update(batch, player);
+            if (e.getHealth() <= 0)
+                spawner.remove(i);
         }
     }
 }

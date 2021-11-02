@@ -10,13 +10,14 @@ import com.volcano.game.Enemies;
 public class Slime extends Enemies {
 
     Circle range;
-    Rectangle hitbox;
 
     //Animators
     Animator idle;
     Animator moving;
     final String dir = "enemies/slime/";
     float stateTime;
+
+    float health = 100;
 
     boolean isChasing = false;
 
