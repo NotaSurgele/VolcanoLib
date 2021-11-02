@@ -34,8 +34,16 @@ public abstract class Enemies {
     //Main functions
     public void followPlayer(Player player)
     {
-        Vector2 playerPos = player.position;
+        Vector2 playerPos = player.position.cpy();
 
+        if (this.position.y > playerPos.y + (player.getHeight() / 2))
+            playerPos.y = playerPos.y + (player.getHeight() / 2);
+        if (this.position.y > playerPos.y + (player.getHeight()))
+            playerPos.y = playerPos.y + player.getHeight();
+        if (this.position.x > playerPos.x + (player.getWidth() / 2))
+            playerPos.x = playerPos.x + (player.getWidth() / 2);
+        if (this.position.x > playerPos.x + player.getWidth())
+            playerPos.x = playerPos.x + player.getWidth();
         this.direction.set(playerPos.x - this.position.x, playerPos.y - this.position.y);
         this.position.add(this.direction.x * this.moveSpeed * Game.deltaTime, this.direction.y * this.moveSpeed * Game.deltaTime);
         this.sprite.setPosition(this.position.x, this.position.y);
@@ -78,6 +86,11 @@ public abstract class Enemies {
     public Vector2 getDirectionVector()
     {
         return this.direction;
+    }
+
+    public Vector2 getPosition()
+    {
+        return this.position;
     }
 
     public abstract void update(SpriteBatch batch, Player player);

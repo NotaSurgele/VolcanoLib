@@ -3,12 +3,14 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.volcano.game.Animator;
 import com.volcano.game.Enemies;
 
 public class Slime extends Enemies {
 
     Circle range;
+    Rectangle hitbox;
 
     //Animators
     Animator idle;
@@ -20,9 +22,16 @@ public class Slime extends Enemies {
 
     public Slime(Texture t, float w, float h, float m) {
         super(t, w, h, m);
+        this.setHitbox();
         this.setDetector();
         this.idle = Animator.initializeAnimation(this.idle, this.dir + "slime_idle_spritesheet.png", 6, 1, 0.07f);
         this.moving = Animator.initializeAnimation(this.idle, this.dir + "slime_run_spritesheeet.png", 6, 1, 0.07f);
+    }
+
+    private void setHitbox()
+    {
+        this.hitbox = new Rectangle();
+        this.hitbox.set(this.getPosition().x, this.getPosition().y, this.getWidth(), this.getHeight());
     }
 
     private void setDetector()
@@ -43,6 +52,14 @@ public class Slime extends Enemies {
         this.range.setPosition(x, y);
     }
 
+    private void setHitboxPosition()
+    {
+        float x = this.position.x;
+        float y = this.position.y;
+
+        this.hitbox.setPosition(x, y);
+    }
+
     private void focusPlayer(Player player)
     {
         if (this.range.contains(player.position)) {
@@ -56,6 +73,7 @@ public class Slime extends Enemies {
     {
         this.stateTime += Game.deltaTime;
 
+        this.setHitboxPosition();
         this.setDetectorPosition();
         this.focusPlayer(player);
         this.render(batch);

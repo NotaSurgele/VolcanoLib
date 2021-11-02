@@ -179,6 +179,11 @@ public class Room {
         return map;
     }
 
+    public int[][] getRoomLayer()
+    {
+        return this.layer;
+    }
+
     private void displayLayer()
     {
         for (int each = 0; each != this.height; each++) {

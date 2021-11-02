@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.volcano.game.Enemies;
 import com.volcano.game.Room;
 import com.mygdx.game.Game.State;
@@ -10,15 +11,23 @@ import java.util.ArrayList;
 
 public class MobSpawner {
 
-    Slime slime;
+    final int MAXENTITY = 5;
     ArrayList<Enemies> spawner;
     Dungeon dj;
 
     public MobSpawner(Dungeon dj) {
-        this.slime = new Slime(new Texture("enemies/slime/slime_idle_anim_f0.png"), 32, 32, 1f);
         this.spawner = new ArrayList<>();
-        this.spawner.add(this.slime);
+        this.entityCreator();
         this.dj = dj;
+    }
+
+    private void entityCreator()
+    {
+        for (int i = this.MAXENTITY; i != 0; i--) {
+            Slime s = new Slime(new Texture("enemies/slime/slime_idle_anim_f0.png"), 32, 32, 1f);
+
+            this.spawner.add(s);
+        }
     }
 
     public void getDungeon(Dungeon dj)
@@ -26,23 +35,38 @@ public class MobSpawner {
         this.dj = dj;
     }
 
-    public void onChangeSpawnMob(Enemies e)
+    private void setRandomSpawn(Enemies e)
+    {
+        Room currentRoom = this.dj.getCurrentRoom();
+        float minX = (currentRoom.getRoomX()) * Dungeon.tileSize;
+        float minY = (currentRoom.getRoomY()) * Dungeon.tileSize;
+        float maxX = (currentRoom.getRoomX() + currentRoom.getWidth()) * Dungeon.tileSize;
+        float maxY = (currentRoom.getRoomY() + currentRoom.getHeight()) * Dungeon.tileSize;
+        float x = MathUtils.random(minX + 16f, maxX - 16f);
+        float y = MathUtils.random(minY + 16f, maxY - 16f);
+
+        e.setPosition(x, y);
+    }
+
+    public void onChangeSpawnMob()
     {
         if (Game.STATE == State.CHANGE) {
-            Room currentRoom = this.dj.getCurrentRoom();
-            float x = (currentRoom.getRoomX() + (float)(currentRoom.getWidth() / 2)) * Dungeon.tileSize;
-            float y = (currentRoom.getRoomY() + (float)(currentRoom.getHeight() / 2)) * Dungeon.tileSize;
+            for (int i = this.spawner.size() - 1; i >= 0; i--) {
+                Enemies e = this.spawner.get(i);
 
-            e.setPosition(x, y);
+                this.setRandomSpawn(e);
+            }
             Game.STATE = State.NOTHING;
         }
     }
 
     public void update(SpriteBatch batch, Player player)
     {
-        Enemies e = this.spawner.get(0);
+        this.onChangeSpawnMob();
+        for (int i = this.spawner.size() - 1; i >= 0; i--) {
+            Enemies e = this.spawner.get(i);
 
-        this.onChangeSpawnMob(e);
-        e.update(batch, player);
+            e.update(batch, player);
+        }
     }
 }

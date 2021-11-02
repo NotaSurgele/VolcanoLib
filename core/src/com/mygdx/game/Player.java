@@ -130,7 +130,7 @@ public class Player extends Players {
 
     public void update(SpriteBatch batch, float deltaTime, Cursor cursor, LayerData layerData)
     {
-        this.stateTime += Gdx.graphics.getDeltaTime();
+        this.stateTime += Game.deltaTime;
 
         if (!this.collider.isColliding(layerData)) {
             this.oldX = this.position.x;
