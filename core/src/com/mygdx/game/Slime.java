@@ -74,7 +74,7 @@ public class Slime extends Enemies {
         if (!this.getKnockBack())
             this.focusPlayer(player);
         else
-            this.knockBack(10f, 0.1f);
+            this.knockBack(0.1f);
     }
 
     @Override

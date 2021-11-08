@@ -22,6 +22,7 @@ public abstract class Enemies {
     Vector2 playerPos;
     float moveSpeed;
     float knockbackTime;
+    float knockbackForce;
 
     public Enemies(Texture t, float w, float h, float m)
     {
@@ -62,16 +63,16 @@ public abstract class Enemies {
         this.health -= dmg;
     }
 
-    public void knockBack(float force, float time)
+    public void knockBack(float time)
     {
-        this.direction.set(playerPos.x - this.position.x, playerPos.y - this.position.y);
-        this.position.add(-this.direction.x * force * Game.deltaTime, -this.direction.y * force * Game.deltaTime);
-        this.sprite.setPosition(this.position.x, this.position.y);
-        this.knockbackTime += Game.deltaTime;
         if (this.knockbackTime >= time) {
             this.isKnockback = false;
             this.knockbackTime = 0.0f;
         }
+        this.direction.set(playerPos.x - this.position.x, playerPos.y - this.position.y);
+        this.position.add(-this.direction.x * this.knockbackForce * Game.deltaTime, -this.direction.y * this.knockbackForce * Game.deltaTime);
+        this.sprite.setPosition(this.position.x, this.position.y);
+        this.knockbackTime += Game.deltaTime;
     }
 
     //Set function
@@ -87,8 +88,9 @@ public abstract class Enemies {
         this.sprite.setPosition(this.position.x, this.position.y);
     }
 
-    public void setKnockBack(boolean knockBack)
+    public void setKnockBack(boolean knockBack, float force)
     {
+        this.knockbackForce = force;
         this.isKnockback = knockBack;
     }
 

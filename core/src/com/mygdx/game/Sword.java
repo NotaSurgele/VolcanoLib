@@ -18,7 +18,7 @@ public class Sword extends Weapons {
 
     float angle = 0f;
     float goTo = angle + 130;
-
+    float force = 15f;
     public boolean isSlashing = false;
     public boolean isUltimate = false;
 
@@ -64,7 +64,7 @@ public class Sword extends Weapons {
         for (Enemies e : MobSpawner.spawner) {
             if (this.hitbox.contains(e.getPosition().x, e.getPosition().y)) {
                 e.setKnockBackDirection(e.getDirectionVector().add(e.getPosition()));
-                e.setKnockBack(true);
+                e.setKnockBack(true, this.force);
                 e.takeDamage(this.weaponDamage);
             }
         }
