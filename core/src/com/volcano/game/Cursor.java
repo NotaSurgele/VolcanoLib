@@ -109,9 +109,9 @@ public class Cursor {
         float x = mouseCoord.x - (this.sprite.getWidth() / 2);
         float y = mouseCoord.y - (this.sprite.getHeight() / 2);
 
+        this.position.x = x;
+        this.position.y = y;
         this.sprite.setPosition(x, y);
-        this.position.x = this.sprite.getX();
-        this.position.y = this.sprite.getY();
     }
 
     private void setCursorCoordinate()

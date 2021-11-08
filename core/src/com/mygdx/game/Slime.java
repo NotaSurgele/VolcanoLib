@@ -69,6 +69,14 @@ public class Slime extends Enemies {
         } else this.isChasing = false;
     }
 
+    private void checkKnockback(Player player)
+    {
+        if (!this.getKnockBack())
+            this.focusPlayer(player);
+        else
+            this.knockBack(10f, 0.1f);
+    }
+
     @Override
     public void update(SpriteBatch batch, Player player)
     {
@@ -76,7 +84,7 @@ public class Slime extends Enemies {
 
         this.setHitboxPosition();
         this.setDetectorPosition();
-        this.focusPlayer(player);
+        this.checkKnockback(player);
         this.render(batch);
     }
 

@@ -1,5 +1,5 @@
-com/volcano/game/Weapons.java
- com.volcano.game.Weapons
+com/volcano/game/Animator.java
+ com.volcano.game.Animator
 com/volcano/game/MazeGenerator.java
  com.volcano.game.MazeGenerator
 com/volcano/game/LayerData.java
@@ -8,45 +8,45 @@ com/volcano/game/TriggerUI.java
  com.volcano.game.TriggerUI
 com/volcano/game/Debug.java
  com.volcano.game.Debug
-com/mygdx/game/BasicGun.java
- com.mygdx.game.BasicGun
-com/mygdx/game/Dungeon.java
- com.mygdx.game.Dungeon
-com/volcano/game/Animator.java
- com.volcano.game.Animator
+com/volcano/game/Collision.java
+ com.volcano.game.Collision
 com/volcano/game/Room.java
  com.volcano.game.Room
 com/volcano/game/Players.java
  com.volcano.game.Players
-com/volcano/game/Cursor.java
- com.volcano.game.Cursor
+com/volcano/game/Weapons.java
+ com.volcano.game.Weapons
+com/mygdx/game/Dungeon.java
+ com.mygdx.game.Dungeon
 com/mygdx/game/Bullet.java
  com.mygdx.game.Bullet
-com/volcano/game/Collision.java
- com.volcano.game.Collision
+com/mygdx/game/BasicGun.java
+ com.mygdx.game.BasicGun
+com/mygdx/game/Player.java
+ com.mygdx.game.Player
+com/volcano/game/Cursor.java
+ com.volcano.game.Cursor
+com/mygdx/game/Inventory.java
+ com.mygdx.game.Inventory
+com/volcano/game/Enemies.java
+ com.volcano.game.Enemies
+com/mygdx/game/Sword.java
+ com.mygdx.game.Sword
 com/mygdx/game/MobSpawner.java
  com.mygdx.game.MobSpawner
 com/volcano/game/Button.java
  com.volcano.game.Button
  com.volcano.game.Button$State
-com/mygdx/game/Slime.java
- com.mygdx.game.Slime
 com/mygdx/game/Game.java
  com.mygdx.game.Game
  com.mygdx.game.Game$State
 com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame
-com/mygdx/game/Menu.java
- com.mygdx.game.Menu
 com/volcano/game/Scene.java
  com.volcano.game.Scene
  com.volcano.game.Scene$1
  com.volcano.game.Scene$SCENES
-com/volcano/game/Enemies.java
- com.volcano.game.Enemies
-com/mygdx/game/Player.java
- com.mygdx.game.Player
-com/mygdx/game/Sword.java
- com.mygdx.game.Sword
-com/mygdx/game/Inventory.java
- com.mygdx.game.Inventory
+com/mygdx/game/Slime.java
+ com.mygdx.game.Slime
+com/mygdx/game/Menu.java
+ com.mygdx.game.Menu

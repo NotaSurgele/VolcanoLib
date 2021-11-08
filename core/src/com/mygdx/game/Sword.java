@@ -41,31 +41,33 @@ public class Sword extends Weapons {
     //Attack methods
     public void swordSlash()
     {
-        this.hitEnemies();
         this.angle = MathUtils.lerp(this.angle, this.goTo, 30f * Game.deltaTime);
         if ((int)this.angle <= (int)this.goTo) {
             this.isSlashing = false;
         }
         this.sprite.setRotation(this.angle);
+        this.hitEnemies();
+    }
+
+    public void ultimate()
+    {
+        this.angle = MathUtils.lerp(this.angle, this.goTo, 20f * Game.deltaTime);
+        if ((int) this.angle <= (int) this.goTo) {
+            this.isUltimate = false;
+        }
+        this.sprite.setRotation(this.angle);
+        this.hitEnemies();
     }
 
     public void hitEnemies()
     {
         for (Enemies e : MobSpawner.spawner) {
             if (this.hitbox.contains(e.getPosition().x, e.getPosition().y)) {
+                e.setKnockBackDirection(e.getDirectionVector().add(e.getPosition()));
+                e.setKnockBack(true);
                 e.takeDamage(this.weaponDamage);
             }
         }
-    }
-
-    public void ultimate()
-    {
-        this.hitEnemies();
-        this.angle = MathUtils.lerp(this.angle, this.goTo, 20f * Game.deltaTime);
-        if ((int) this.angle <= (int) this.goTo) {
-            this.isUltimate = false;
-        }
-        this.sprite.setRotation(this.angle);
     }
 
     public void setHitbox()
@@ -75,28 +77,49 @@ public class Sword extends Weapons {
         this.hitbox.setRotation(this.sprite.getRotation());
     }
 
-    public void showHitbox()
+    public void showHitbox(SpriteBatch batch)
     {
         this.hitboxRenderer.begin(ShapeRenderer.ShapeType.Line);
         this.hitboxRenderer.polygon(this.hitbox.getTransformedVertices());
         this.hitboxRenderer.end();
     }
 
-    public void update(SpriteBatch batch)
+    private void checkSlashing()
+    {
+        if (this.isSlashing)
+            this.swordSlash();
+    }
+
+    private void checkUltimate()
+    {
+        if (this.isUltimate)
+            this.ultimate();
+    }
+
+    private void setSlashing()
     {
         if (!this.isUltimate && !this.isSlashing && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             this.angle = this.sprite.getRotation() + 70f;
             this.goTo = this.angle - 130f;
             this.isSlashing = true;
         }
-        if (this.isSlashing)
-            this.swordSlash();
+    }
+
+    private void setUltimate()
+    {
         if (!this.isSlashing && !this.isUltimate && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
             this.angle = this.sprite.getRotation();
             this.goTo = this.angle - 360f;
             this.isUltimate = true;
         }
-        if (this.isUltimate)  this.ultimate();
+    }
+
+    public void update(SpriteBatch batch)
+    {
+        this.setSlashing();
+        this.setUltimate();
+        this.checkSlashing();
+        this.checkUltimate();
         this.setHitbox();
         this.draw(batch);
     }

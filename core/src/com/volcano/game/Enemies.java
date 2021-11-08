@@ -15,9 +15,13 @@ public abstract class Enemies {
     public Rectangle hitbox;
     public float health = 100;
 
-    Vector2 direction;
+    private boolean isKnockback = false;
 
+    Vector2 direction;
+    Vector2 knockback;
+    Vector2 playerPos;
     float moveSpeed;
+    float knockbackTime;
 
     public Enemies(Texture t, float w, float h, float m)
     {
@@ -31,13 +35,14 @@ public abstract class Enemies {
         this.sprite.setBounds(0, 0, w, h);
         this.position = new Vector2(0, 0);
         this.direction = new Vector2();
+        this.knockback = new Vector2();
         this.moveSpeed = m;
     }
 
     //Main functions
     public void followPlayer(Player player)
     {
-        Vector2 playerPos = player.position.cpy();
+        this.playerPos = player.position.cpy();
 
         if (this.position.y > playerPos.y + (player.getHeight() / 2))
             playerPos.y = playerPos.y + (player.getHeight() / 2);
@@ -57,6 +62,18 @@ public abstract class Enemies {
         this.health -= dmg;
     }
 
+    public void knockBack(float force, float time)
+    {
+        this.direction.set(playerPos.x - this.position.x, playerPos.y - this.position.y);
+        this.position.add(-this.direction.x * force * Game.deltaTime, -this.direction.y * force * Game.deltaTime);
+        this.sprite.setPosition(this.position.x, this.position.y);
+        this.knockbackTime += Game.deltaTime;
+        if (this.knockbackTime >= time) {
+            this.isKnockback = false;
+            this.knockbackTime = 0.0f;
+        }
+    }
+
     //Set function
     public void setPosition(float x, float y)
     {
@@ -68,6 +85,16 @@ public abstract class Enemies {
     {
         this.position.set(position.x, position.y);
         this.sprite.setPosition(this.position.x, this.position.y);
+    }
+
+    public void setKnockBack(boolean knockBack)
+    {
+        this.isKnockback = knockBack;
+    }
+
+    public void setKnockBackDirection(Vector2 dir)
+    {
+        this.knockback = dir;
     }
 
     //Get method
@@ -104,6 +131,11 @@ public abstract class Enemies {
     public float getHealth()
     {
         return this.health;
+    }
+
+    public boolean getKnockBack()
+    {
+        return this.isKnockback;
     }
 
     public abstract void update(SpriteBatch batch, Player player);

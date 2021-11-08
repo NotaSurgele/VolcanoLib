@@ -11,13 +11,12 @@ import java.util.ArrayList;
 
 public class MobSpawner {
 
-    final int MAXENTITY = 5;
+    final int MAXENTITY = 1;
     public static ArrayList<Enemies> spawner;
     Dungeon dj;
 
     public MobSpawner(Dungeon dj) {
         spawner = new ArrayList<>();
-        this.entityCreator();
         this.dj = dj;
     }
 
@@ -51,6 +50,7 @@ public class MobSpawner {
     public void onChangeSpawnMob()
     {
         if (Game.STATE == State.CHANGE) {
+            this.entityCreator();
             for (int i = spawner.size() - 1; i >= 0; i--) {
                 Enemies e = spawner.get(i);
 
