@@ -12,7 +12,6 @@ public class Bomb extends Weapons {
     Animator charging;
     Animator explosion;
 
-    Sprite effect;
     final String dir = "props_itens/";
     final String effectDir = "effects (new)/";
 
@@ -33,8 +32,6 @@ public class Bomb extends Weapons {
         this.charging = Animator.initializeAnimation(this.charging, this.dir + "bomb_anim_spritesheet.png", 10,1, 0.12f);
         this.explosion = Animator.initializeAnimation(this.explosion, this.effectDir + "explosion_anim_spritesheet.png", 7, 1, 0.07f);
         this.STATE = State.NORMAL;
-        this.effect = new Sprite();
-        this.effect.setRegion(t);
     }
 
     public void setBombState(State newState)
