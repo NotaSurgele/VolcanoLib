@@ -28,12 +28,6 @@ com/volcano/game/MazeGenerator.java
  com.volcano.game.MazeGenerator
 com/volcano/game/Room.java
  com.volcano.game.Room
-com/mygdx/game/ExplodingGoblin.java
- com.mygdx.game.ExplodingGoblin
-com/mygdx/game/Slime.java
- com.mygdx.game.Slime
-com/volcano/game/Enemies.java
- com.volcano.game.Enemies
 com/mygdx/game/MobSpawner.java
  com.mygdx.game.MobSpawner
 com/volcano/game/Button.java
@@ -53,5 +47,11 @@ com/volcano/game/Scene.java
  com.volcano.game.Scene
  com.volcano.game.Scene$1
  com.volcano.game.Scene$SCENES
+com/mygdx/game/ExplodingGoblin.java
+ com.mygdx.game.ExplodingGoblin
+com/volcano/game/Enemies.java
+ com.volcano.game.Enemies
+com/mygdx/game/Slime.java
+ com.mygdx.game.Slime
 com/mygdx/game/Menu.java
  com.mygdx.game.Menu

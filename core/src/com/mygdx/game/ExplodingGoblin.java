@@ -87,7 +87,7 @@ public class ExplodingGoblin extends Enemies {
         if (this.bomb != null) {
             this.bomb.setWeaponX(this.getPosition().x + (this.getWidth() / 2));
             this.bomb.setWeaponY(this.getPosition().y + (this.getHeight() / 2));
-            this.bomb.update(batch, player);
+            this.bomb.update(batch, player, this);
         }
     }
 
@@ -95,6 +95,10 @@ public class ExplodingGoblin extends Enemies {
     public void update(SpriteBatch batch, Player player) {
         this.stateTime += Game.deltaTime;
 
+        System.out.println(this.getHealth());
+
+        if (this.getHealth() <= 0)
+            this.killed();
         if (!this.isHide()) {
             this.setDetectorPosition(this.range);
             this.focusPlayer(player);

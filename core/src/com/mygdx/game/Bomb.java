@@ -75,18 +75,20 @@ public class Bomb extends Weapons {
         }
     }
 
-    private void checkHit(Player player)
+    private void checkHit(Player player, ExplodingGoblin self)
     {
         if (this.STATE == State.EXPLOSE) {
             boolean playerHit = this.isEntityInsideExplosionHitbox(player.getSprite());
             if (playerHit) player.getDamaged(10f);
             for (int each = MobSpawner.spawner.size(); each != 0; each--) {
-                Enemies e = MobSpawner.spawner.get(each - 1);
-                boolean hit = this.isEntityInsideExplosionHitbox(e.getSprite());
-                if (hit) {
-                    e.takeDamage(100f);
-                    e.hide(true);
-                }
+                if (MobSpawner.spawner.get(each - 1) != self) {
+                    Enemies e = MobSpawner.spawner.get(each - 1);
+                    boolean hit = this.isEntityInsideExplosionHitbox(e.getSprite());
+                    if (hit) {
+                        e.takeDamage(100f);
+                        e.hide(true);
+                    }
+                } else MobSpawner.spawner.get(each - 1).hide(true);
             }
         }
     }
@@ -96,13 +98,13 @@ public class Bomb extends Weapons {
         return (this.STATE == State.DEAD);
     }
 
-    public void update(SpriteBatch batch, Player player)
+    public void update(SpriteBatch batch, Player player, ExplodingGoblin self)
     {
         if (this.explosion.isFinished(explosionStateTime)) {
             this.STATE = State.DEAD;
         }
         this.setExplosionHitboxPosition(this.getWeaponX() + (this.getWeaponWidth() / 2), this.getWeaponY() + (this.getWeaponHeight() / 2));
-        this.checkHit(player);
+        this.checkHit(player, self);
         this.checkState();
         this.animationController();
         this.render(batch);

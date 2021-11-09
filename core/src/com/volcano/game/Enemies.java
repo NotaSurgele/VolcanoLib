@@ -101,6 +101,7 @@ public abstract class Enemies {
 
     public void killed()
     {
+        this.health = 0.0f;
         this.killed = true;
     }
 
