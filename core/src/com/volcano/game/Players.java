@@ -92,6 +92,11 @@ public class Players {
         camera.position.set(this.cameraPosition);
     }
 
+    public void draw(SpriteBatch batch)
+    {
+        this.sprite.draw(batch);
+    }
+
     // Get Method
     public Vector2 getPositionVector()
     {
@@ -124,6 +129,11 @@ public class Players {
         int y = (int)(this.position.y + this.getHeight() / 2) / Dungeon.tileSize;
 
         return new Vector2(x, y);
+    }
+
+    public Sprite getSprite()
+    {
+        return this.sprite;
     }
 
     // Set Method

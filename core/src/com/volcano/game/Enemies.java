@@ -3,6 +3,7 @@ package com.volcano.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
@@ -16,6 +17,7 @@ public abstract class Enemies {
     public float health = 100;
 
     private boolean isKnockback = false;
+    private boolean killed = false;
 
     Vector2 direction;
     Vector2 knockback;
@@ -77,6 +79,24 @@ public abstract class Enemies {
         this.knockbackTime += Game.deltaTime;
     }
 
+    public void setDetectorPosition(Circle detector)
+    {
+        float x = this.position.x + (this.getWidth() / 2);
+        float y = this.position.y + (this.getHeight() / 2);
+
+        detector.setPosition(x, y);
+    }
+
+    public void draw(SpriteBatch batch)
+    {
+        this.sprite.draw(batch);
+    }
+
+    public void killed()
+    {
+        this.killed = true;
+    }
+
     //Set function
     public void setPosition(float x, float y)
     {
@@ -99,6 +119,12 @@ public abstract class Enemies {
     public void setKnockBackDirection(Vector2 dir)
     {
         this.knockback = dir;
+    }
+
+    public void setHitbox()
+    {
+        this.hitbox = new Rectangle();
+        this.hitbox.set(this.getPosition().x, this.getPosition().y, this.getWidth(), this.getHeight());
     }
 
     //Get method
@@ -142,5 +168,23 @@ public abstract class Enemies {
         return this.isKnockback;
     }
 
+    public Sprite getSprite()
+    {
+        return this.sprite;
+    }
+
     public abstract void update(SpriteBatch batch, Player player);
+
+    //Boolean
+    public boolean isPlayerInsideCircle(Circle c, Player p)
+    {
+        return (c.contains(p.getPositionVector()));
+    }
+
+    public boolean isKilled()
+    {
+        if (this.health <= 0)
+            this.killed = true;
+        return this.killed;
+    }
 }

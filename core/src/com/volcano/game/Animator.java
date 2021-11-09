@@ -138,6 +138,12 @@ public class Animator {
         return animation;
     }
 
+    //Boolean
+    public boolean isFinished(float stateTime)
+    {
+        return this.animation.isAnimationFinished(stateTime);
+    }
+
     public void dispose()
     {
         this.texture.dispose();

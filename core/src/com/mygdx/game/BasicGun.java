@@ -38,7 +38,7 @@ public class BasicGun extends Weapons {
             if (b.isDead)
                 this.bulletLoader.remove(i - 1);
         }
-        this.sprite.draw(batch);
+        this.draw(batch);
     }
 
     public void dispose()

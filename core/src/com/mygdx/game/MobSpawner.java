@@ -23,9 +23,9 @@ public class MobSpawner {
     private void entityCreator()
     {
         for (int i = this.MAXENTITY; i != 0; i--) {
-            Slime s = new Slime(new Texture("enemies/slime/slime_idle_anim_f0.png"), 32, 32, 1f);
-
-            spawner.add(s);
+            //Slime s = new Slime(new Texture("enemies/slime/slime_idle_anim_f0.png"), 32, 32, 1f);
+            ExplodingGoblin eg = new ExplodingGoblin(new Texture("enemies/goblin/goblin_idle_anim_f0.png"), 64, 64, 2f);
+            spawner.add(eg);
         }
     }
 
@@ -67,8 +67,9 @@ public class MobSpawner {
             Enemies e = spawner.get(i);
 
             e.update(batch, player);
-            if (e.getHealth() <= 0)
+            if (spawner.size() != 0 && e.getHealth() <= 0) {
                 spawner.remove(i);
+            }
         }
     }
 }

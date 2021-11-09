@@ -3,6 +3,7 @@ package com.volcano.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
@@ -12,12 +13,18 @@ public class Weapons {
     public Vector2 position;
     public float knockBackForce;
 
+    Circle explosionHitbox;
     Texture inventoryShow;
 
     boolean rotateAround = false;
 
     public Weapons(Texture t, float w, float h, float x, float y, float f) {
         this.setWeaponsData(t, w, h, x, y, f);
+    }
+
+    //Explosive Weapons
+    public Weapons(Texture t, float w, float h, float x, float y, float f, float explosiveRadius) {
+        this.setWeaponsData(t, w, h, x, y, f, explosiveRadius);
     }
 
     public Weapons() {}
@@ -32,6 +39,20 @@ public class Weapons {
         this.sprite.setPosition(this.position.x, this.position.y);
         this.inventoryShow = t;
         this.knockBackForce = f;
+    }
+
+    public void setWeaponsData(Texture t, float w, float h, float x, float y, float f, float explosionRadius)
+    {
+        this.sprite = new Sprite();
+        this.position = new Vector2(x, y);
+        this.sprite.setBounds(x, y, w, h);
+        this.sprite.setRegion(t);
+        this.sprite.setPosition(this.position.x, this.position.y);
+        this.inventoryShow = t;
+        this.knockBackForce = f;
+        this.explosionHitbox = new Circle();
+        this.explosionHitbox.setPosition(x, y);
+        this.explosionHitbox.setRadius(explosionRadius);
     }
 
     //Get method
@@ -53,6 +74,16 @@ public class Weapons {
     public float getWeaponWidth()
     {
         return this.sprite.getWidth();
+    }
+
+    public float getWeaponWidthScaled()
+    {
+        return this.sprite.getWidth() * this.sprite.getScaleX();
+    }
+
+    public float getWeaponHeightScaled()
+    {
+        return this.sprite.getHeight() * this.sprite.getScaleY();
     }
 
     public float getWeaponHeight()
@@ -131,6 +162,11 @@ public class Weapons {
         this.sprite = newSprite;
     }
 
+    public void setExplosionHitboxPosition(float x, float y)
+    {
+        this.explosionHitbox.setPosition(x, y);
+    }
+
     //Main method
 
     public void lookAtCursor(Cursor cursor, float adjust)
@@ -140,25 +176,6 @@ public class Weapons {
 
         float angle = lookAt.sub(this.position).angleDeg() - adjust;
         this.sprite.setRotation(angle);
-    }
-
-    public void lookAtCursor(Cursor cursor)
-    {
-        Vector2 lookAt = cursor.getCursorPosition();
-        lookAt.x = lookAt.x - (cursor.sprite.getWidth() / 2);
-
-        float angle = lookAt.sub(this.position).angleDeg();
-        this.sprite.setRotation(angle);
-    }
-
-    public boolean isFlipX()
-    {
-        return this.sprite.isFlipX();
-    }
-
-    public boolean isFlipY()
-    {
-        return this.sprite.isFlipY();
     }
 
     public void flipWeapon(Cursor cursor)
@@ -178,4 +195,34 @@ public class Weapons {
             }
         }
     }
+
+    public void lookAtCursor(Cursor cursor)
+    {
+        Vector2 lookAt = cursor.getCursorPosition();
+        lookAt.x = lookAt.x - (cursor.sprite.getWidth() / 2);
+
+        float angle = lookAt.sub(this.position).angleDeg();
+        this.sprite.setRotation(angle);
+    }
+
+    public void draw(SpriteBatch batch)
+    {
+        this.sprite.draw(batch);
+    }
+
+    public boolean isFlipX()
+    {
+        return this.sprite.isFlipX();
+    }
+
+    public boolean isFlipY()
+    {
+        return this.sprite.isFlipY();
+    }
+
+    public boolean isEntityInsideExplosionHitbox(Sprite entity)
+    {
+        return this.explosionHitbox.contains(new Vector2(entity.getX(), entity.getY()));
+    }
+
 }

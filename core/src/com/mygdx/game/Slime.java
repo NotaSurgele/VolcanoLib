@@ -29,12 +29,6 @@ public class Slime extends Enemies {
         this.moving = Animator.initializeAnimation(this.idle, this.dir + "slime_run_spritesheeet.png", 6, 1, 0.07f);
     }
 
-    private void setHitbox()
-    {
-        this.hitbox = new Rectangle();
-        this.hitbox.set(this.getPosition().x, this.getPosition().y, this.getWidth(), this.getHeight());
-    }
-
     private void setDetector()
     {
         float x = this.position.x + (this.getWidth() / 2);
@@ -43,14 +37,6 @@ public class Slime extends Enemies {
         this.range = new Circle();
         this.range.setPosition(x, y);
         this.range.setRadius(300f);
-    }
-
-    private void setDetectorPosition()
-    {
-        float x = this.position.x + (this.getWidth() / 2);
-        float y = this.position.y + (this.getHeight() / 2);
-
-        this.range.setPosition(x, y);
     }
 
     private void setHitboxPosition()
@@ -81,10 +67,9 @@ public class Slime extends Enemies {
     public void update(SpriteBatch batch, Player player)
     {
         this.stateTime += Game.deltaTime;
-        System.out.println("Not nor " + this.getPosition());
-        System.out.println("Nor " + this.getPosition().nor());
+
         this.setHitboxPosition();
-        this.setDetectorPosition();
+        this.setDetectorPosition(this.range);
         this.checkKnockback(player);
         this.render(batch);
     }
@@ -105,7 +90,7 @@ public class Slime extends Enemies {
     private void render(SpriteBatch batch)
     {
         this.animationController();
-        this.sprite.draw(batch);
+        this.draw(batch);
     }
 
     public void dispose()

@@ -123,11 +123,6 @@ public class Sword extends Weapons {
         this.draw(batch);
     }
 
-    public void draw(SpriteBatch batch)
-    {
-        this.sprite.draw(batch);
-    }
-
     public void dispose()
     {
         this.sprite.getTexture().dispose();

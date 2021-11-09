@@ -128,6 +128,11 @@ public class Player extends Players {
         return this.inventory.getCurrentWeapons();
     }
 
+    public void getDamaged(float dmg)
+    {
+        System.out.println("Hit");
+    }
+
     public void update(SpriteBatch batch, float deltaTime, Cursor cursor, LayerData layerData)
     {
         this.stateTime += Game.deltaTime;
@@ -141,7 +146,7 @@ public class Player extends Players {
         this.collisionCheckPoint(layerData);
         this.flipPlayerWithMouse(cursor);
         this.flipPlayerWithKeyboard();
-        this.sprite.draw(batch);
+        this.draw(batch);
         this.checkWeapons(batch, cursor, layerData);
         this.inventory.update(batch, this.getPositionVector(), cursor);
     }
