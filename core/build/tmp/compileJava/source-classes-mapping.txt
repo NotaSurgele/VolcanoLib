@@ -40,18 +40,18 @@ com/mygdx/game/MyGdxGame.java
  com.mygdx.game.MyGdxGame
 com/mygdx/game/Sword.java
  com.mygdx.game.Sword
-com/mygdx/game/Bomb.java
- com.mygdx.game.Bomb
- com.mygdx.game.Bomb$State
+com/mygdx/game/Menu.java
+ com.mygdx.game.Menu
 com/volcano/game/Scene.java
  com.volcano.game.Scene
  com.volcano.game.Scene$1
  com.volcano.game.Scene$SCENES
-com/mygdx/game/ExplodingGoblin.java
- com.mygdx.game.ExplodingGoblin
-com/volcano/game/Enemies.java
- com.volcano.game.Enemies
 com/mygdx/game/Slime.java
  com.mygdx.game.Slime
-com/mygdx/game/Menu.java
- com.mygdx.game.Menu
+com/volcano/game/Enemies.java
+ com.volcano.game.Enemies
+com/mygdx/game/Bomb.java
+ com.mygdx.game.Bomb
+ com.mygdx.game.Bomb$State
+com/mygdx/game/ExplodingGoblin.java
+ com.mygdx.game.ExplodingGoblin

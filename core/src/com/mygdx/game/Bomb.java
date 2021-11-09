@@ -95,14 +95,14 @@ public class Bomb extends Weapons {
 
     public boolean isFinished()
     {
+        if (this.explosion.isFinished(explosionStateTime)) {
+            this.STATE = State.DEAD;
+        }
         return (this.STATE == State.DEAD);
     }
 
     public void update(SpriteBatch batch, Player player, ExplodingGoblin self)
     {
-        if (this.explosion.isFinished(explosionStateTime)) {
-            this.STATE = State.DEAD;
-        }
         this.setExplosionHitboxPosition(this.getWeaponX() + (this.getWeaponWidth() / 2), this.getWeaponY() + (this.getWeaponHeight() / 2));
         this.checkHit(player, self);
         this.checkState();
