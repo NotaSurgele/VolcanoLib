@@ -81,7 +81,8 @@ public class Slime extends Enemies {
     public void update(SpriteBatch batch, Player player)
     {
         this.stateTime += Game.deltaTime;
-
+        System.out.println("Not nor " + this.getPosition());
+        System.out.println("Nor " + this.getPosition().nor());
         this.setHitboxPosition();
         this.setDetectorPosition();
         this.checkKnockback(player);

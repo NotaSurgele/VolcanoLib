@@ -10,19 +10,20 @@ public class Weapons {
 
     public Sprite sprite;
     public Vector2 position;
+    public float knockBackForce;
 
     Texture inventoryShow;
 
     boolean rotateAround = false;
 
-    public Weapons(Texture t, float w, float h, float x, float y) {
-        this.setWeaponsData(t, w, h, x, y);
+    public Weapons(Texture t, float w, float h, float x, float y, float f) {
+        this.setWeaponsData(t, w, h, x, y, f);
     }
 
     public Weapons() {}
 
     //Main method
-    public void setWeaponsData(Texture t, float w, float h, float x, float y)
+    public void setWeaponsData(Texture t, float w, float h, float x, float y, float f)
     {
         this.sprite = new Sprite();
         this.position = new Vector2(x, y);
@@ -30,6 +31,7 @@ public class Weapons {
         this.sprite.setRegion(t);
         this.sprite.setPosition(this.position.x, this.position.y);
         this.inventoryShow = t;
+        this.knockBackForce = f;
     }
 
     //Get method

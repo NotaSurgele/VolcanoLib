@@ -14,8 +14,8 @@ public class BasicGun extends Weapons {
 
     ArrayList<Bullet> bulletLoader;
 
-    public BasicGun(Texture t, float w, float h, float x, float y) {
-        super(t, w, h, x, y);
+    public BasicGun(Texture t, float w, float h, float x, float y, float f) {
+        super(t, w, h, x, y, f);
         this.bulletLoader = new ArrayList<>();
     }
 

@@ -54,7 +54,8 @@ public abstract class Enemies {
         if (this.position.x > playerPos.x + player.getWidth())
             playerPos.x = playerPos.x + player.getWidth();
         this.direction.set(playerPos.x - this.position.x, playerPos.y - this.position.y);
-        this.position.add(this.direction.x * this.moveSpeed * Game.deltaTime, this.direction.y * this.moveSpeed * Game.deltaTime);
+        this.position.x += this.direction.x * this.moveSpeed * Game.deltaTime;
+        this.position.y += this.direction.y * this.moveSpeed * Game.deltaTime;
         this.sprite.setPosition(this.position.x, this.position.y);
     }
 
@@ -70,7 +71,8 @@ public abstract class Enemies {
             this.knockbackTime = 0.0f;
         }
         this.direction.set(playerPos.x - this.position.x, playerPos.y - this.position.y);
-        this.position.add(-this.direction.x * this.knockbackForce * Game.deltaTime, -this.direction.y * this.knockbackForce * Game.deltaTime);
+        this.position.x += -this.direction.x * this.knockbackForce * Game.deltaTime;
+        this.position.y += -this.direction.y * this.knockbackForce * Game.deltaTime;
         this.sprite.setPosition(this.position.x, this.position.y);
         this.knockbackTime += Game.deltaTime;
     }
@@ -127,7 +129,7 @@ public abstract class Enemies {
 
     public Vector2 getPosition()
     {
-        return this.position;
+        return this.position.cpy();
     }
 
     public float getHealth()

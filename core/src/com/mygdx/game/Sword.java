@@ -18,7 +18,6 @@ public class Sword extends Weapons {
 
     float angle = 0f;
     float goTo = angle + 130;
-    float force = 15f;
     public boolean isSlashing = false;
     public boolean isUltimate = false;
 
@@ -27,8 +26,8 @@ public class Sword extends Weapons {
     Polygon hitbox;
     ShapeRenderer hitboxRenderer;
 
-    public Sword(Texture t, float w, float h, float x, float y) {
-        super(t, w, h, x, y);
+    public Sword(Texture t, float w, float h, float x, float y, float f) {
+        super(t, w, h, x, y, f);
         this.hitboxRenderer = new ShapeRenderer();
         this.hitboxRenderer.setAutoShapeType(true);
         this.hitbox = new Polygon(new float[] {0, 0, this.getWeaponWidth() - 10, 30, this.getWeaponWidth() - 10, this.getWeaponHeight(), 0, this.getWeaponHeight() - 50});
@@ -64,7 +63,7 @@ public class Sword extends Weapons {
         for (Enemies e : MobSpawner.spawner) {
             if (this.hitbox.contains(e.getPosition().x, e.getPosition().y)) {
                 e.setKnockBackDirection(e.getDirectionVector().add(e.getPosition()));
-                e.setKnockBack(true, this.force);
+                e.setKnockBack(true, this.knockBackForce);
                 e.takeDamage(this.weaponDamage);
             }
         }
@@ -98,7 +97,7 @@ public class Sword extends Weapons {
 
     private void setSlashing()
     {
-        if (!this.isUltimate && !this.isSlashing && Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if (!this.isUltimate && !this.isSlashing && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             this.angle = this.sprite.getRotation() + 70f;
             this.goTo = this.angle - 130f;
             this.isSlashing = true;
