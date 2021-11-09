@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class MobSpawner {
 
-    final int MAXENTITY = 1;
+    final int MAXENTITY = 2;
     public static ArrayList<Enemies> spawner;
     Dungeon dj;
 
@@ -23,9 +23,13 @@ public class MobSpawner {
     private void entityCreator()
     {
         for (int i = this.MAXENTITY; i != 0; i--) {
-            //Slime s = new Slime(new Texture("enemies/slime/slime_idle_anim_f0.png"), 32, 32, 1f);
-            ExplodingGoblin eg = new ExplodingGoblin(new Texture("enemies/goblin/goblin_idle_anim_f0.png"), 64, 64, 2f);
-            spawner.add(eg);
+            if (i == 1) {
+                ExplodingGoblin eg = new ExplodingGoblin(new Texture("enemies/goblin/goblin_idle_anim_f0.png"), 64, 64, 3f);
+                spawner.add(eg);
+            } else {
+                Slime s = new Slime(new Texture("enemies/slime/slime_idle_anim_f0.png"), 32, 32, 1f);
+                spawner.add(s);
+            }
         }
     }
 
@@ -67,7 +71,7 @@ public class MobSpawner {
             Enemies e = spawner.get(i);
 
             e.update(batch, player);
-            if (spawner.size() != 0 && e.getHealth() <= 0) {
+            if (spawner.size() != 0 && e.isKilled()) {
                 spawner.remove(i);
             }
         }

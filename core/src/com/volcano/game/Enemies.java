@@ -18,6 +18,7 @@ public abstract class Enemies {
 
     private boolean isKnockback = false;
     private boolean killed = false;
+    private boolean hide = false;
 
     Vector2 direction;
     Vector2 knockback;
@@ -61,6 +62,11 @@ public abstract class Enemies {
         this.sprite.setPosition(this.position.x, this.position.y);
     }
 
+    public void hide(boolean h)
+    {
+        this.hide = h;
+    }
+
     public void takeDamage(float dmg)
     {
         this.health -= dmg;
@@ -89,7 +95,8 @@ public abstract class Enemies {
 
     public void draw(SpriteBatch batch)
     {
-        this.sprite.draw(batch);
+        if (!this.hide)
+            this.sprite.draw(batch);
     }
 
     public void killed()
@@ -183,8 +190,11 @@ public abstract class Enemies {
 
     public boolean isKilled()
     {
-        if (this.health <= 0)
-            this.killed = true;
         return this.killed;
+    }
+
+    public boolean isHide()
+    {
+        return this.hide;
     }
 }

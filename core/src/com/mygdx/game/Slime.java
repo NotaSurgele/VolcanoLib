@@ -63,11 +63,18 @@ public class Slime extends Enemies {
             this.knockBack(0.1f);
     }
 
+    private void kill()
+    {
+        if (this.getHealth() <= 0)
+            this.killed();
+    }
+
     @Override
     public void update(SpriteBatch batch, Player player)
     {
         this.stateTime += Game.deltaTime;
 
+        this.kill();
         this.setHitboxPosition();
         this.setDetectorPosition(this.range);
         this.checkKnockback(player);

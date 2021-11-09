@@ -74,10 +74,10 @@ public class ExplodingGoblin extends Enemies {
     public void checkBomb()
     {
         if (this.bomb != null) {
-            if (this.bomb.getState() == Bomb.State.EXPLOSE)
-                this.bomb.killGoblin(this);
-            if (this.bomb.getState() == Bomb.State.DEAD)
+            if (this.bomb.isFinished()) {
                 this.bomb = null;
+                this.killed();
+            }
         }
     }
 
@@ -95,9 +95,11 @@ public class ExplodingGoblin extends Enemies {
     public void update(SpriteBatch batch, Player player) {
         this.stateTime += Game.deltaTime;
 
-        this.setDetectorPosition(this.range);
-        this.focusPlayer(player);
-        this.render(batch);
+        if (!this.isHide()) {
+            this.setDetectorPosition(this.range);
+            this.focusPlayer(player);
+            this.render(batch);
+        }
         this.bomb(batch, player);
     }
 

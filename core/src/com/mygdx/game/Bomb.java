@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.volcano.game.Animator;
 import com.volcano.game.Enemies;
@@ -11,6 +12,7 @@ public class Bomb extends Weapons {
     Animator charging;
     Animator explosion;
 
+    Sprite effect;
     final String dir = "props_itens/";
     final String effectDir = "effects (new)/";
 
@@ -31,6 +33,8 @@ public class Bomb extends Weapons {
         this.charging = Animator.initializeAnimation(this.charging, this.dir + "bomb_anim_spritesheet.png", 10,1, 0.12f);
         this.explosion = Animator.initializeAnimation(this.explosion, this.effectDir + "explosion_anim_spritesheet.png", 7, 1, 0.07f);
         this.STATE = State.NORMAL;
+        this.effect = new Sprite();
+        this.effect.setRegion(t);
     }
 
     public void setBombState(State newState)
@@ -54,7 +58,6 @@ public class Bomb extends Weapons {
     private void explosionCD()
     {
         if (this.stateTime >= 3f) {
-            System.out.println("Hello World");
             this.STATE = State.EXPLOSE;
         }
     }
@@ -74,9 +77,7 @@ public class Bomb extends Weapons {
 
     private void checkHit(Player player)
     {
-        System.out.println(STATE);
-        if (this.explosion.isFinished(this.explosionStateTime)) {
-
+        if (this.STATE == State.EXPLOSE) {
             boolean playerHit = this.isEntityInsideExplosionHitbox(player.getSprite());
             if (playerHit) player.getDamaged(10f);
             for (int each = MobSpawner.spawner.size(); each != 0; each--) {
@@ -84,19 +85,22 @@ public class Bomb extends Weapons {
                 boolean hit = this.isEntityInsideExplosionHitbox(e.getSprite());
                 if (hit) {
                     e.takeDamage(100f);
+                    e.hide(true);
                 }
             }
-            this.STATE = State.DEAD;
         }
     }
 
-    public void killGoblin(ExplodingGoblin g)
+    public boolean isFinished()
     {
-        g.killed();
+        return (this.STATE == State.DEAD);
     }
 
     public void update(SpriteBatch batch, Player player)
     {
+        if (this.explosion.isFinished(explosionStateTime)) {
+            this.STATE = State.DEAD;
+        }
         this.setExplosionHitboxPosition(this.getWeaponX() + (this.getWeaponWidth() / 2), this.getWeaponY() + (this.getWeaponHeight() / 2));
         this.checkHit(player);
         this.checkState();
