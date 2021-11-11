@@ -1,8 +1,10 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.volcano.game.Animator;
 import com.volcano.game.Enemies;
 import com.volcano.game.Weapons;
@@ -11,6 +13,8 @@ public class Bomb extends Weapons {
 
     Animator charging;
     Animator explosion;
+
+    ShapeRenderer visualHitbox;
 
     final String dir = "props_itens/";
     final String effectDir = "effects (new)/";
@@ -32,6 +36,7 @@ public class Bomb extends Weapons {
         this.charging = Animator.initializeAnimation(this.charging, this.dir + "bomb_anim_spritesheet.png", 10,1, 0.12f);
         this.explosion = Animator.initializeAnimation(this.explosion, this.effectDir + "explosion_anim_spritesheet.png", 7, 1, 0.07f);
         this.STATE = State.NORMAL;
+        this.visualHitbox = new ShapeRenderer();
     }
 
     public void setBombState(State newState)
@@ -44,11 +49,12 @@ public class Bomb extends Weapons {
         return this.STATE;
     }
 
-    private void checkState()
+    private void checkState(SpriteBatch batch)
     {
         if (this.STATE == State.CHARGING) {
             this.stateTime += Game.deltaTime;
             this.explosionCD();
+            this.showHitbox(batch);
         }
     }
 
@@ -98,11 +104,22 @@ public class Bomb extends Weapons {
         return (this.STATE == State.DEAD);
     }
 
+    private void showHitbox(SpriteBatch batch)
+    {
+        batch.end();
+        this.visualHitbox.setProjectionMatrix(Game.camera.combined);
+        this.visualHitbox.begin(ShapeRenderer.ShapeType.Line);
+        this.visualHitbox.setColor(Color.RED);
+        this.visualHitbox.circle(this.getExplosionCircleX(), this.getExplosionCircleY(), this.getExplosionCircleRadius());
+        this.visualHitbox.end();
+        batch.begin();
+    }
+
     public void update(SpriteBatch batch, Player player, ExplodingGoblin self)
     {
         this.setExplosionHitboxPosition(this.getWeaponX() + (this.getWeaponWidth() / 2), this.getWeaponY() + (this.getWeaponHeight() / 2));
         this.checkHit(player, self);
-        this.checkState();
+        this.checkState(batch);
         this.animationController();
         this.render(batch);
     }

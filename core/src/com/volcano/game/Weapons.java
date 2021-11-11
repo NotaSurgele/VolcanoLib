@@ -121,6 +121,21 @@ public class Weapons {
         return this.sprite.getOriginY();
     }
 
+    public float getExplosionCircleX()
+    {
+        return this.explosionHitbox.x;
+    }
+
+    public float getExplosionCircleY()
+    {
+        return this.explosionHitbox.y;
+    }
+
+    public float getExplosionCircleRadius()
+    {
+        return this.explosionHitbox.radius;
+    }
+
     //Set method
 
     public void setWeaponPosition(Vector2 newPosition)

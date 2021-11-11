@@ -29,7 +29,7 @@ public class ExplodingGoblin extends Enemies {
         this.setDetector();
         this.idle = Animator.initializeAnimation(this.idle, this.dir + "goblin_idle_spritesheet.png", 6, 1, 0.07f);
         this.moving = Animator.initializeAnimation(this.moving, this.dir + "goblin_run_spritesheet.png", 6, 1, 0.07f);
-        this.bomb = new Bomb(new Texture(this.wDir + "bomb_anim_f0.png"), 64, 64, this.position.x, this.position.y, 15f, 350f);
+        this.bomb = new Bomb(new Texture(this.wDir + "bomb_anim_f0.png"), 64, 64, this.position.x, this.position.y, 15f, 150f);
     }
 
     private void setDetector()
@@ -91,17 +91,23 @@ public class ExplodingGoblin extends Enemies {
         }
     }
 
+    private void checkKnockBack(Player player)
+    {
+        if (!this.getKnockBack())
+            this.focusPlayer(player);
+        else
+            this.knockBack(0.1f);
+    }
+
     @Override
     public void update(SpriteBatch batch, Player player) {
         this.stateTime += Game.deltaTime;
-
-        System.out.println(this.getHealth());
 
         if (this.getHealth() <= 0)
             this.killed();
         if (!this.isHide()) {
             this.setDetectorPosition(this.range);
-            this.focusPlayer(player);
+            this.checkKnockBack(player);
             this.render(batch);
         }
         this.bomb(batch, player);
