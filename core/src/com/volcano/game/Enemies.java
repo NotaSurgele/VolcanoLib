@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Game;
@@ -40,6 +41,7 @@ public abstract class Enemies {
         this.position = new Vector2(0, 0);
         this.direction = new Vector2();
         this.knockback = new Vector2();
+        m = m * 100;
         this.moveSpeed = m;
     }
 
@@ -57,6 +59,9 @@ public abstract class Enemies {
         if (this.position.x > playerPos.x + player.getWidth())
             playerPos.x = playerPos.x + player.getWidth();
         this.direction.set(playerPos.x - this.position.x, playerPos.y - this.position.y);
+        float hyp = (float)Math.sqrt(this.direction.x * this.direction.x + this.direction.y * this.direction.y);
+        this.direction.x /= hyp;
+        this.direction.y /= hyp;
         this.position.x += this.direction.x * this.moveSpeed * Game.deltaTime;
         this.position.y += this.direction.y * this.moveSpeed * Game.deltaTime;
         this.sprite.setPosition(this.position.x, this.position.y);
