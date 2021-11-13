@@ -96,7 +96,7 @@ public class ExplodingGoblin extends Enemies {
         if (!this.getKnockBack())
             this.focusPlayer(player);
         else
-            this.knockBack(0.1f);
+            this.knockBack(0.15f);
     }
 
     @Override

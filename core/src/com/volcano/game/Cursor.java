@@ -54,7 +54,7 @@ public class Cursor {
         this.position = new Vector2();
         this.position3D = new Vector3(this.position, 0);
         this.sprite.setRegion(t);
-        this.sprite.setBounds(0, 0, width, height);
+        this.sprite.setBounds(Gdx.graphics.getWidth() / 2f, Gdx.graphics.getHeight() / 2f, width, height);
         this.setCursorCoordinate();
         this.position.x = this.sprite.getX();
         this.position.y = this.sprite.getY();

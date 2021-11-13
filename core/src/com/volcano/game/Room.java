@@ -14,8 +14,8 @@ public class Room {
     int width;
     int height;
 
-    int minWidth = 26;
-    int minHeight = 26;
+    int minWidth = 42;
+    int minHeight = 42;
 
     int maxWidth = 56;
     int maxHeight = 56;

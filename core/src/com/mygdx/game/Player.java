@@ -130,7 +130,7 @@ public class Player extends Players {
 
     public void getDamaged(float dmg)
     {
-        System.out.println("Hit");
+        return;
     }
 
     public void update(SpriteBatch batch, float deltaTime, Cursor cursor, LayerData layerData)
@@ -142,7 +142,7 @@ public class Player extends Players {
             this.oldY = this.position.y;
         }
         this.animationController();
-        this.Move(false, this.moveSpeed, runningSpeed, deltaTime);
+        this.Move(this.moveSpeed, runningSpeed, deltaTime);
         this.collisionCheckPoint(layerData);
         this.flipPlayerWithMouse(cursor);
         this.flipPlayerWithKeyboard();

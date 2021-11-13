@@ -15,6 +15,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.volcano.game.*;
 
+import java.io.IOException;
+
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
 	Cursor cursor;
@@ -22,6 +24,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	Menu menu;
 	Scene scene;
 	Debug debug;
+	Control test;
 
 	public void create () {
 		batch = new SpriteBatch();
@@ -30,11 +33,16 @@ public class MyGdxGame extends ApplicationAdapter {
 		menu = new Menu(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		scene = new Scene();
 		debug = new Debug();
+		try {
+			this.test = new Control();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(0, 0, 0, 0);
+		ScreenUtils.clear(0,0,0,0);
 		batch.begin();
 		cursor.update(batch, Game.camera);
 		scene.update(menu, game, cursor);

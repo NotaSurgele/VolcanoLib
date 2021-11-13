@@ -41,6 +41,7 @@ public class Scene {
     public void playGame(Game game, Cursor cursor)
     {
         this.setScenes(SCENES.GAME);
+        game.load();
         game.play(cursor);
     }
 

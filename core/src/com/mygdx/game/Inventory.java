@@ -48,7 +48,7 @@ public class Inventory {
         this.botLeft = new Texture(this.uiPath + "Inventory_select_bottom_left.png");
         this.botRight = new Texture(this.uiPath + "Inventory_select_bottom_right.png");
         this.screenPosition = new Vector3();
-        this.sword = new Sword(new Texture("heroes/knight/weapon_sword_1.png"), 70, 70, 0, 0, 10f);
+        this.sword = new Sword(new Texture("heroes/knight/weapon_sword_1.png"), 70, 70, 0, 0, 13f);
         this.basicGun = new BasicGun(new Texture("Weapons/BasicGun.png"), 50, 50, 0, 0, 0);
         this.addGame();
         this.basic = t;
@@ -150,7 +150,8 @@ public class Inventory {
 
     public void update(SpriteBatch batch, Vector2 position, Cursor cursor)
     {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB)) Inventory.inventoryIsOpen = !Inventory.inventoryIsOpen;
+        if (Gdx.input.isKeyJustPressed(Input.Keys.TAB))
+            Inventory.inventoryIsOpen = !Inventory.inventoryIsOpen;
         if (Inventory.inventoryIsOpen) {
             this.setCurrentWeapon();
             this.sprite.setPosition(position.x, position.y - 100f);

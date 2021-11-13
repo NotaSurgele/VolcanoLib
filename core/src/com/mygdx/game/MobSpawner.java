@@ -41,6 +41,7 @@ public class MobSpawner {
     private void setRandomSpawn(Enemies e)
     {
         Room currentRoom = this.dj.getCurrentRoom();
+
         float minX = (currentRoom.getRoomX()) * Dungeon.tileSize;
         float minY = (currentRoom.getRoomY()) * Dungeon.tileSize;
         float maxX = (currentRoom.getRoomX() + currentRoom.getWidth()) * Dungeon.tileSize;

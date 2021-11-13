@@ -78,9 +78,12 @@ public class Sword extends Weapons {
 
     public void showHitbox(SpriteBatch batch)
     {
+        batch.end();
         this.hitboxRenderer.begin(ShapeRenderer.ShapeType.Line);
+        this.hitboxRenderer.setProjectionMatrix(Game.camera.combined);
         this.hitboxRenderer.polygon(this.hitbox.getTransformedVertices());
         this.hitboxRenderer.end();
+        batch.begin();
     }
 
     private void checkSlashing()
@@ -97,7 +100,7 @@ public class Sword extends Weapons {
 
     private void setSlashing()
     {
-        if (!this.isUltimate && !this.isSlashing && Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+        if (!this.isUltimate && !this.isSlashing && Gdx.input.isButtonPressed(Control.ATTACK1)) {
             this.angle = this.sprite.getRotation() + 70f;
             this.goTo = this.angle - 130f;
             this.isSlashing = true;
@@ -106,7 +109,7 @@ public class Sword extends Weapons {
 
     private void setUltimate()
     {
-        if (!this.isSlashing && !this.isUltimate && Gdx.input.isButtonJustPressed(Input.Buttons.RIGHT)) {
+        if (!this.isSlashing && !this.isUltimate && Gdx.input.isButtonJustPressed(Control.ATTACK2)) {
             this.angle = this.sprite.getRotation();
             this.goTo = this.angle - 360f;
             this.isUltimate = true;
