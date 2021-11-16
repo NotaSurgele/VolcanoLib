@@ -52,7 +52,7 @@ public class Animator {
 
     public TextureRegion playAnimationToSprite(Sprite sprite, float stateTime, boolean loop)
     {
-        TextureRegion currentFrame = this.animation.getKeyFrame(stateTime, loop);
+        this.currentFrame = this.animation.getKeyFrame(stateTime, loop);
 
         this.setFrameToSprite(sprite, currentFrame);
         return currentFrame;
@@ -107,14 +107,14 @@ public class Animator {
 
     public float getCurrentFrameWidth(float stateTime, boolean isLooping)
     {
-        TextureRegion currentFrame = this.animation.getKeyFrame(stateTime, isLooping);
+        this.currentFrame = this.animation.getKeyFrame(stateTime, isLooping);
 
         return currentFrame.getRegionWidth();
     }
 
     public float getCurrentFrameHeight(float stateTime, boolean isLooping)
     {
-        TextureRegion currentFrame = this.animation.getKeyFrame(stateTime, isLooping);
+        this.currentFrame = this.animation.getKeyFrame(stateTime, isLooping);
 
         return currentFrame.getRegionHeight();
     }
@@ -127,6 +127,11 @@ public class Animator {
     public float getFrameHeight(TextureRegion frame)
     {
         return frame.getRegionHeight();
+    }
+
+    public int getKeyFrameIndex(float stateTime)
+    {
+        return this.animation.getKeyFrameIndex(stateTime);
     }
 
     //Static method
@@ -144,8 +149,17 @@ public class Animator {
         return this.animation.isAnimationFinished(stateTime);
     }
 
+    public boolean isGivenFrame(float stateTime, int givenFrame)
+    {
+        int frame = this.animation.getKeyFrameIndex(stateTime);
+
+        return frame == givenFrame;
+    }
+
     public void dispose()
     {
         this.texture.dispose();
     }
+
+
 }

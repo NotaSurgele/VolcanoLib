@@ -84,16 +84,15 @@ public class Game extends Scene {
         STATE = newState;
     }
 
-    public void checkCutScene()
+    public void checkCutScene(SpriteBatch batch)
     {
         if (STATE == State.SPAWNING)
-            this.cutScene.spawning(this.player.getPositionY() - 500f, this.player.getPositionY(), 5f);
+            this.cutScene.spawning(this.player.getPositionY() - 500f, this.player.getPositionY(), 5f, batch, this.player);
     }
 
     public void play(Cursor cursor)
     {
         if (!this.isLoaded) return;
-        this.checkCutScene();
         Game.deltaTime = Gdx.graphics.getDeltaTime();
 
         if (Inventory.inventoryIsOpen)
@@ -104,6 +103,7 @@ public class Game extends Scene {
         this.dj.update(this.batch, this.player, this.triggerUI);
         this.mobSpawner.getDungeon(dj);
         this.mobSpawner.update(this.batch, this.player);
+        this.checkCutScene(this.batch);
         if (STATE == State.NOTHING)
             this.player.update(this.batch, Game.deltaTime, cursor, this.dj.layerData);
         this.cameraHandler();

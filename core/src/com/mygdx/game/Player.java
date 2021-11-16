@@ -35,6 +35,7 @@ public class Player extends Players {
         this.moving = Animator.initializeAnimation(this.idle, "heroes/knight/knight_run_spritesheet.png", 6, 1, 0.07f);
         this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 50, 50, "F", "Press F to use !", 0.2f);
         this.inventory = new Inventory(new Texture("ui (new)/Inventory_notSelected.png"), 0, 0, 400, 400);
+        this.idle.playAnimationToSprite(this.sprite, this.stateTime, false);
     }
 
     public Player(Sprite sprite, Vector2 position) {
