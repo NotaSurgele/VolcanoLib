@@ -3,7 +3,10 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.volcano.game.LayerData;
 import com.volcano.game.MazeGenerator;
@@ -26,6 +29,9 @@ public class Dungeon {
     Texture wallRight;
     Texture wallDown;
     Texture extract;
+    Texture[][] mapTextureArray;
+
+    TextureRegion test;
 
     public static final int tileSize = 32;
     int width = 250;
@@ -40,6 +46,7 @@ public class Dungeon {
 
     public Dungeon() {
         this.map = new int[this.height][this.width];
+        this.mapTextureArray = new Texture[this.height][this.width];
         this.floor = new Texture(this.floorPath + "floor_2.png");
         this.wallTop = new Texture(this.wallPath + "wall_top_1.png");
         this.wallRight = new Texture(this.wallPath + "wall_bottom_inner_right.png");
@@ -47,6 +54,7 @@ public class Dungeon {
         this.wallLeft = new Texture(this.wallPath + "wall_bottom_inner_left.png");
         this.extract = new Texture(this.floorPath + "stair_nextlevel.png");
         this.rooms = new ArrayList<Room>();
+        this.test = new TextureRegion();
         this.load();
     }
 
@@ -65,11 +73,34 @@ public class Dungeon {
                 this.rooms.add(r);
             }
         }
-
+        this.loadTextureMapArray();
         this.layerData = new LayerData(this.map);
     }
 
-    public boolean stairsCheck(int line, int each, int[][]layer)
+    private void loadTextureMapArray()
+    {
+        int h = this.height;
+        int w = this.width;
+
+        for (int line = 0; line != h; line++) {
+
+            for (int each = 0; each != w; each++) {
+
+                if (this.map[line][each] != -1) {
+
+                    if (this.map[line][each] == -2) this.mapTextureArray[line][each] = this.wallDown;
+                    else if (this.map[line][each] == -3) this.mapTextureArray[line][each] = this.wallRight;
+                    else if (this.map[line][each] == -4) this.mapTextureArray[line][each] = this.wallTop;
+                    else if (this.map[line][each] == -5) this.mapTextureArray[line][each] = this.wallLeft;
+                    else if (this.map[line][each] == 1) this.mapTextureArray[line][each] = this.floor;
+                    else if (this.map[line][each] == 2) this.mapTextureArray[line][each] = this.extract;
+                } else
+                    this.mapTextureArray[line][each] = null;
+            }
+        }
+    }
+
+    private boolean stairsCheck(int line, int each, int[][]layer)
     {
         if (layer[line][each] == 2) {
             return true;
@@ -77,7 +108,7 @@ public class Dungeon {
         return false;
     }
 
-    public void checkStairs(Player player, SpriteBatch batch, TriggerUI triggerUI)
+    private void checkStairs(Player player, SpriteBatch batch, TriggerUI triggerUI)
     {
         float TriggerUIX = player.getPositionX() + player.getWidth() + 10f;
         float TriggerUIY = player.getPositionY() + (player.getHeight() / 2);
@@ -125,13 +156,8 @@ public class Dungeon {
 
         for (int line = 0; line != h; line++) {
             for (int each = 0; each != w; each++) {
-                if (this.map[line][each] != -1) {
-                    if (this.map[line][each] == -2) batch.draw(this.wallDown, x, y, tileSize, tileSize);
-                    else if (this.map[line][each] == -3) batch.draw(this.wallRight, x, y, tileSize, tileSize);
-                    else if (this.map[line][each] == -4) batch.draw(this.wallTop, x, y, tileSize, tileSize);
-                    else if (this.map[line][each] == -5) batch.draw(this.wallLeft, x, y, tileSize, tileSize);
-                    else if (this.map[line][each] == 1) batch.draw(this.floor, x, y, tileSize, tileSize);
-                    else if (this.map[line][each] == 2) batch.draw(this.extract, x, y, tileSize, tileSize);
+                if (this.mapTextureArray[line][each] != null) {
+                    batch.draw(this.mapTextureArray[line][each], x, y, tileSize, tileSize);
                 }
                 x += tileSize;
             }
