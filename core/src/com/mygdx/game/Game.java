@@ -64,6 +64,7 @@ public class Game extends Scene {
     public void load()
     {
         if (this.isLoaded) return;
+        System.out.println("Hello World");
         this.sprite = new Sprite();
         this.sprite.setBounds(500, 200, 70, 70);
         this.player = new Player(this.sprite, 70, 70);
@@ -99,7 +100,7 @@ public class Game extends Scene {
             Game.deltaTime *= Game.slowTime;
         this.batch.setProjectionMatrix(camera.combined);
         this.batch.begin();
-        this.debug.cameraZoom(camera);
+        //this.debug.cameraZoom(camera);
         this.dj.update(this.batch, this.player, this.triggerUI);
         this.mobSpawner.getDungeon(dj);
         this.mobSpawner.update(this.batch, this.player);

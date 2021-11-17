@@ -15,7 +15,7 @@ public class BlueMage extends Enemies {
 
     public BlueMage(Texture t, float w, float h, float m) {
         super(t, w, h, m);
-        this.move = Animator.initializeAnimation(this.move, this.dir + "Blue-Mage-spritesheet.png", 3, 1, 0.10f);
+        this.move = Animator.initializeAnimation(this.move, this.dir + "Blue-Mage-attack-spritesheet.png", 17, 1, 0.10f);
     }
 
     @Override

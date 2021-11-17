@@ -45,9 +45,10 @@ public class Scene {
         game.play(cursor);
     }
 
-    public void exitGame()
+    public void exitGame(Menu menu)
     {
         this.setScenes(SCENES.NULL);
+        menu.dispose();
         Gdx.app.exit();
     }
 
@@ -56,14 +57,16 @@ public class Scene {
         switch (this.scenes) {
             case MENU: this.playMenu(menu, cursor); break;
             case GAME: this.playGame(game, cursor); break;
-            case NULL: this.exitGame(); break;
+            case NULL: this.exitGame(menu); break;
             default: break;
         }
     }
 
     public void dispose(Menu menu, Game game)
     {
-        menu.dispose();
-        game.dispose();
+        if (this.scenes != SCENES.NULL) {
+            menu.dispose();
+            game.dispose();
+        }
     }
 }
