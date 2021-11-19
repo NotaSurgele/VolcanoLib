@@ -27,8 +27,6 @@ public class Weapons {
         this.setWeaponsData(t, w, h, x, y, f, explosiveRadius);
     }
 
-    public Weapons() {}
-
     //Main method
     public void setWeaponsData(Texture t, float w, float h, float x, float y, float f)
     {

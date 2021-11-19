@@ -14,7 +14,7 @@ import org.graalvm.compiler.loop.MathUtil;
 
 import static java.lang.Math.sqrt;
 
-public class Bullet {
+public abstract class Bullet {
 
     Sprite sprite;
     Vector2 position;
@@ -33,6 +33,11 @@ public class Bullet {
         this.setBullet(t, w, h, c);
     }
 
+    public Bullet(Texture t, float w, float h, float x, float y)
+    {
+        this.setBullet(t, w, h, x, y);
+    }
+
     private void setBullet(Texture t, float w, float h, Cursor c)
     {
         this.sprite = new Sprite();
@@ -43,6 +48,16 @@ public class Bullet {
         this.origin = new Vector2(this.sprite.getOriginX(), this.sprite.getOriginY());
         this.setBulletPosition();
         this.bulletMoving(c);
+    }
+
+    private void setBullet(Texture t, float w, float h, float x, float y)
+    {
+        this.sprite = new Sprite();
+        this.sprite.setRegion(t);
+        this.sprite.setBounds(x, y, w, h);
+        this.position = new Vector2(this.sprite.getX(), this.sprite.getY());
+        this.direction = new Vector2();
+        this.origin = new Vector2(this.sprite.getOriginX(), this.sprite.getOriginY());
     }
 
     public void destroyBullet(LayerData layerData)
@@ -97,4 +112,6 @@ public class Bullet {
         this.sprite.setPosition(this.position.x, this.position.y);
         this.sprite.draw(batch);
     }
+
+    public abstract void update(SpriteBatch batch, Player player, float x, float y);
 }

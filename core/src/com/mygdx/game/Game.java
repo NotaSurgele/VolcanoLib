@@ -64,7 +64,6 @@ public class Game extends Scene {
     public void load()
     {
         if (this.isLoaded) return;
-        System.out.println("Hello World");
         this.sprite = new Sprite();
         this.sprite.setBounds(500, 200, 70, 70);
         this.player = new Player(this.sprite, 70, 70);

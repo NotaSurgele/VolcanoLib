@@ -156,9 +156,8 @@ public class Dungeon {
 
         for (int line = 0; line != h; line++) {
             for (int each = 0; each != w; each++) {
-                if (this.mapTextureArray[line][each] != null) {
+                if (this.mapTextureArray[line][each] != null)
                     batch.draw(this.mapTextureArray[line][each], x, y, tileSize, tileSize);
-                }
                 x += tileSize;
             }
             y += tileSize;
