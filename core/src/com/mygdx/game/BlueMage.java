@@ -14,7 +14,9 @@ public class BlueMage extends Enemies {
     Fireball fireBall;
 
     float stateTime;
-    final int shootingCD = 3;
+    float cd;
+    final int shootingCD = 5;
+
 
     State state;
 
@@ -31,9 +33,28 @@ public class BlueMage extends Enemies {
         this.move = Animator.initializeAnimation(this.move, this.dir + "Blue-Mage-spritesheet.png", 4, 1, 0.07f);
         this.attack = Animator.initializeAnimation(this.attack, this.dir + "Blue-Mage-attack-spritesheet.png", 17, 1, 0.10f);
         this.fireBall = new Fireball(new Texture("enemies/blue-mage/Blue-Mage_Fireball_Spawning.png"), 128, 128, 0, 0);
+        this.state = State.IDLE;
     }
 
     private void animationController()
+    {
+        if (this.state == State.IDLE || this.state == State.CHASING)
+            this.move.playAnimationToSprite(this.sprite, this.stateTime, true);
+        else if (this.state == State.ATTACKING)
+            this.move.playAnimationToSprite(this.sprite, this.stateTime, false);
+    }
+
+    private void checkShootingCD()
+    {
+        if (this.fireBall.hasShoot())
+            this.cd += Game.deltaTime;
+        if (this.cd >= this.shootingCD) {
+            this.state = State.IDLE;
+            this.cd = 0f;
+        }
+    }
+
+    private void stateController()
     {
 
     }
@@ -42,8 +63,7 @@ public class BlueMage extends Enemies {
     public void update(SpriteBatch batch, Player player) {
         this.stateTime += Game.deltaTime;
 
-        this.followPlayer(player);
-        this.move.playAnimationToSprite(this.sprite, this.stateTime, true);
+        this.animationController();
         this.draw(batch);
         this.fireBall.update(batch, player, this.getPosition().x, this.getPosition().y);
 

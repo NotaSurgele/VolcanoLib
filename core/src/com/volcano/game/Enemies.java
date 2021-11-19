@@ -98,6 +98,14 @@ public abstract class Enemies {
         detector.setPosition(x, y);
     }
 
+    public void setSonarPosition(Sonar sonar)
+    {
+        float x = this.position.x + (this.getWidth() / 2);
+        float y = this.position.y + (this.getHeight() / 2);
+
+        sonar.setPosition(x, y);
+    }
+
     public void draw(SpriteBatch batch)
     {
         if (!this.hide)

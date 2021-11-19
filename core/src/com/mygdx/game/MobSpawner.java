@@ -23,8 +23,10 @@ public class MobSpawner {
     private void entityCreator()
     {
         for (int i = this.MAXENTITY; i != 0; i--) {
-            BlueMage bm = new BlueMage(new Texture("enemies/blue-mage/Blue-Mage-spritesheet.png"), 126, 126, 1f);
-            spawner.add(bm);
+            Slime s = new Slime(new Texture("enemies/slime/slime_idle_anim_f0.png"), 32, 32, 1f);
+            spawner.add(s);
+            /*BlueMage bm = new BlueMage(new Texture("enemies/blue-mage/Blue-Mage-spritesheet.png"), 126, 126, 1f);
+            spawner.add(bm);*/
             /*if (i == 1) {
                 ExplodingGoblin eg = new ExplodingGoblin(new Texture("enemies/goblin/goblin_idle_anim_f0.png"), 64, 64, 3f);
                 spawner.add(eg);

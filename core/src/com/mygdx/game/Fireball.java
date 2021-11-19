@@ -16,9 +16,11 @@ public class Fireball extends Bullet {
 
     float stateTime;
     float charginTime;
+    float lifeTime;
 
     boolean hasSpawn = false;
     boolean goTo = false;
+    boolean isDead = false;
 
     public Fireball(Texture t, float w, float h, float x, float y) {
         super(t, w, h, x, y);
@@ -69,11 +71,29 @@ public class Fireball extends Bullet {
         }
     }
 
+    private void checkLifeTime()
+    {
+        if (lifeTime >= 5f)
+            this.isDead = true;
+    }
+
+    public boolean hasFinished()
+    {
+        return this.isDead;
+    }
+
+    public boolean hasShoot()
+    {
+        return this.goTo;
+    }
+
     @Override
     public void update(SpriteBatch batch, Player player, float x, float y)
     {
         this.stateTime += Game.deltaTime;
+        this.lifeTime += Game.deltaTime;
 
+        this.checkLifeTime();
         this.checkCharginTime(player);
         this.animationController();
         this.checkPosition(x, y);

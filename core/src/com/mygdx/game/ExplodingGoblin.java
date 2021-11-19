@@ -5,10 +5,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.volcano.game.Animator;
 import com.volcano.game.Enemies;
+import com.volcano.game.Sonar;
 
 public class ExplodingGoblin extends Enemies {
 
-    Circle range;
+    Sonar sonar;
 
     //Weapons
     Bomb bomb;
@@ -26,25 +27,16 @@ public class ExplodingGoblin extends Enemies {
     public ExplodingGoblin(Texture t, float w, float h, float m) {
         super(t, w, h, m);
         this.setHitbox();
-        this.setDetector();
+        this.sonar = new Sonar(500f);
         this.idle = Animator.initializeAnimation(this.idle, this.dir + "goblin_idle_spritesheet.png", 6, 1, 0.07f);
         this.moving = Animator.initializeAnimation(this.moving, this.dir + "goblin_run_spritesheet.png", 6, 1, 0.07f);
         this.bomb = new Bomb(new Texture(this.wDir + "bomb_anim_f0.png"), 64, 64, this.position.x, this.position.y, 15f, 150f);
     }
 
-    private void setDetector()
-    {
-        float x = this.position.x + (this.getWidth() / 2);
-        float y = this.position.y + (this.getHeight() / 2);
-
-        this.range = new Circle();
-        this.range.setPosition(x, y);
-        this.range.setRadius(500f);
-    }
 
     private void focusPlayer(Player player)
     {
-        this.isChasing = this.isPlayerInsideCircle(this.range, player);
+        this.isChasing = this.sonar.isPlayersDetected(player);
         if (this.isChasing) {
             if (bomb == null) return;
             if (this.bomb.getState() == Bomb.State.CHARGING)
@@ -106,7 +98,7 @@ public class ExplodingGoblin extends Enemies {
         if (this.getHealth() <= 0)
             this.killed();
         if (!this.isHide()) {
-            this.setDetectorPosition(this.range);
+            this.setSonarPosition(this.sonar);
             this.checkKnockBack(player);
             this.render(batch);
         }
