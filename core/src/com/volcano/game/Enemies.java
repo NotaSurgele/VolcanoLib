@@ -179,6 +179,11 @@ public abstract class Enemies {
         return this.position.cpy();
     }
 
+    public Vector2 getPositionCentered()
+    {
+        return new Vector2(this.position.x + (this.getWidth() / 2), this.position.y + (this.getHeight() / 2));
+    }
+
     public float getHealth()
     {
         return this.health;

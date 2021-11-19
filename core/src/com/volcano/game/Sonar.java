@@ -24,4 +24,15 @@ public class Sonar {
     {
         return this.detector.contains(p.getPositionVector());
     }
+
+    public boolean isCoordinateContains(Vector2 coordinate)
+    {
+        return this.detector.contains(coordinate);
+    }
+
+    public boolean isCoordinateContains(float x, float y)
+    {
+        return this.detector.contains(x, y);
+    }
+
 }
