@@ -48,10 +48,10 @@ public class BlueMage extends Enemies {
 
     private void checkShootingCD()
     {
-        if (this.fireBall == null) return;
-        if (this.fireBall.hasShoot()) {
+        if (this.fireBall == null)
+            return;
+        if (this.fireBall.hasShoot())
             this.cd += Game.deltaTime;
-        }
         if (this.cd >= this.shootingCD) {
             this.state = State.IDLE;
             this.cd = 0f;

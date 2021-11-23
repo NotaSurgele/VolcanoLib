@@ -99,7 +99,7 @@ public class Game extends Scene {
             Game.deltaTime *= Game.slowTime;
         this.batch.setProjectionMatrix(camera.combined);
         this.batch.begin();
-        //this.debug.cameraZoom(camera);
+        this.debug.cameraZoom(camera);
         this.dj.update(this.batch, this.player, this.triggerUI);
         this.mobSpawner.getDungeon(dj);
         this.mobSpawner.update(this.batch, this.player);

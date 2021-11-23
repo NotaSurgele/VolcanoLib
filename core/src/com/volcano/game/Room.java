@@ -27,9 +27,6 @@ public class Room {
 
     public int isRoomAdded = 0;
 
-    float x = startX;
-    float y = startY;
-
     int roomX = 0;
     int roomY = 0;
 
@@ -132,10 +129,7 @@ public class Room {
         return false;
     }
 
-    public int getRoomX()
-    {
-        return this.roomX;
-    }
+    public int getRoomX() { return this.roomX; }
 
     public int getRoomY()
     {

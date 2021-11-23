@@ -6,8 +6,9 @@ com/mygdx/game/BasicGun.java
 com/mygdx/game/Game.java
  com.mygdx.game.Game
  com.mygdx.game.Game$State
-com/mygdx/game/Slime.java
- com.mygdx.game.Slime
+com/mygdx/game/BlueMage.java
+ com.mygdx.game.BlueMage
+ com.mygdx.game.BlueMage$State
 com/mygdx/game/Dungeon.java
  com.mygdx.game.Dungeon
 com/volcano/game/Animator.java
@@ -30,8 +31,8 @@ com/volcano/game/LayerData.java
  com.volcano.game.LayerData
 com/volcano/game/Weapons.java
  com.volcano.game.Weapons
-com/volcano/game/MazeGenerator.java
- com.volcano.game.MazeGenerator
+com/mygdx/game/MobSpawner.java
+ com.mygdx.game.MobSpawner
 com/volcano/game/Button.java
  com.volcano.game.Button
  com.volcano.game.Button$State
@@ -62,8 +63,7 @@ com/mygdx/game/Control.java
 com/mygdx/game/Bomb.java
  com.mygdx.game.Bomb
  com.mygdx.game.Bomb$State
-com/mygdx/game/MobSpawner.java
- com.mygdx.game.MobSpawner
-com/mygdx/game/BlueMage.java
- com.mygdx.game.BlueMage
- com.mygdx.game.BlueMage$State
+com/mygdx/game/Slime.java
+ com.mygdx.game.Slime
+com/volcano/game/MazeGenerator.java
+ com.volcano.game.MazeGenerator

@@ -21,13 +21,11 @@ public abstract class Bullet {
     Vector2 direction;
     Vector2 origin;
 
-    float bulletSpeed = 0.5f;
+    float bulletSpeed = 1000f;
 
     float lifeTime;
     float maxLifeTime = 2.0f;
     boolean isDead = false;
-
-    Rectangle hitbox;
 
     public Bullet(Texture t, float w, float h, Cursor c) {
         this.setBullet(t, w, h, c);
@@ -76,9 +74,7 @@ public abstract class Bullet {
         int x2 = (int)(this.position.x + Dungeon.tileSize) / Dungeon.tileSize;
         int y2 = (int)(this.position.y + Dungeon.tileSize) / Dungeon.tileSize;
 
-        if (layerData.layer[y1][x1] < 0)
-            this.isDead = true;
-        else if (layerData.layer[y2][x2] < 0)
+        if (layerData.layer[y1][x1] < 0 || layerData.layer[y2][x2] < 0)
             this.isDead = true;
     }
 
@@ -107,8 +103,13 @@ public abstract class Bullet {
     public void update(SpriteBatch batch, LayerData layerData)
     {
         this.lifeTime += Game.deltaTime;
+
         this.destroyBullet(layerData);
-        this.position.add(this.direction.x * this.bulletSpeed * Game.deltaTime, this.direction.y * this.bulletSpeed * Game.deltaTime);
+        float hyp = (float)Math.sqrt(this.direction.x * this.direction.x + this.direction.y * this.direction.y);
+        this.direction.x /= hyp;
+        this.direction.y /= hyp;
+        this.position.x += this.direction.x * this.bulletSpeed * Game.deltaTime;
+        this.position.y += this.direction.y * this.bulletSpeed * Game.deltaTime;
         this.sprite.setPosition(this.position.x, this.position.y);
         this.sprite.draw(batch);
     }

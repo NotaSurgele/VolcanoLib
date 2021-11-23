@@ -154,10 +154,21 @@ public class Dungeon {
         int x = 0;
         int y = 0;
 
+        Room r = this.getCurrentRoom();
+
         for (int line = 0; line != h; line++) {
+            int xMin = r.getRoomX();
+            int yMin = r.getRoomY();
+
+            int xMax = (r.getRoomX() + r.getWidth());
+            int yMax = (r.getRoomY() + r.getHeight());
+
             for (int each = 0; each != w; each++) {
-                if (this.mapTextureArray[line][each] != null)
-                    batch.draw(this.mapTextureArray[line][each], x, y, tileSize, tileSize);
+
+                if (this.mapTextureArray[line][each] != null) {
+                    if ((line >= yMin && line <= yMax) && (each >= xMin && each <= xMax))
+                        batch.draw(this.mapTextureArray[line][each], x, y, tileSize, tileSize);
+                }
                 x += tileSize;
             }
             y += tileSize;
