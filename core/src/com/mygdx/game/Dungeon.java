@@ -21,7 +21,11 @@ import java.util.ArrayList;
 public class Dungeon {
 
     int[][] map;
+    int[][] propsLayer;
+
     public LayerData layerData;
+
+    PropsLoader propsLoader;
 
     Texture floor;
     Texture wallLeft;
@@ -30,8 +34,6 @@ public class Dungeon {
     Texture wallDown;
     Texture extract;
     Texture[][] mapTextureArray;
-
-    TextureRegion test;
 
     public static final int tileSize = 32;
     int width = 250;
@@ -54,7 +56,7 @@ public class Dungeon {
         this.wallLeft = new Texture(this.wallPath + "wall_bottom_inner_left.png");
         this.extract = new Texture(this.floorPath + "stair_nextlevel.png");
         this.rooms = new ArrayList<Room>();
-        this.test = new TextureRegion();
+        this.propsLoader = new PropsLoader();
         this.load();
     }
 
@@ -66,7 +68,7 @@ public class Dungeon {
             }
         }
         for (int i = 0; i != this.howMuchRoom; ) {
-            Room r = new Room();
+            Room r = new Room(this.propsLoader);
             this.map = r.addRoomInMap(this.map, this.width, this.height);
             if (r.isRoomAdded == 1) {
                 i += r.isRoomAdded;

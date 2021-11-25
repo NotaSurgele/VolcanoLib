@@ -202,10 +202,6 @@ public abstract class Enemies {
     public abstract void update(SpriteBatch batch, Player player);
 
     //Boolean
-    public boolean isPlayerInsideCircle(Circle c, Player p)
-    {
-        return (c.contains(p.getPositionVector()));
-    }
 
     public boolean isKilled()
     {

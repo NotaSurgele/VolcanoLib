@@ -29,6 +29,7 @@ public class BlueMage extends Enemies {
 
     final String dir = "enemies/blue-mage/";
 
+
     public BlueMage(Texture t, float w, float h, float m) {
         super(t, w, h, m);
         this.move = Animator.initializeAnimation(this.move, this.dir + "Blue-Mage-spritesheet.png", 4, 1, 0.07f);

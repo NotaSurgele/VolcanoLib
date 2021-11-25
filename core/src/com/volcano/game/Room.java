@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Dungeon;
+import com.mygdx.game.Props;
+import com.mygdx.game.PropsLoader;
 
 import java.util.ArrayList;
 
@@ -32,10 +34,14 @@ public class Room {
 
     int[][] layer;
 
-    public Room() {
+    //Props
+    PropsLoader propsLoader;
+
+    public Room(PropsLoader pL) {
         this.setRoomSize();
         this.layer = new int[this.height][this.width];
         this.loadLayer();
+        this.propsLoader = pL;
     }
 
     public Room(int startX, int startY)
