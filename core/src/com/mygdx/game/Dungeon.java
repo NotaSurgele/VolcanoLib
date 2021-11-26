@@ -84,7 +84,7 @@ public class Dungeon {
             }
         }
         this.loadTextureMapArray();
-        this.layerData = new LayerData(this.map);
+        this.layerData = new LayerData(this.propsLayer);
     }
 
     private void loadTextureMapArray()
