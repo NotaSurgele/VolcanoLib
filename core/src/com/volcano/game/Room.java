@@ -205,10 +205,10 @@ public class Room {
             int y = 0;
 
             int minX = this.roomX;
-            int maxX = this.roomX + this.width;
+            int maxX = this.roomX + this.width - 1;
 
             int minY = this.roomY;
-            int maxY = this.roomY + this.height;
+            int maxY = this.roomY + this.height - 1;
 
             switch (p.getType()) {
                 case FLOOR:
@@ -217,7 +217,7 @@ public class Room {
                     break;
                 case WALL:
                     x = MathUtils.random(minX, maxX);
-                    y = maxY - 1;
+                    y = maxY;
                     break;
                 default: break;
             }
