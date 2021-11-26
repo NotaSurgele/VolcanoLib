@@ -26,6 +26,7 @@ public class Dungeon {
     public LayerData layerData;
 
     PropsLoader propsLoader;
+    Texture[][] propsTextureArray;
 
     Texture floor;
     Texture wallLeft;
@@ -49,6 +50,8 @@ public class Dungeon {
     public Dungeon() {
         this.map = new int[this.height][this.width];
         this.mapTextureArray = new Texture[this.height][this.width];
+        this.propsLayer = new int[this.height][this.width];
+        this.propsTextureArray = new Texture[this.height][this.width];
         this.floor = new Texture(this.floorPath + "floor_2.png");
         this.wallTop = new Texture(this.wallPath + "wall_top_1.png");
         this.wallRight = new Texture(this.wallPath + "wall_bottom_inner_right.png");
@@ -65,14 +68,19 @@ public class Dungeon {
         for (int i = 0; i != this.height; i++) {
             for (int j = 0; j != this.width; j++) {
                 this.map[i][j] = -1;
+                this.propsLayer[i][j] = -1;
             }
         }
         for (int i = 0; i != this.howMuchRoom; ) {
             Room r = new Room(this.propsLoader);
+
             this.map = r.addRoomInMap(this.map, this.width, this.height);
+
             if (r.isRoomAdded == 1) {
+                this.propsLayer = r.addPropsInRoom(this.propsLayer, this.propsTextureArray);
                 i += r.isRoomAdded;
                 this.rooms.add(r);
+
             }
         }
         this.loadTextureMapArray();
@@ -168,8 +176,12 @@ public class Dungeon {
             for (int each = 0; each != w; each++) {
 
                 if (this.mapTextureArray[line][each] != null) {
-                    if ((line >= yMin && line <= yMax) && (each >= xMin && each <= xMax))
+                    if ((line >= yMin && line <= yMax) && (each >= xMin && each <= xMax)) {
                         batch.draw(this.mapTextureArray[line][each], x, y, tileSize, tileSize);
+                        if (this.propsTextureArray[line][each] != null) {
+                            batch.draw(this.propsTextureArray[line][each], x, y, tileSize, tileSize);
+                        }
+                    }
                 }
                 x += tileSize;
             }

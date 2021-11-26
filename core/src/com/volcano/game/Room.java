@@ -36,21 +36,14 @@ public class Room {
 
     //Props
     PropsLoader propsLoader;
+    Props[] props;
 
     public Room(PropsLoader pL) {
         this.setRoomSize();
         this.layer = new int[this.height][this.width];
         this.loadLayer();
         this.propsLoader = pL;
-    }
-
-    public Room(int startX, int startY)
-    {
-        this.setRoomSize();
-        this.layer = new int[this.height][this.width];
-        this.startX = startX;
-        this.startY = startY;
-        this.loadLayer();
+        this.loadProps();
     }
 
     private void setTilesId(int line, int cell, int w, int h)
@@ -87,6 +80,21 @@ public class Room {
         int y = MathUtils.random(3, this.height - 2) - 1;
 
         this.layer[y][x] = 2;
+    }
+
+    private void loadProps()
+    {
+        int propsNumber = MathUtils.random(5, 8);
+
+        this.props = new Props[propsNumber];
+        for (int index = 0; index != propsNumber; index++) {
+
+            int size = this.propsLoader.getPropsArraySize();
+            int r = MathUtils.random(1, size) - 1;
+            Props p = this.propsLoader.getProp(r);
+
+            this.props[index] = p;
+        }
     }
 
     public Vector2 getSpawnPoint()
@@ -152,31 +160,71 @@ public class Room {
         return this.height;
     }
 
-    public int[][] addRoomInMap(int[][] map, int width, int height)
+    private void writeRoomArray(int[][] array)
     {
-        int x = MathUtils.random(0, width - 1);
-        int y = MathUtils.random(0, height - 1);
-        int roomWidth = this.width;
-        int roomHeight = this.height;
         int localX = 0;
         int localY = 0;
 
-        if (this.isNotOverTheEdges(x, y, roomWidth, roomHeight, width, height)
-            || this.isNotOverlapping(map, x, y, roomWidth, roomHeight))
-            return map;
-        this.roomX = x;
-        this.roomY = y;
-        this.setRoomSpawnPoint();
-        for (int i = y; i != (y + roomHeight); i++) {
-            for (int j = x; j != (x + roomWidth); j++) {
-                map[i][j] = this.layer[localY][localX];
+        for (int i = this.roomY; i != (this.roomY + this.height); i++) {
+
+            for (int j = this.roomX; j != (this.roomX + this.width); j++) {
+                array[i][j] = this.layer[localY][localX];
                 localX++;
             }
             localX = 0;
             localY++;
         }
+    }
+
+    public int[][] addRoomInMap(int[][] map, int worldWidth, int worldHeight)
+    {
+        int x = MathUtils.random(0, worldWidth - 1);
+        int y = MathUtils.random(0, worldHeight - 1);
+        int roomWidth = this.width;
+        int roomHeight = this.height;
+
+        if (this.isNotOverTheEdges(x, y, roomWidth, roomHeight, worldWidth, worldHeight)
+            || this.isNotOverlapping(map, x, y, roomWidth, roomHeight))
+            return map;
+        this.roomX = x;
+        this.roomY = y;
+        this.setRoomSpawnPoint();
+        this.writeRoomArray(map);
         this.isRoomAdded = 1;
         return map;
+    }
+
+    public int[][] addPropsInRoom(int[][] propsLayer, Texture[][] propsTextureArray)
+    {
+        this.writeRoomArray(propsLayer);
+        int size = this.props.length;
+
+        for (int each = 0; each != size; each++) {
+            Props p = this.props[each];
+            int x = 0;
+            int y = 0;
+
+            int minX = this.roomX;
+            int maxX = this.roomX + this.width;
+
+            int minY = this.roomY;
+            int maxY = this.roomY + this.height;
+
+            switch (p.getType()) {
+                case FLOOR:
+                    x = MathUtils.random(minX, maxX);
+                    y = MathUtils.random(minY, maxY);
+                    break;
+                case WALL:
+                    x = MathUtils.random(minX, maxX);
+                    y = maxY - 1;
+                    break;
+                default: break;
+            }
+            propsLayer[y][x] = p.getValue();
+            propsTextureArray[y][x] = p.getTexture();
+        }
+        return propsLayer;
     }
 
     public int[][] getRoomLayer()

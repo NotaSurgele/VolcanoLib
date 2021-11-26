@@ -10,8 +10,8 @@ com/mygdx/game/BlueMage.java
  com.mygdx.game.BlueMage$State
 com/volcano/game/Enemies.java
  com.volcano.game.Enemies
-com/mygdx/game/Bullet.java
- com.mygdx.game.Bullet
+com/mygdx/game/Inventory.java
+ com.mygdx.game.Inventory
 com/volcano/game/Animator.java
  com.volcano.game.Animator
 com/volcano/game/Cursor.java
@@ -28,8 +28,8 @@ com/mygdx/game/Fireball.java
  com.mygdx.game.Fireball
 com/mygdx/game/ExplodingGoblin.java
  com.mygdx.game.ExplodingGoblin
-com/mygdx/game/Inventory.java
- com.mygdx.game.Inventory
+com/mygdx/game/Bullet.java
+ com.mygdx.game.Bullet
 com/volcano/game/LayerData.java
  com.volcano.game.LayerData
 com/volcano/game/Weapons.java
@@ -53,6 +53,8 @@ com/volcano/game/Utils.java
  com.volcano.game.Utils
 com/mygdx/game/Props.java
  com.mygdx.game.Props
+com/mygdx/game/PropsLoader.java
+ com.mygdx.game.PropsLoader
 com/mygdx/game/MobSpawner.java
  com.mygdx.game.MobSpawner
 com/volcano/game/Button.java
@@ -60,6 +62,7 @@ com/volcano/game/Button.java
  com.volcano.game.Button$State
 com/volcano/game/Room.java
  com.volcano.game.Room
+ com.volcano.game.Room$1
 com/mygdx/game/Game.java
  com.mygdx.game.Game
  com.mygdx.game.Game$State
@@ -71,7 +74,5 @@ com/volcano/game/Scene.java
  com.volcano.game.Scene$SCENES
 com/mygdx/game/Dungeon.java
  com.mygdx.game.Dungeon
-com/mygdx/game/PropsLoader.java
- com.mygdx.game.PropsLoader
 com/mygdx/game/Menu.java
  com.mygdx.game.Menu

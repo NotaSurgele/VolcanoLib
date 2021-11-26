@@ -27,11 +27,23 @@ public class PropsLoader {
         this.propsArray = new Props[dataArray.length];
         for (int i = 0; i != dataArray.length; i++) {
             String[] val = dataArray[i].split(":");
+
+            String name = val[0];
             String texturePath = val[1];
             int value = Integer.parseInt(val[2]);
             PropsType type = this.getPropsType(val[3]);
-            this.propsArray[i] = new Props(new Texture(texturePath), value, type);
+            this.propsArray[i] = new Props(name, new Texture(propsDir + texturePath), value, type);
         }
+    }
+
+    public Props getProp(int index)
+    {
+        return this.propsArray[index];
+    }
+
+    public int getPropsArraySize()
+    {
+        return this.propsArray.length;
     }
 
 }
