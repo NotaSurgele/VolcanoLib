@@ -28,8 +28,6 @@ public class PropsLoader {
         for (int i = 0; i != dataArray.length; i++) {
             String[] val = dataArray[i].split(":");
 
-
-            System.out.println(val.length);
             String name = val[0];
             String texturePath = val[1];
             int value = Integer.parseInt(val[2]);
@@ -39,9 +37,9 @@ public class PropsLoader {
                 int cols = Integer.parseInt(val[5]);
                 int rows = Integer.parseInt(val[6]);
                 float frameDuration = Float.parseFloat(val[7]);
-                this.propsArray[i] = new Props(name, new Texture(propsDir + texturePath), value, type, isAnimate, cols, rows, frameDuration);
+                this.propsArray[i] = new Props(name, new Texture(propsDir + texturePath), value, type, cols, rows, frameDuration);
             } else
-                this.propsArray[i] = new Props(name, new Texture(propsDir + texturePath), value, type, isAnimate);
+                this.propsArray[i] = new Props(name, new Texture(propsDir + texturePath), value, type);
         }
     }
 
