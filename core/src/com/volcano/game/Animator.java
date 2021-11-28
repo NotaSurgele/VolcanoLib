@@ -37,10 +37,11 @@ public class Animator {
         this.animation = new Animation<TextureRegion>(frameDuration, animationFrame);
     }
 
-    public void playAnimation(SpriteBatch batch, float stateTime, boolean loop)
+    public void playAnimation(SpriteBatch batch, float stateTime, boolean loop, float x, float y, float w, float h)
     {
         this.currentFrame = this.animation.getKeyFrame(stateTime, loop);
-        batch.draw(this.currentFrame, 0, 0);
+
+        batch.draw(this.currentFrame, x, y, w, h);
     }
 
     public void stopAnimation(float stateTime)
@@ -139,6 +140,14 @@ public class Animator {
     {
         animation = new Animator();
         animation.createAnimation(new Texture(texturePath), FRAME_COLS, FRAME_ROWS, frameDuration);
+
+        return animation;
+    }
+
+    public static Animator initializeAnimation(Animator animation, Texture t, int FRAME_COLS, int FRAME_ROWS, float frameDuration)
+    {
+        animation = new Animator();
+        animation.createAnimation(t, FRAME_COLS, FRAME_ROWS, frameDuration);
 
         return animation;
     }

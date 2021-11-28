@@ -3,19 +3,12 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.volcano.game.LayerData;
-import com.volcano.game.MazeGenerator;
 import com.volcano.game.Room;
 import com.volcano.game.TriggerUI;
 
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class Dungeon {
@@ -26,9 +19,10 @@ public class Dungeon {
     public LayerData layerData;
 
     PropsLoader propsLoader;
-    Texture[][] propsTextureArray;
+    Props[][] propsArray;
 
     Texture floor;
+    Texture wall;
     Texture wallLeft;
     Texture wallTop;
     Texture wallRight;
@@ -51,13 +45,14 @@ public class Dungeon {
         this.map = new int[this.height][this.width];
         this.mapTextureArray = new Texture[this.height][this.width];
         this.propsLayer = new int[this.height][this.width];
-        this.propsTextureArray = new Texture[this.height][this.width];
+        this.propsArray = new Props[this.height][this.width];
         this.floor = new Texture(this.floorPath + "floor_2.png");
         this.wallTop = new Texture(this.wallPath + "wall_top_1.png");
         this.wallRight = new Texture(this.wallPath + "wall_bottom_inner_right.png");
         this.wallDown = new Texture(this.wallPath + "wall_bottom_1.png");
         this.wallLeft = new Texture(this.wallPath + "wall_bottom_inner_left.png");
         this.extract = new Texture(this.floorPath + "stair_nextlevel.png");
+        this.wall = new Texture(this.wallPath + "wall_1.png");
         this.rooms = new ArrayList<Room>();
         this.propsLoader = new PropsLoader();
         this.load();
@@ -77,7 +72,7 @@ public class Dungeon {
             this.map = r.addRoomInMap(this.map, this.width, this.height);
 
             if (r.isRoomAdded == 1) {
-                this.propsLayer = r.addPropsInRoom(this.propsLayer, this.propsTextureArray);
+                this.propsLayer = r.addPropsInRoom(this.propsLayer, this.propsArray);
                 i += r.isRoomAdded;
                 this.rooms.add(r);
 
@@ -104,6 +99,7 @@ public class Dungeon {
                     else if (this.map[line][each] == -5) this.mapTextureArray[line][each] = this.wallLeft;
                     else if (this.map[line][each] == 1) this.mapTextureArray[line][each] = this.floor;
                     else if (this.map[line][each] == 2) this.mapTextureArray[line][each] = this.extract;
+                    else if (this.map[line][each] == -10) this.mapTextureArray[line][each] = this.wall;
                 } else
                     this.mapTextureArray[line][each] = null;
             }
@@ -139,6 +135,7 @@ public class Dungeon {
             this.currentRoom += 1;
             if (this.currentRoom >= this.rooms.size()) return;
             Room r = this.rooms.get(this.currentRoom);
+
             if (r != null) {
                 Vector2 v = r.getSpawnPoint();
                 player.setPosition(v);
@@ -178,8 +175,11 @@ public class Dungeon {
                 if (this.mapTextureArray[line][each] != null) {
                     if ((line >= yMin && line <= yMax) && (each >= xMin && each <= xMax)) {
                         batch.draw(this.mapTextureArray[line][each], x, y, tileSize, tileSize);
-                        if (this.propsTextureArray[line][each] != null) {
-                            batch.draw(this.propsTextureArray[line][each], x, y, tileSize, tileSize);
+                        if (this.propsArray[line][each] != null) {
+                            if (this.propsArray[line][each].isAnimate) {
+                                this.propsArray[line][each].animate(batch, true, x, y, tileSize, tileSize);
+                            } else
+                                batch.draw(this.propsArray[line][each].getTexture(), x, y, tileSize, tileSize);
                         }
                     }
                 }

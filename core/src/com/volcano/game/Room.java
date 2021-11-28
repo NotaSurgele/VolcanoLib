@@ -22,9 +22,6 @@ public class Room {
     int maxWidth = 56;
     int maxHeight = 56;
 
-    float startX = 0f;
-    float startY = 0f;
-
     Vector2 spawnPoint;
 
     public int isRoomAdded = 0;
@@ -58,6 +55,7 @@ public class Room {
         if (line == h - 1 && cell == w - 1) this.layer[line][cell] = -7;
         if (line == h - 1 && cell == 0)     this.layer[line][cell] = -8;
         if (line == 0 && cell == 0)         this.layer[line][cell] = -9;
+        if (line == h - 2  && cell > 0 && cell < w - 1)      this.layer[line][cell] = -10;
     }
 
     private void loadLayer()
@@ -194,7 +192,7 @@ public class Room {
         return map;
     }
 
-    public int[][] addPropsInRoom(int[][] propsLayer, Texture[][] propsTextureArray)
+    public int[][] addPropsInRoom(int[][] propsLayer, Props[][] propsArray)
     {
         this.writeRoomArray(propsLayer);
         int size = this.props.length;
@@ -217,12 +215,12 @@ public class Room {
                     break;
                 case WALL:
                     x = MathUtils.random(minX, maxX);
-                    y = maxY;
+                    y = maxY - 1;
                     break;
                 default: break;
             }
             propsLayer[y][x] = p.getValue();
-            propsTextureArray[y][x] = p.getTexture();
+            propsArray[y][x] = p;
         }
         return propsLayer;
     }
