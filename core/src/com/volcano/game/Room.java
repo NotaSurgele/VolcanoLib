@@ -137,8 +137,7 @@ public class Room {
         int maxX = x + roomWidth;
         int maxY = y + roomHeight;
 
-        if (maxX > width || maxY > height) return true;
-        return false;
+        return maxX > width || maxY > height;
     }
 
     public int getRoomX() { return this.roomX; }
