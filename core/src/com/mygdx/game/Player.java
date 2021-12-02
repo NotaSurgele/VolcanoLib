@@ -96,7 +96,7 @@ public class Player extends Players {
             this.idle.playAnimationToSprite(this.sprite, this.stateTime, true);
     }
 
-    public void collisionCheckPoint(LayerData layerData)
+    private void collisionCheckPoint(LayerData layerData)
     {
         layerData.setLayerCoordinate((int)this.getPositionX() / Dungeon.tileSize, (int)(this.sprite.getY() + (this.getHeight() / 2)) / Dungeon.tileSize);
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX + 3f, this.oldY, this.position);
@@ -106,6 +106,33 @@ public class Player extends Players {
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY - 3f, this.position);
         layerData.setLayerCoordinate((int)(this.getPositionX() + (this.getWidth() / 2)) / Dungeon.tileSize, (int)(this.getPositionY()) / Dungeon.tileSize);
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY + 3f, this.position);
+    }
+
+
+    private void betterPropsCollision(LayerData layerData)
+    {
+        int y = (int) this.position.y / Dungeon.tileSize;
+        int x = (int) this.position.x / Dungeon.tileSize;
+        float h = this.getHeight();
+
+        //Left
+        layerData.setLayerCoordinate(x, y);
+        this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY, this.position);
+
+        y = (int) (this.position.y + ((h / 2) / 2)) / Dungeon.tileSize;
+        layerData.setLayerCoordinate(x, y);
+        this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY, this.position);
+
+        //Right
+        float w = this.getWidth();
+
+        x = (int) (this.position.x + w) / Dungeon.tileSize;
+        layerData.setLayerCoordinate(x, y);
+        this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY, this.position);
+
+        y = (int) (this.position.y + ((h / 2) / 2)) / Dungeon.tileSize;
+        layerData.setLayerCoordinate(x, y);
+        this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY, this.position);
     }
 
     public void checkWeapons(SpriteBatch batch, Cursor cursor, LayerData layerData)
@@ -145,6 +172,7 @@ public class Player extends Players {
         this.animationController();
         this.Move(this.moveSpeed, runningSpeed, deltaTime);
         this.collisionCheckPoint(layerData);
+        this.betterPropsCollision(layerData);
         this.flipPlayerWithMouse(cursor);
         this.flipPlayerWithKeyboard();
         this.draw(batch);
