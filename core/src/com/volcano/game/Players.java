@@ -22,8 +22,6 @@ public class Players {
 
     Vector3 cameraPosition;
 
-    public boolean qwertyCheck;
-
     public Players(Sprite sprite, float x, float y) {
         this.sprite = sprite;
         this.position = new Vector2(x, y);

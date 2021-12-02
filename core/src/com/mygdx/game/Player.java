@@ -65,24 +65,13 @@ public class Player extends Players {
 
     public void flipPlayerWithKeyboard()
     {
-        if (!this.qwertyCheck) {
-            if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-                if (!this.sprite.isFlipX())
-                    this.sprite.flip(true, false);
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                if (this.sprite.isFlipX())
-                    this.sprite.flip(true, false);
-            }
-        } else {
-            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                if (!this.sprite.isFlipX())
-                    this.sprite.flip(true, false);
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                if (this.sprite.isFlipX())
-                    this.sprite.flip(false, false);
-            }
+        if (Gdx.input.isKeyPressed(Control.LEFT)) {
+            if (!this.sprite.isFlipX())
+                this.sprite.flip(true, false);
+        }
+        if (Gdx.input.isKeyPressed(Control.RIGHT)) {
+            if (this.sprite.isFlipX())
+                this.sprite.flip(true, false);
         }
     }
 
