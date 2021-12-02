@@ -100,10 +100,13 @@ public class Player extends Players {
     {
         layerData.setLayerCoordinate((int)this.getPositionX() / Dungeon.tileSize, (int)(this.sprite.getY() + (this.getHeight() / 2)) / Dungeon.tileSize);
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX + 3f, this.oldY, this.position);
+
         layerData.setLayerCoordinate((int)(this.getPositionX() + this.getWidth()) / Dungeon.tileSize, (int)(this.getPositionY() + (this.getHeight() / 2)) / Dungeon.tileSize);
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX - 3f, this.oldY, this.position);
+
         layerData.setLayerCoordinate((int)(this.getPositionX() + (this.getWidth() / 2)) / Dungeon.tileSize, (int)(this.getPositionY() + (this.getHeight())) / Dungeon.tileSize);
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY - 3f, this.position);
+
         layerData.setLayerCoordinate((int)(this.getPositionX() + (this.getWidth() / 2)) / Dungeon.tileSize, (int)(this.getPositionY()) / Dungeon.tileSize);
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY + 3f, this.position);
     }
@@ -161,14 +164,19 @@ public class Player extends Players {
         return;
     }
 
-    public void update(SpriteBatch batch, float deltaTime, Cursor cursor, LayerData layerData)
+    private void getOldPosition(LayerData layerData)
     {
-        this.stateTime += Game.deltaTime;
-
         if (!this.collider.isColliding(layerData)) {
             this.oldX = this.position.x;
             this.oldY = this.position.y;
         }
+    }
+
+    public void update(SpriteBatch batch, float deltaTime, Cursor cursor, LayerData layerData)
+    {
+        this.stateTime += Game.deltaTime;
+
+        this.getOldPosition(layerData);
         this.animationController();
         this.Move(this.moveSpeed, runningSpeed, deltaTime);
         this.collisionCheckPoint(layerData);

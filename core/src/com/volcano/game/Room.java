@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Dungeon;
 import com.mygdx.game.Props;
 import com.mygdx.game.PropsLoader;
+import com.mygdx.game.PropsType;
 
 import java.util.ArrayList;
 
@@ -188,6 +189,14 @@ public class Room {
         return map;
     }
 
+    private boolean isPropsOverlapping(int[][] propsLayer, int x, int y, PropsType type)
+    {
+        if (type == PropsType.FLOOR)
+            return !(propsLayer[y][x] == 1);
+        else
+            return !(propsLayer[y][x] == -10);
+    }
+
     public int[][] addPropsInRoom(int[][] propsLayer, Props[][] propsArray)
     {
         this.writeRoomArray(propsLayer);
@@ -208,10 +217,20 @@ public class Room {
                 case FLOOR:
                     x = MathUtils.random(minX, maxX);
                     y = MathUtils.random(minY, maxY);
+
+                    while (isPropsOverlapping(propsLayer, x, y, p.getType())) {
+                        x = MathUtils.random(minX, maxX);
+                        y = MathUtils.random(minY, maxY);
+                    }
                     break;
                 case WALL:
                     x = MathUtils.random(minX, maxX);
                     y = maxY - 1;
+
+                    while (isPropsOverlapping(propsLayer, x, y, p.getType())) {
+                        x = MathUtils.random(minX, maxX);
+                        y = MathUtils.random(minY, maxY);
+                    }
                     break;
                 default: break;
             }
