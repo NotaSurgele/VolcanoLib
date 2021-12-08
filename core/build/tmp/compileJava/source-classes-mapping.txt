@@ -1,5 +1,6 @@
 com/volcano/game/TriggerUI.java
  com.volcano.game.TriggerUI
+<<<<<<< HEAD
 com/mygdx/game/BasicGun.java
  com.mygdx.game.BasicGun
  com.mygdx.game.BasicGun$1
@@ -11,12 +12,23 @@ com/mygdx/game/Dungeon.java
 com/mygdx/game/BlueMage.java
  com.mygdx.game.BlueMage
  com.mygdx.game.BlueMage$State
+=======
+com/volcano/game/Debug.java
+ com.volcano.game.Debug
+com/mygdx/game/Control.java
+ com.mygdx.game.Control
+com/volcano/game/MazeGenerator.java
+ com.volcano.game.MazeGenerator
+com/volcano/game/Utils.java
+ com.volcano.game.Utils
+>>>>>>> 4629079740d95029e26893b67b6ee01cc001dfe2
 com/mygdx/game/PropsLoader.java
  com.mygdx.game.PropsLoader
 com/volcano/game/Animator.java
  com.volcano.game.Animator
 com/volcano/game/Cursor.java
  com.volcano.game.Cursor
+<<<<<<< HEAD
 com/mygdx/game/PropsType.java
  com.mygdx.game.PropsType
 com/mygdx/game/Player.java
@@ -35,6 +47,27 @@ com/volcano/game/LayerData.java
  com.volcano.game.LayerData
 com/volcano/game/Weapons.java
  com.volcano.game.Weapons
+=======
+com/volcano/game/Room.java
+ com.volcano.game.Room
+ com.volcano.game.Room$1
+com/mygdx/game/PropsType.java
+ com.mygdx.game.PropsType
+com/mygdx/game/Sword.java
+ com.mygdx.game.Sword
+com/volcano/game/Collision.java
+ com.volcano.game.Collision
+com/mygdx/game/Inventory.java
+ com.mygdx.game.Inventory
+com/volcano/game/Weapons.java
+ com.volcano.game.Weapons
+com/mygdx/game/Props.java
+ com.mygdx.game.Props
+com/volcano/game/LayerData.java
+ com.volcano.game.LayerData
+com/mygdx/game/MobSpawner.java
+ com.mygdx.game.MobSpawner
+>>>>>>> 4629079740d95029e26893b67b6ee01cc001dfe2
 com/volcano/game/Button.java
  com.volcano.game.Button
  com.volcano.game.Button$State
@@ -42,6 +75,7 @@ com/mygdx/game/MobSpawner.java
  com.mygdx.game.MobSpawner
 com/volcano/game/Sonar.java
  com.volcano.game.Sonar
+<<<<<<< HEAD
 com/volcano/game/Debug.java
  com.volcano.game.Debug
 com/volcano/game/Room.java
@@ -55,24 +89,55 @@ com/volcano/game/Utils.java
  com.volcano.game.Utils
 com/mygdx/game/Props.java
  com.mygdx.game.Props
+=======
+com/mygdx/game/BasicGun.java
+ com.mygdx.game.BasicGun
+ com.mygdx.game.BasicGun$1
+com/mygdx/game/Game.java
+ com.mygdx.game.Game
+ com.mygdx.game.Game$State
+com/mygdx/game/CutScene.java
+ com.mygdx.game.CutScene
+>>>>>>> 4629079740d95029e26893b67b6ee01cc001dfe2
 com/volcano/game/Scene.java
  com.volcano.game.Scene
  com.volcano.game.Scene$1
  com.volcano.game.Scene$SCENES
+<<<<<<< HEAD
+=======
+com/mygdx/game/BlueMage.java
+ com.mygdx.game.BlueMage
+ com.mygdx.game.BlueMage$State
+com/mygdx/game/Dungeon.java
+ com.mygdx.game.Dungeon
+>>>>>>> 4629079740d95029e26893b67b6ee01cc001dfe2
 com/mygdx/game/Bullet.java
  com.mygdx.game.Bullet
 com/volcano/game/Enemies.java
  com.volcano.game.Enemies
+<<<<<<< HEAD
 com/mygdx/game/Inventory.java
  com.mygdx.game.Inventory
 com/volcano/game/Collision.java
  com.volcano.game.Collision
 com/mygdx/game/Control.java
  com.mygdx.game.Control
+=======
+com/mygdx/game/Player.java
+ com.mygdx.game.Player
+com/volcano/game/Players.java
+ com.volcano.game.Players
+com/mygdx/game/MyGdxGame.java
+ com.mygdx.game.MyGdxGame
+>>>>>>> 4629079740d95029e26893b67b6ee01cc001dfe2
 com/mygdx/game/Bomb.java
  com.mygdx.game.Bomb
  com.mygdx.game.Bomb$State
+com/mygdx/game/Fireball.java
+ com.mygdx.game.Fireball
+com/mygdx/game/ExplodingGoblin.java
+ com.mygdx.game.ExplodingGoblin
+com/mygdx/game/Menu.java
+ com.mygdx.game.Menu
 com/mygdx/game/Slime.java
  com.mygdx.game.Slime
-com/volcano/game/MazeGenerator.java
- com.volcano.game.MazeGenerator

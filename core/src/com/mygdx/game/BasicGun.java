@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.volcano.game.Cursor;
@@ -22,13 +21,13 @@ public class BasicGun extends Weapons {
     public void update(SpriteBatch batch, Cursor cursor, LayerData layerData)
     {
         this.render(batch, cursor, layerData);
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+        if (Gdx.input.isButtonPressed(Control.ATTACK1)) {
+
             Bullet b = new Bullet(new Texture("Weapons/Bullet.png"), 16, 16, cursor) {
                 @Override
                 public void update(SpriteBatch batch, Player player, float x, float y) {}
             };
             this.bulletLoader.add(b);
-            b = null;
         }
     }
 
