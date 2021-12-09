@@ -14,11 +14,17 @@ public class Room {
     int width;
     int height;
 
-    int minWidth = 42;
-    int minHeight = 42;
+    final int minWidth = 42;
+    final int minHeight = 42;
 
-    int maxWidth = 56;
-    int maxHeight = 56;
+    final int maxWidth = 56;
+    final int maxHeight = 56;
+
+    final int chamberMinWidth = 16;
+    final int chamberMinHeight = 16;
+
+    final int chamberMaxWidth = 26;
+    final int chamberMaxHeight = 26;
 
     Vector2 spawnPoint;
 
@@ -41,19 +47,19 @@ public class Room {
         this.loadProps();
     }
 
-    private void setTilesId(int line, int cell, int w, int h)
+    private void setTilesId(int[][] layer, int line, int cell, int w, int h)
     {
-        if (line == 0)      this.layer[line][cell] = -2;
-        if (line == h - 1)  this.layer[line][cell] = -4;
-        if (cell == 0)      this.layer[line][cell] = -5;
-        if (cell == w - 1)  this.layer[line][cell] = -3;
-        if (line > 0 && line < (h - 1) &&  cell > 0 && cell < (w - 1))  this.layer[line][cell] = 1;
-        if (line == 0 && cell == 0)         this.layer[line][cell] = -5;
-        if (line == 0 && cell == w - 1)     this.layer[line][cell] = -6;
-        if (line == h - 1 && cell == w - 1) this.layer[line][cell] = -7;
-        if (line == h - 1 && cell == 0)     this.layer[line][cell] = -8;
-        if (line == 0 && cell == 0)         this.layer[line][cell] = -9;
-        if (line == h - 2  && cell > 0 && cell < w - 1)      this.layer[line][cell] = -10;
+        if (line == 0)      layer[line][cell] = -2;
+        if (line == h - 1)  layer[line][cell] = -4;
+        if (cell == 0)      layer[line][cell] = -5;
+        if (cell == w - 1)  layer[line][cell] = -3;
+        if (line > 0 && line < (h - 1) &&  cell > 0 && cell < (w - 1))  layer[line][cell] = 1;
+        if (line == 0 && cell == 0)         layer[line][cell] = -5;
+        if (line == 0 && cell == w - 1)     layer[line][cell] = -6;
+        if (line == h - 1 && cell == w - 1) layer[line][cell] = -7;
+        if (line == h - 1 && cell == 0)     layer[line][cell] = -8;
+        if (line == 0 && cell == 0)         layer[line][cell] = -9;
+        if (line == h - 2 && cell > 0 && cell < w - 1)      layer[line][cell] = -10;
     }
 
     private void loadLayer()
@@ -64,7 +70,7 @@ public class Room {
         this.spawnPoint = new Vector2();
         for (int line = 0; line != h; line++) {
             for (int cell = 0; cell != w; cell++) {
-                this.setTilesId(line, cell, w, h);
+                this.setTilesId(this.layer, line, cell, w, h);
             }
         }
         this.setExtract();
@@ -78,9 +84,48 @@ public class Room {
         this.layer[y][x] = 2;
     }
 
+    private void setChamberTiles(int[][] chamber, int width, int height)
+    {
+        for (int line = 0; line != height; line++) {
+            for (int cell = 0; cell != width; cell++) {
+                this.setTilesId(chamber, line, cell, width, height);
+            }
+        }
+    }
+
+    private void addChamberInPropsLayer(int[][] chamber, int width, int height, int[][] propsLayer)
+    {
+        int x = this.roomX;
+        int y = MathUtils.random(this.roomY, (this.roomY + this.height) - height);
+        int line = 0;
+        int each = 0;
+
+        for (int i = y; i != y + height; i++) {
+            for (int j = x; j != x + width; j++) {
+                propsLayer[i][j] = chamber[line][each];
+                each++;
+            }
+            each = 0;
+            line++;
+        }
+    }
+
+    private void chamberGenerator(int[][] propsLayer)
+    {
+        int width = 0;
+        int height = 0;
+        int[][] chamber = null;
+
+        width = MathUtils.random(this.chamberMinWidth, this.chamberMaxWidth);
+        height = MathUtils.random(this.chamberMinHeight, this.chamberMaxHeight);
+        chamber = new int[height][width];
+        this.setChamberTiles(chamber, width, height);
+        this.addChamberInPropsLayer(chamber, width, height, propsLayer);
+    }
+
     private void loadProps()
     {
-        int propsNumber = MathUtils.random(5, 8);
+        int propsNumber = MathUtils.random(1);
 
         this.props = new Props[propsNumber];
         for (int index = 0; index != propsNumber; index++) {
@@ -183,6 +228,7 @@ public class Room {
             return map;
         this.roomX = x;
         this.roomY = y;
+
         this.setRoomSpawnPoint();
         this.writeRoomArray(map);
         this.isRoomAdded = 1;
@@ -200,6 +246,7 @@ public class Room {
     public int[][] addPropsInRoom(int[][] propsLayer, Props[][] propsArray)
     {
         this.writeRoomArray(propsLayer);
+        this.chamberGenerator(propsLayer);
         int size = this.props.length;
 
         for (int each = 0; each != size; each++) {
@@ -218,25 +265,22 @@ public class Room {
                     x = MathUtils.random(minX, maxX);
                     y = MathUtils.random(minY, maxY);
 
-                    while (isPropsOverlapping(propsLayer, x, y, p.getType())) {
-                        x = MathUtils.random(minX, maxX);
-                        y = MathUtils.random(minY, maxY);
-                    }
                     break;
                 case WALL:
                     x = MathUtils.random(minX, maxX);
                     y = maxY - 1;
-
-                    while (isPropsOverlapping(propsLayer, x, y, p.getType())) {
-                        x = MathUtils.random(minX, maxX);
-                        y = MathUtils.random(minY, maxY);
-                    }
                     break;
                 default: break;
             }
+            //BOucle infini si props > 75
+            /*while (isPropsOverlapping(propsLayer, x, y, p.getType())) {
+                x = MathUtils.random(minX, maxX);
+                y = MathUtils.random(minY, maxY);
+            }*/
             propsLayer[y][x] = p.getValue();
             propsArray[y][x] = p;
         }
+        //this.displayLayer(propsLayer, propsLayer.length, propsLayer[0].length);
         return propsLayer;
     }
 
@@ -245,11 +289,11 @@ public class Room {
         return this.layer;
     }
 
-    private void displayLayer()
+    private void displayLayer(int[][] layer, int width, int height)
     {
-        for (int each = 0; each != this.height; each++) {
-            for (int cell = 0; cell !=  this.width; cell++) {
-                System.out.print(this.layer[each][cell] + " ");
+        for (int each = 0; each != height; each++) {
+            for (int cell = 0; cell !=  width; cell++) {
+                System.out.print(layer[each][cell] + " ");
             }
             System.out.print("\n");
         }

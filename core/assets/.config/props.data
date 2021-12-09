@@ -1,6 +1,5 @@
 Bookshelf:bookshelf.png:-10:Floor:false;
 Prisoner:prisoner.png:2:Wall:false;
 Torch:torch_spritesheet.png:3:Wall:true:6:1:0.2;
-Chest:chest_spritesheet.png:-11:Floor:true:8:1:0.2;
 Red_Flag:flag_red.png:4:Wall:false;
 Green_Flag:flag_green.png:5:Wall:false;

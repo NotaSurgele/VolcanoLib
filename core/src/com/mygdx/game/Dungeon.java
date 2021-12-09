@@ -70,7 +70,6 @@ public class Dungeon {
             Room r = new Room(this.propsLoader);
 
             this.map = r.addRoomInMap(this.map, this.width, this.height);
-
             if (r.isRoomAdded == 1) {
                 this.propsLayer = r.addPropsInRoom(this.propsLayer, this.propsArray);
                 i += r.isRoomAdded;
@@ -175,6 +174,14 @@ public class Dungeon {
                 if (this.mapTextureArray[line][each] != null) {
                     if ((line >= yMin && line <= yMax) && (each >= xMin && each <= xMax)) {
                         batch.draw(this.mapTextureArray[line][each], x, y, tileSize, tileSize);
+                        if (this.propsLayer[line][each] != -1) {
+                            if (this.propsLayer[line][each] == -2) batch.draw(this.wallDown, x, y,tileSize, tileSize);
+                            else if (this.propsLayer[line][each] == -3) batch.draw(this.wallRight, x, y,tileSize, tileSize);
+                            else if (this.propsLayer[line][each] == -4) batch.draw(this.wallTop, x, y,tileSize, tileSize);
+                            else if (this.propsLayer[line][each] == -5) batch.draw(this.wallLeft, x, y,tileSize, tileSize);
+                            else if (this.propsLayer[line][each] == 1) batch.draw(this.floor, x, y, tileSize, tileSize);
+                            else if (this.propsLayer[line][each] == -10) batch.draw(this.wall, x, y, tileSize, tileSize);
+                        }
                         if (this.propsArray[line][each] != null) {
                             if (this.propsArray[line][each].isAnimate) {
                                 this.propsArray[line][each].animate(batch, true, x, y, tileSize, tileSize);
