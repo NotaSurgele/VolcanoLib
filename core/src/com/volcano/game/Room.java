@@ -20,12 +20,6 @@ public class Room {
     final int maxWidth = 56;
     final int maxHeight = 56;
 
-    final int chamberMinWidth = 16;
-    final int chamberMinHeight = 16;
-
-    final int chamberMaxWidth = 26;
-    final int chamberMaxHeight = 26;
-
     Vector2 spawnPoint;
 
     public int isRoomAdded = 0;
@@ -82,45 +76,6 @@ public class Room {
         int y = MathUtils.random(3, this.height - 2) - 1;
 
         this.layer[y][x] = 2;
-    }
-
-    private void setChamberTiles(int[][] chamber, int width, int height)
-    {
-        for (int line = 0; line != height; line++) {
-            for (int cell = 0; cell != width; cell++) {
-                this.setTilesId(chamber, line, cell, width, height);
-            }
-        }
-    }
-
-    private void addChamberInPropsLayer(int[][] chamber, int width, int height, int[][] propsLayer)
-    {
-        int x = this.roomX;
-        int y = MathUtils.random(this.roomY, (this.roomY + this.height) - height);
-        int line = 0;
-        int each = 0;
-
-        for (int i = y; i != y + height; i++) {
-            for (int j = x; j != x + width; j++) {
-                propsLayer[i][j] = chamber[line][each];
-                each++;
-            }
-            each = 0;
-            line++;
-        }
-    }
-
-    private void chamberGenerator(int[][] propsLayer)
-    {
-        int width = 0;
-        int height = 0;
-        int[][] chamber = null;
-
-        width = MathUtils.random(this.chamberMinWidth, this.chamberMaxWidth);
-        height = MathUtils.random(this.chamberMinHeight, this.chamberMaxHeight);
-        chamber = new int[height][width];
-        this.setChamberTiles(chamber, width, height);
-        this.addChamberInPropsLayer(chamber, width, height, propsLayer);
     }
 
     private void loadProps()
@@ -246,7 +201,6 @@ public class Room {
     public int[][] addPropsInRoom(int[][] propsLayer, Props[][] propsArray)
     {
         this.writeRoomArray(propsLayer);
-        this.chamberGenerator(propsLayer);
         int size = this.props.length;
 
         for (int each = 0; each != size; each++) {
