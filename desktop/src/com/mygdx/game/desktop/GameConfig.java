@@ -67,7 +67,21 @@ public class GameConfig {
         return readConfigFile();
     }
 
+    public static String readFile(String fileName)  throws IOException
+    {
+        String data = "";
+        FileReader r = null;
 
+        try {
+            r = new FileReader(fileName);
+            for (int ch = 0; (ch = r.read()) != -1; data += (char)ch);
+        } catch (FileNotFoundException e) {
+            System.err.println("An error has occured\nCouldn't read: config.ini");
+            e.printStackTrace();
+        }
+        r.close();
+        return data;
+    }
 
     public static LwjglApplicationConfiguration loadWindowConfiguration(LwjglApplicationConfiguration config, String data)
     {

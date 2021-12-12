@@ -35,6 +35,7 @@ public class Player extends Players {
         this.moving = Animator.initializeAnimation(this.idle, "heroes/knight/knight_run_spritesheet.png", 6, 1, 0.07f);
         this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 50, 50, "F", "Press F to use !", 0.2f);
         this.inventory = new Inventory(new Texture("ui (new)/Inventory_notSelected.png"), 0, 0, 400, 400);
+        this.idle.playAnimationToSprite(this.sprite, this.stateTime, false);
     }
 
     public Player(Sprite sprite, Vector2 position) {
@@ -64,24 +65,13 @@ public class Player extends Players {
 
     public void flipPlayerWithKeyboard()
     {
-        if (!this.qwertyCheck) {
-            if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-                if (!this.sprite.isFlipX())
-                    this.sprite.flip(true, false);
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                if (this.sprite.isFlipX())
-                    this.sprite.flip(true, false);
-            }
-        } else {
-            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                if (!this.sprite.isFlipX())
-                    this.sprite.flip(true, false);
-            }
-            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                if (this.sprite.isFlipX())
-                    this.sprite.flip(false, false);
-            }
+        if (Gdx.input.isKeyPressed(Control.LEFT)) {
+            if (!this.sprite.isFlipX())
+                this.sprite.flip(true, false);
+        }
+        if (Gdx.input.isKeyPressed(Control.RIGHT)) {
+            if (this.sprite.isFlipX())
+                this.sprite.flip(true, false);
         }
     }
 
@@ -95,16 +85,46 @@ public class Player extends Players {
             this.idle.playAnimationToSprite(this.sprite, this.stateTime, true);
     }
 
-    public void collisionCheckPoint(LayerData layerData)
+    private void collisionCheckPoint(LayerData layerData)
     {
         layerData.setLayerCoordinate((int)this.getPositionX() / Dungeon.tileSize, (int)(this.sprite.getY() + (this.getHeight() / 2)) / Dungeon.tileSize);
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX + 3f, this.oldY, this.position);
+
         layerData.setLayerCoordinate((int)(this.getPositionX() + this.getWidth()) / Dungeon.tileSize, (int)(this.getPositionY() + (this.getHeight() / 2)) / Dungeon.tileSize);
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX - 3f, this.oldY, this.position);
+
         layerData.setLayerCoordinate((int)(this.getPositionX() + (this.getWidth() / 2)) / Dungeon.tileSize, (int)(this.getPositionY() + (this.getHeight())) / Dungeon.tileSize);
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY - 3f, this.position);
+
         layerData.setLayerCoordinate((int)(this.getPositionX() + (this.getWidth() / 2)) / Dungeon.tileSize, (int)(this.getPositionY()) / Dungeon.tileSize);
         this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY + 3f, this.position);
+    }
+
+
+    private void betterPropsCollision(LayerData layerData)
+    {
+        int y = (int) this.position.y / Dungeon.tileSize;
+        int x = (int) this.position.x / Dungeon.tileSize;
+        float h = this.getHeight();
+
+        //Left
+        layerData.setLayerCoordinate(x, y);
+        this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY, this.position);
+
+        y = (int) (this.position.y + ((h / 2) / 2)) / Dungeon.tileSize;
+        layerData.setLayerCoordinate(x, y);
+        this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY, this.position);
+
+        //Right
+        float w = this.getWidth();
+
+        x = (int) (this.position.x + w) / Dungeon.tileSize;
+        layerData.setLayerCoordinate(x, y);
+        this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY, this.position);
+
+        y = (int) (this.position.y + ((h / 2) / 2)) / Dungeon.tileSize;
+        layerData.setLayerCoordinate(x, y);
+        this.collider.onCollidingSetOldEntityPosition(this.sprite, layerData, this.oldX, this.oldY, this.position);
     }
 
     public void checkWeapons(SpriteBatch batch, Cursor cursor, LayerData layerData)
@@ -128,20 +148,31 @@ public class Player extends Players {
         return this.inventory.getCurrentWeapons();
     }
 
-    public void update(SpriteBatch batch, float deltaTime, Cursor cursor, LayerData layerData)
+    public void getDamaged(float dmg)
     {
-        this.stateTime += Gdx.graphics.getDeltaTime();
+        return;
+    }
 
+    private void getOldPosition(LayerData layerData)
+    {
         if (!this.collider.isColliding(layerData)) {
             this.oldX = this.position.x;
             this.oldY = this.position.y;
         }
+    }
+
+    public void update(SpriteBatch batch, float deltaTime, Cursor cursor, LayerData layerData)
+    {
+        this.stateTime += Game.deltaTime;
+
+        this.getOldPosition(layerData);
         this.animationController();
-        this.Move(false, this.moveSpeed, runningSpeed, deltaTime);
+        this.Move(this.moveSpeed, runningSpeed, deltaTime);
         this.collisionCheckPoint(layerData);
+        this.betterPropsCollision(layerData);
         this.flipPlayerWithMouse(cursor);
         this.flipPlayerWithKeyboard();
-        this.sprite.draw(batch);
+        this.draw(batch);
         this.checkWeapons(batch, cursor, layerData);
         this.inventory.update(batch, this.getPositionVector(), cursor);
     }

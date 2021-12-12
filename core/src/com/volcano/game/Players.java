@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.Control;
 import com.mygdx.game.Dungeon;
 
 public class Players {
@@ -20,8 +21,6 @@ public class Players {
     public Collision collider;
 
     Vector3 cameraPosition;
-
-    public boolean qwertyCheck;
 
     public Players(Sprite sprite, float x, float y) {
         this.sprite = sprite;
@@ -40,40 +39,24 @@ public class Players {
     public void Move(boolean qwert, float moveSpeed, float deltaTime)
     {
         Vector2 direction = new Vector2(this.position);
-        this.qwertyCheck = qwert;
 
-        if (!this.qwertyCheck) {
-            direction.y += (Gdx.input.isKeyPressed(Input.Keys.Z)) ? moveSpeed * deltaTime: 0;
-            direction.y += (Gdx.input.isKeyPressed(Input.Keys.S)) ? -moveSpeed * deltaTime: 0;
-            direction.x += (Gdx.input.isKeyPressed(Input.Keys.Q)) ? -moveSpeed * deltaTime: 0;
-            direction.x += (Gdx.input.isKeyPressed(Input.Keys.D)) ? moveSpeed * deltaTime: 0;
-        } else {
-            direction.y += (Gdx.input.isKeyPressed(Input.Keys.W)) ? moveSpeed * deltaTime: 0;
-            direction.y += (Gdx.input.isKeyPressed(Input.Keys.S)) ? -moveSpeed * deltaTime: 0;
-            direction.x += (Gdx.input.isKeyPressed(Input.Keys.A)) ? -moveSpeed * deltaTime: 0;
-            direction.x += (Gdx.input.isKeyPressed(Input.Keys.D)) ? moveSpeed * deltaTime: 0;
-        }
+        direction.y += (Gdx.input.isKeyPressed(Control.FORWARD)) ? moveSpeed * deltaTime: 0;
+        direction.y += (Gdx.input.isKeyPressed(Control.BACKWARD)) ? -moveSpeed * deltaTime: 0;
+        direction.x += (Gdx.input.isKeyPressed(Control.LEFT)) ? -moveSpeed * deltaTime: 0;
+        direction.x += (Gdx.input.isKeyPressed(Control.RIGHT)) ? moveSpeed * deltaTime: 0;
         this.setPositionVector(direction);
     }
 
-    public void Move(boolean qwert, float moveSpeed, float runningSpeed, float deltaTime)
+    public void Move(float moveSpeed, float runningSpeed, float deltaTime)
     {
         Vector2 direction = new Vector2(this.position);
-        this.qwertyCheck = qwert;
         boolean isRunning = this.isRunning();
 
         moveSpeed = isRunning ? moveSpeed += runningSpeed : moveSpeed;
-        if (!this.qwertyCheck) {
-            direction.y += (Gdx.input.isKeyPressed(Input.Keys.Z)) ? moveSpeed * deltaTime: 0;
-            direction.y += (Gdx.input.isKeyPressed(Input.Keys.S)) ? -moveSpeed * deltaTime: 0;
-            direction.x += (Gdx.input.isKeyPressed(Input.Keys.Q)) ? -moveSpeed * deltaTime: 0;
-            direction.x += (Gdx.input.isKeyPressed(Input.Keys.D)) ? moveSpeed * deltaTime: 0;
-        } else {
-            direction.y += (Gdx.input.isKeyPressed(Input.Keys.W)) ? moveSpeed * deltaTime: 0;
-            direction.y += (Gdx.input.isKeyPressed(Input.Keys.S)) ? -moveSpeed * deltaTime: 0;
-            direction.x += (Gdx.input.isKeyPressed(Input.Keys.A)) ? -moveSpeed * deltaTime: 0;
-            direction.x += (Gdx.input.isKeyPressed(Input.Keys.D)) ? moveSpeed * deltaTime: 0;
-        }
+        direction.y += (Gdx.input.isKeyPressed(Control.FORWARD)) ? moveSpeed * deltaTime: 0;
+        direction.y += (Gdx.input.isKeyPressed(Control.BACKWARD)) ? -moveSpeed * deltaTime: 0;
+        direction.x += (Gdx.input.isKeyPressed(Control.LEFT)) ? -moveSpeed * deltaTime: 0;
+        direction.x += (Gdx.input.isKeyPressed(Control.RIGHT)) ? moveSpeed * deltaTime: 0;
         this.setPositionVector(direction);
     }
 
@@ -90,6 +73,11 @@ public class Players {
 
         this.cameraPosition.slerp(playerPosition, smoothness * Gdx.graphics.getDeltaTime());
         camera.position.set(this.cameraPosition);
+    }
+
+    public void draw(SpriteBatch batch)
+    {
+        this.sprite.draw(batch);
     }
 
     // Get Method
@@ -124,6 +112,11 @@ public class Players {
         int y = (int)(this.position.y + this.getHeight() / 2) / Dungeon.tileSize;
 
         return new Vector2(x, y);
+    }
+
+    public Sprite getSprite()
+    {
+        return this.sprite;
     }
 
     // Set Method
@@ -165,13 +158,8 @@ public class Players {
     // Boolean method
     public boolean isMoving()
     {
-        if (!this.qwertyCheck) {
-            return  Gdx.input.isKeyPressed(Input.Keys.Z) || Gdx.input.isKeyPressed(Input.Keys.Q) ||
-                    Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.D);
-        } else {
-            return  Gdx.input.isKeyPressed(Input.Keys.W) || Gdx.input.isKeyPressed(Input.Keys.A) ||
-                    Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.D);
-        }
+        return Gdx.input.isKeyPressed(Control.FORWARD) || Gdx.input.isKeyPressed(Control.LEFT) ||
+                Gdx.input.isKeyPressed(Control.BACKWARD) || Gdx.input.isKeyPressed(Control.RIGHT);
     }
 
     public boolean isRunning()
@@ -179,7 +167,7 @@ public class Players {
         boolean isMoving = this.isMoving();
 
         if (isMoving) {
-            return (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT));
+            return (Gdx.input.isKeyPressed(Control.RUN));
         }
         return false;
     }

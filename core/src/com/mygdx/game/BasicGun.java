@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.volcano.game.Cursor;
@@ -14,18 +13,21 @@ public class BasicGun extends Weapons {
 
     ArrayList<Bullet> bulletLoader;
 
-    public BasicGun(Texture t, float w, float h, float x, float y) {
-        super(t, w, h, x, y);
+    public BasicGun(Texture t, float w, float h, float x, float y, float f) {
+        super(t, w, h, x, y, f);
         this.bulletLoader = new ArrayList<>();
     }
 
     public void update(SpriteBatch batch, Cursor cursor, LayerData layerData)
     {
         this.render(batch, cursor, layerData);
-        if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-            Bullet b = new Bullet(new Texture("Weapons/Bullet.png"), 16, 16, cursor);
+        if (Gdx.input.isButtonPressed(Control.ATTACK1)) {
+
+            Bullet b = new Bullet(new Texture("Weapons/Bullet.png"), 16, 16, cursor) {
+                @Override
+                public void update(SpriteBatch batch, Player player, float x, float y) {}
+            };
             this.bulletLoader.add(b);
-            b = null;
         }
     }
 
@@ -38,7 +40,7 @@ public class BasicGun extends Weapons {
             if (b.isDead)
                 this.bulletLoader.remove(i - 1);
         }
-        this.sprite.draw(batch);
+        this.draw(batch);
     }
 
     public void dispose()

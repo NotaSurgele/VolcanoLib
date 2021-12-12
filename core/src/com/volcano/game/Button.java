@@ -24,6 +24,8 @@ public class Button {
     State state;
     BitmapFont buttonName;
 
+    Texture hoverButtonTexture;
+
     float nameX;
     float nameY;
 
@@ -50,6 +52,22 @@ public class Button {
         this.batch = new SpriteBatch();
         this.sprite = this.createSprite();
         this.oldTexture = t;
+        this.buttonName = new BitmapFont();
+        this.nameX = this.position.x + ((this.width / 2) / 2);
+        this.nameY = this.position.y + ((this.height / 2) / 2);
+    }
+
+    public Button(Texture normalT, Texture hoverT, float x, float y, float w, float h, String n)
+    {
+        this.texture = normalT;
+        this.hoverButtonTexture = hoverT;
+        this.oldTexture = normalT;
+        this.position = new Vector2(x, y);
+        this.width = w;
+        this.height = h;
+        this.name = n;
+        this.batch = new SpriteBatch();
+        this.sprite = this.createSprite();
         this.buttonName = new BitmapFont();
         this.nameX = this.position.x + ((this.width / 2) / 2);
         this.nameY = this.position.y + ((this.height / 2) / 2);
@@ -236,6 +254,15 @@ public class Button {
             this.setNewTexture(this.oldTexture);
         }
     }
+
+    public void onHoverSetNewTexture()
+    {
+        if (this.state == State.HOVER)
+            this.setNewTexture(this.hoverButtonTexture);
+        else if (this.state == State.NOTHING)
+            this.setNewTexture(this.oldTexture);
+    }
+
 
     public void onHoverSetNewScale(Vector2 newScale)
     {

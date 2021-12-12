@@ -3,12 +3,15 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.volcano.game.Animator;
 import com.volcano.game.Enemies;
+import com.volcano.game.Sonar;
 
 public class Slime extends Enemies {
 
-    Circle range;
+
+    Sonar sonar;
 
     //Animators
     Animator idle;
@@ -16,39 +19,46 @@ public class Slime extends Enemies {
     final String dir = "enemies/slime/";
     float stateTime;
 
+    float health = 100;
+
     boolean isChasing = false;
 
     public Slime(Texture t, float w, float h, float m) {
         super(t, w, h, m);
-        this.setDetector();
+        this.setHitbox();
+        this.sonar = new Sonar(300f);
         this.idle = Animator.initializeAnimation(this.idle, this.dir + "slime_idle_spritesheet.png", 6, 1, 0.07f);
         this.moving = Animator.initializeAnimation(this.idle, this.dir + "slime_run_spritesheeet.png", 6, 1, 0.07f);
     }
 
-    private void setDetector()
+    private void setHitboxPosition()
     {
-        float x = this.position.x + (this.getWidth() / 2);
-        float y = this.position.y + (this.getHeight() / 2);
+        float x = this.position.x;
+        float y = this.position.y;
 
-        this.range = new Circle();
-        this.range.setPosition(x, y);
-        this.range.setRadius(300f);
-    }
-
-    private void setDetectorPosition()
-    {
-        float x = this.position.x + (this.getWidth() / 2);
-        float y = this.position.y + (this.getHeight() / 2);
-
-        this.range.setPosition(x, y);
+        this.hitbox.setPosition(x, y);
     }
 
     private void focusPlayer(Player player)
     {
-        if (this.range.contains(player.position)) {
+        if (this.sonar.isPlayersDetected(player)) {
             this.followPlayer(player);
             this.isChasing = true;
         } else this.isChasing = false;
+    }
+
+    private void checkKnockback(Player player)
+    {
+        if (!this.getKnockBack())
+            this.focusPlayer(player);
+        else
+            this.knockBack(0.1f);
+    }
+
+    private void kill()
+    {
+        if (this.getHealth() <= 0)
+            this.killed();
     }
 
     @Override
@@ -56,14 +66,11 @@ public class Slime extends Enemies {
     {
         this.stateTime += Game.deltaTime;
 
-        this.setDetectorPosition();
-        this.focusPlayer(player);
+        this.kill();
+        this.setHitboxPosition();
+        this.setSonarPosition(this.sonar);
+        this.checkKnockback(player);
         this.render(batch);
-    }
-
-    public void setDetectorNewRadius(float rd)
-    {
-        this.range.setRadius(rd);
     }
 
     private void animationController()
@@ -77,7 +84,7 @@ public class Slime extends Enemies {
     private void render(SpriteBatch batch)
     {
         this.animationController();
-        this.sprite.draw(batch);
+        this.draw(batch);
     }
 
     public void dispose()

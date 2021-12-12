@@ -27,12 +27,15 @@ public class Game extends Scene {
     //DUNGEON PART
     Dungeon dj;
 
-    Slime slime;
+    CutScene cutScene;
+
+    private boolean isLoaded = false;
 
     //UTILS
     public static float slowTime = 0.2f;
 
     enum State {
+        SPAWNING,
         CHANGE,
         NOTHING
     }
@@ -41,16 +44,6 @@ public class Game extends Scene {
 
     public Game(float viewportWidth, float viewportHeight) {
         camera = this.setCamera(false, viewportWidth, viewportHeight);
-        this.sprite = new Sprite();
-		this.sprite.setBounds(500, 200, 70, 70);
-		this.player = new Player(this.sprite, 70, 70);
-		this.batch = new SpriteBatch();
-		this.dj = new Dungeon();
-        this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 24, 24, "F", "Press F to use !", 0.8f);
-        this.debug = new Debug();
-        this.player.spawnPoint(this.dj.getChoosenRoomSpawnPoint(0));
-        this.mobSpawner = new MobSpawner(this.dj);
-        Game.STATE = State.NOTHING;
     }
 
     public OrthographicCamera setCamera(boolean ortho, float viewPortW, float viewPortH)
@@ -70,11 +63,36 @@ public class Game extends Scene {
     //load everything
     public void load()
     {
+        if (this.isLoaded) return;
+        this.sprite = new Sprite();
+        this.sprite.setBounds(500, 200, 70, 70);
+        this.player = new Player(this.sprite, 70, 70);
+        this.batch = new SpriteBatch();
+        this.dj = new Dungeon();
+        this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 24, 24, "F", "Press F to use !", 0.8f);
+        this.debug = new Debug();
+        this.player.spawnPoint(this.dj.getChoosenRoomSpawnPoint(0));
+        this.mobSpawner = new MobSpawner(this.dj);
+        Game.STATE = State.SPAWNING;
+        camera.position.set(new Vector3(this.player.getPositionVector(), 0));
+        this.cutScene = new CutScene();
+        this.isLoaded = true;
+    }
 
+    public static void setState(State newState)
+    {
+        STATE = newState;
+    }
+
+    public void checkCutScene(SpriteBatch batch)
+    {
+        if (STATE == State.SPAWNING)
+            this.cutScene.spawning(this.player.getPositionY() - 500f, this.player.getPositionY(), 5f, batch, this.player);
     }
 
     public void play(Cursor cursor)
     {
+        if (!this.isLoaded) return;
         Game.deltaTime = Gdx.graphics.getDeltaTime();
 
         if (Inventory.inventoryIsOpen)
@@ -85,7 +103,9 @@ public class Game extends Scene {
         this.dj.update(this.batch, this.player, this.triggerUI);
         this.mobSpawner.getDungeon(dj);
         this.mobSpawner.update(this.batch, this.player);
-        this.player.update(this.batch, Game.deltaTime, cursor, this.dj.layerData);
+        this.checkCutScene(this.batch);
+        if (STATE == State.NOTHING)
+            this.player.update(this.batch, Game.deltaTime, cursor, this.dj.layerData);
         this.cameraHandler();
         this.batch.end();
     }
