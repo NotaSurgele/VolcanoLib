@@ -22,14 +22,22 @@ public class Brush {
         return this.currentTexture;
     }
 
-    public void drawTexture(MouseEvent mouse)
+    public void drawTexture(Vector2i origin, Vector2i pos)
     {
         Graphics g = this.content.getGraphics();
-        int x = mouse.getX() - (mouse.getX() % RoomCreator.TILESIZE);
-        int y = mouse.getY() - (mouse.getY() % RoomCreator.TILESIZE) - 32;
+        int originX = origin.getX();
+        int originY = origin.getY();
+        int posX = pos.getX();
+        int posY = pos.getY();
 
-        if (x <= 800 && y <= 800)
-            g.drawImage(this.currentTexture, x, y, null);
+        if ((originX <= 800 && originY <= 800)) {
+            for (int i = originX; i <= posX; i += RoomCreator.TILESIZE) {
+                for (int j = originY; j <= posY; j += RoomCreator.TILESIZE) {
+                    if (i <= 800 && j <= 800)
+                        g.drawImage(this.currentTexture, i, j, null);
+                }
+            }
+        }
     }
 
 }

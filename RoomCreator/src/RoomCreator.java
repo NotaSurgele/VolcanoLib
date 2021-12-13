@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.IOException;
 import javax.swing.*;
 
@@ -10,14 +11,19 @@ public class RoomCreator {
     static final int ROOMWIDTH = 800;
     static final int ROOMHEIGHT = 800;
 
-    static Brush brush;
+    static Vector2i startRect;
+    static Vector2i endRect;
+
+    public static Brush brush;
 
     TexturedButton floor;
-    MouseEvents mouse;
+    static MouseEvents mouse;
+    JFrame frame = new JFrame();
 
     public RoomCreator() throws IOException {
-        JFrame frame = new JFrame();
 
+        startRect = new Vector2i(-404, -404);
+        endRect = new Vector2i(0, 0);
         mouse = new MouseEvents();
         frame.setContentPane(new Grid());
         brush = new Brush((JPanel) frame.getContentPane());
@@ -29,10 +35,19 @@ public class RoomCreator {
         //Button
         floor = new TexturedButton(32, 832, "assets/floor_1.png");
         frame.getContentPane().add(floor);
+
+        while (true) {
+            int x = MouseInfo.getPointerInfo().getLocation().x;
+            int y = MouseInfo.getPointerInfo().getLocation().y;
+
+            endRect.set(x - (x % TILESIZE), y - (y % TILESIZE) - 32);
+            if (mouse.isPressed)
+                brush.drawTexture(startRect, endRect);
+        }
     }
 
     public static void main(String[] args) throws IOException {
-        RoomCreator r = new RoomCreator();
+        new RoomCreator();
     }
 
 }
