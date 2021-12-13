@@ -5,8 +5,7 @@ public class MouseEvents extends MouseAdapter {
 
     public boolean isPressed = false;
 
-    public MouseEvents() {
-    }
+    public MouseEvents() {}
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -22,5 +21,7 @@ public class MouseEvents extends MouseAdapter {
         super.mouseEntered(e);
         isPressed = false;
         RoomCreator.startRect.set(-404, -404);
+        RoomCreator.endRect.set(0,0);
     }
+
 }
