@@ -20,6 +20,16 @@ public class TexturedButton extends JButton {
         this.addActionListener(new ButtonListener(img, value));
     }
 
+    public TexturedButton(int x, int y, String imgPath, int value, boolean eraser) throws IOException {
+
+        BufferedImage img = ImageIO.read(new File(imgPath));
+        ImageIcon image = new ImageIcon(img);
+        this.setBounds(x, y, 16, 16);
+        this.setIcon(image);
+        this.texture = null;
+        this.addActionListener(new ButtonListener(null, value));
+    }
+
     public BufferedImage getTexture()
     {
         return this.texture;

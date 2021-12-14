@@ -46,6 +46,7 @@ public class Brush {
         }
         System.out.println("______________________________________________________\n");
     }
+
     public void drawTexture(Vector2i origin, Vector2i pos)
     {
         Graphics g = this.content.getGraphics();
@@ -58,10 +59,11 @@ public class Brush {
             for (int i = originX; i <= posX; i += RoomCreator.TILESIZE) {
                 for (int j = originY; j <= posY; j += RoomCreator.TILESIZE) {
                     if (i <= RoomCreator.ROOMHEIGHT && j <= RoomCreator.ROOMWIDTH) {
-                        g.drawImage(this.currentTexture, i, j, null);
+                        if (this.currentTexture != null)
+                            g.drawImage(this.currentTexture, i, j, null);
+                        else this.content.repaint(i, j, RoomCreator.TILESIZE, RoomCreator.TILESIZE);
                         if ((i / RoomCreator.TILESIZE > 0 && i / RoomCreator.TILESIZE < 50) && (j / RoomCreator.TILESIZE > 0 && j / RoomCreator.TILESIZE < 50)) {
-                            if (this.drawingLayer != null)
-                                this.drawingLayer[j / RoomCreator.TILESIZE][i / RoomCreator.TILESIZE] = this.value;
+                            if (this.drawingLayer != null) this.drawingLayer[j / RoomCreator.TILESIZE][i / RoomCreator.TILESIZE] = this.value;
                         }
                     }
                 }

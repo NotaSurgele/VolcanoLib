@@ -60,9 +60,11 @@ public class RoomCreator {
 
         TexturedButton floor = new TexturedButton(32, 832, "assets/floor_1.png", 1);
         TexturedButton floor2 = new TexturedButton(64, 832, "assets/floor_2.png", 2);
+        TexturedButton eraser = new TexturedButton(96, 832, "assets/eraser.png", -1, true);
 
         frame.getContentPane().add(floor);
         frame.getContentPane().add(floor2);
+        frame.getContentPane().add(eraser);
     }
 
     public void update()
