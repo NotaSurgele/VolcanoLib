@@ -17,6 +17,7 @@ public class RoomCreator {
     public static Brush brush;
 
     static MouseEvents mouse;
+
     JFrame frame = new JFrame();
 
     public RoomCreator() throws IOException {
@@ -49,8 +50,13 @@ public class RoomCreator {
         LayerButton collision = new LayerButton("C", 832, 400);
         LayerButton noCollision = new LayerButton("NC", 832, 432);
 
+        brush.setLayer(noCollision.layer);
+        Clear clear = new Clear(832, 480, "CL");
+
         frame.getContentPane().add(collision);
         frame.getContentPane().add(noCollision);
+        frame.getContentPane().add(clear);
+
 
         TexturedButton floor = new TexturedButton(32, 832, "assets/floor_1.png", 1);
         TexturedButton floor2 = new TexturedButton(64, 832, "assets/floor_2.png", 2);
@@ -65,12 +71,13 @@ public class RoomCreator {
 
             int marginX = frame.getLocation().x;
             int marginY = frame.getLocation().y;
+
             int x = MouseInfo.getPointerInfo().getLocation().x - marginX;
             int y = MouseInfo.getPointerInfo().getLocation().y - marginY;
 
             endRect.set(x - (x % TILESIZE), y - (y % TILESIZE) - 32);
-            if (mouse.isPressed)
-                brush.drawTexture(startRect, endRect);
+            if (mouse.isPressed)  brush.drawTexture(startRect, endRect);
+
         }
     }
 

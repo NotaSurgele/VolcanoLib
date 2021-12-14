@@ -27,4 +27,22 @@ public class Layer {
     {
         this.layer[x][y] = value;
     }
+
+    public void clear()
+    {
+        this.layer = null;
+
+        this.layer = this.setLayer();
+    }
+
+    public void showLayer()
+    {
+        for (int i = 0; i != this.layer.length; i++) {
+            for (int j = 0; j != this.layer[i].length; j++) {
+                System.out.print(" " + this.layer[j][i] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println("__________________________________________________\n");
+    }
 }

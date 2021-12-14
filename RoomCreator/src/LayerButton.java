@@ -21,4 +21,14 @@ public class LayerButton extends JButton {
     {
         this.layer.setValue(x, y, value);
     }
+
+    public void showLayer()
+    {
+        this.layer.showLayer();
+    }
+
+    public void clear()
+    {
+        this.layer.clear();
+    }
 }
