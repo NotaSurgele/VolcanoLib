@@ -19,7 +19,9 @@ public class MouseEvents extends MouseAdapter {
     @Override
     public void mouseReleased(MouseEvent e) {
         super.mouseEntered(e);
+
         isPressed = false;
+        RoomCreator.brush.showLayer();
         RoomCreator.startRect.set(-404, -404);
         RoomCreator.endRect.set(0,0);
     }

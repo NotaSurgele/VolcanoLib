@@ -107,10 +107,7 @@ public class Dungeon {
 
     private boolean stairsCheck(int line, int each, int[][]layer)
     {
-        if (layer[line][each] == 2) {
-            return true;
-        }
-        return false;
+        return layer[line][each] == 2;
     }
 
     private void checkStairs(Player player, SpriteBatch batch, TriggerUI triggerUI)

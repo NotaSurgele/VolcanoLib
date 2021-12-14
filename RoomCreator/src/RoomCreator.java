@@ -63,8 +63,10 @@ public class RoomCreator {
     {
         while (true) {
 
-            int x = MouseInfo.getPointerInfo().getLocation().x;
-            int y = MouseInfo.getPointerInfo().getLocation().y;
+            int marginX = frame.getLocation().x;
+            int marginY = frame.getLocation().y;
+            int x = MouseInfo.getPointerInfo().getLocation().x - marginX;
+            int y = MouseInfo.getPointerInfo().getLocation().y - marginY;
 
             endRect.set(x - (x % TILESIZE), y - (y % TILESIZE) - 32);
             if (mouse.isPressed)

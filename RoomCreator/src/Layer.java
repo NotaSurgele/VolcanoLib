@@ -12,7 +12,7 @@ public class Layer {
 
         for (int i = 0; i != 50; i++) {
             for (int j = 0; j != 50; j++) {
-                layer[i][j] = 3;
+                layer[i][j] = -1;
             }
         }
         return layer;
