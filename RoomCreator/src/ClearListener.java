@@ -12,10 +12,6 @@ public class ClearListener implements ActionListener {
         ((LayerButton) c.getContentPane().getComponentAt(832, 400)).clear();
         ((LayerButton) c.getContentPane().getComponentAt(832, 432)).clear();
 
-        //Display cleared Layers
-        /*((LayerButton) c.getContentPane().getComponentAt(832, 400)).showLayer();
-        ((LayerButton) c.getContentPane().getComponentAt(832, 432)).showLayer();*/
-
         c.getContentPane().repaint();
     }
 }

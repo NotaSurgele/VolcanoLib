@@ -9,7 +9,7 @@ public class LayerButton extends JButton {
         this.layer = new Layer();
         this.setText(name);
         this.setBounds(x, y, 50, 20);
-        this.addActionListener(new LayerListeners(layer));
+        this.addActionListener(new LayerListeners(layer, name));
     }
 
     public int[][] getLayer()
