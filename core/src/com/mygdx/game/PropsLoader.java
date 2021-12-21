@@ -48,6 +48,24 @@ public class PropsLoader {
         return this.propsArray[index];
     }
 
+    public Props getProp(String propName)
+    {
+        for (int i = this.propsArray.length; i != 0; i--) {
+            if (this.propsArray[i].getName().equalsIgnoreCase(propName))
+                return this.propsArray[i];
+        }
+        return null;
+    }
+
+    public Props getPropByValue(int value)
+    {
+        for (int i = this.propsArray.length - 1; i != 0; i--) {
+            if (this.propsArray[i].getValue() == value)
+                return this.propsArray[i];
+        }
+        return null;
+    }
+
     public int getPropsArraySize()
     {
         return this.propsArray.length;

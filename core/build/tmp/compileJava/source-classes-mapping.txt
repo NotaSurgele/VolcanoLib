@@ -6,6 +6,8 @@ com/mygdx/game/BasicGun.java
 com/mygdx/game/Game.java
  com.mygdx.game.Game
  com.mygdx.game.Game$State
+com/mygdx/game/RoomRetriever.java
+ com.mygdx.game.RoomRetriever
 com/mygdx/game/BlueMage.java
  com.mygdx.game.BlueMage
  com.mygdx.game.BlueMage$State
@@ -46,7 +48,6 @@ com/volcano/game/Debug.java
  com.volcano.game.Debug
 com/volcano/game/Room.java
  com.volcano.game.Room
- com.volcano.game.Room$1
 com/mygdx/game/Sword.java
  com.mygdx.game.Sword
 com/mygdx/game/CutScene.java

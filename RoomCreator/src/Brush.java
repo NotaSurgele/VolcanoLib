@@ -62,8 +62,8 @@ public class Brush {
                         if (this.currentTexture != null)
                             g.drawImage(this.currentTexture, i, j, null);
                         else this.content.repaint(i, j, RoomCreator.TILESIZE, RoomCreator.TILESIZE);
-                        if ((i / RoomCreator.TILESIZE > 0 && i / RoomCreator.TILESIZE < 50) && (j / RoomCreator.TILESIZE > 0 && j / RoomCreator.TILESIZE < 50)) {
-                            if (this.drawingLayer != null) this.drawingLayer[j / RoomCreator.TILESIZE][i / RoomCreator.TILESIZE] = this.value;
+                        if ((i / RoomCreator.TILESIZE >= 0 && i / RoomCreator.TILESIZE <= 50) && (j / RoomCreator.TILESIZE >= 0 && j / RoomCreator.TILESIZE <= 50)) {
+                            if (this.drawingLayer != null) this.drawingLayer[i / RoomCreator.TILESIZE][j / RoomCreator.TILESIZE] = this.value;
                         }
                     }
                 }

@@ -50,19 +50,20 @@ public class SaveListener implements ActionListener {
         return obj;
     }
 
-    private void writeJSONData(int[][] collision, int[][] noCollision)
+    private void writeJSONData(int[][] wall, int[][] floor, int[][] prop)
     {
         JSONObject globalOBJ = getGlobalObject();
         JSONObject obj = new JSONObject();
 
-        JSONArray JSONCollision = new JSONArray();
-        JSONArray JSONNoCollision = new JSONArray();
+        JSONArray JSONFloor = new JSONArray();
+        JSONArray JSONWall = new JSONArray();
+        JSONArray JSONProp = new JSONArray();
 
-        this.setJSONArray(collision, JSONCollision, obj, "Collision");
-        this.setJSONArray(noCollision, JSONNoCollision, obj, "TEST");
+        this.setJSONArray(wall, JSONFloor, obj, "Wall");
+        this.setJSONArray(floor, JSONWall, obj, "Floor");
+        this.setJSONArray(prop, JSONProp, obj, "Prop");
 
-
-        globalOBJ.put("3", obj);
+        globalOBJ.put(String.valueOf(globalOBJ.size() + 1), obj);
 
         FileWriter fw = null;
         BufferedWriter bw = null;
@@ -88,9 +89,12 @@ public class SaveListener implements ActionListener {
 
         Save s = (Save) e.getSource();
         JPanel jp = s.getContentPane();
-        int[][] collision = ((LayerButton) jp.getComponentAt(832, 400)).getLayer();
-        int[][] noCollision = ((LayerButton) jp.getComponentAt(832, 432)).getLayer();
+        int[][] wall = ((LayerButton) jp.getComponentAt(832, 400)).getLayer();
+        int[][] floor = ((LayerButton) jp.getComponentAt(832, 432)).getLayer();
+        int[][] prop = ((LayerButton) jp.getComponentAt(832, 464)).getLayer();
 
-        this.writeJSONData(collision, noCollision);
+
+
+        this.writeJSONData(wall, floor, prop);
     }
 }

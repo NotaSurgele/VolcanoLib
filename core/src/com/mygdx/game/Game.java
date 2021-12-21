@@ -86,8 +86,9 @@ public class Game extends Scene {
 
     public void checkCutScene(SpriteBatch batch)
     {
-        if (STATE == State.SPAWNING)
+        if (STATE == State.SPAWNING) {
             this.cutScene.spawning(this.player.getPositionY() - 500f, this.player.getPositionY(), 5f, batch, this.player);
+        }
     }
 
     public void play(Cursor cursor)

@@ -19,7 +19,6 @@ public class Players {
     public Sprite sprite;
     public Vector2 position;
     public Collision collider;
-
     Vector3 cameraPosition;
 
     public Players(Sprite sprite, float x, float y) {

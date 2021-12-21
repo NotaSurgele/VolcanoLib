@@ -13,13 +13,17 @@ import java.util.ArrayList;
 
 public class Dungeon {
 
-    int[][] map;
+    int[][] floorLayer;
     int[][] propsLayer;
+    int[][] wallLayer;
 
-    public LayerData layerData;
+    Props[][] propsArray;
+    Texture[][] floorTextureArray;
+    Texture[][] wallTextureArray;
 
     PropsLoader propsLoader;
-    Props[][] propsArray;
+
+    public LayerData layerData;
 
     Texture floor;
     Texture wall;
@@ -28,7 +32,6 @@ public class Dungeon {
     Texture wallRight;
     Texture wallDown;
     Texture extract;
-    Texture[][] mapTextureArray;
 
     public static final int tileSize = 32;
     int width = 250;
@@ -42,10 +45,16 @@ public class Dungeon {
     final String wallPath = "tiles/wall/";
 
     public Dungeon() {
-        this.map = new int[this.height][this.width];
-        this.mapTextureArray = new Texture[this.height][this.width];
+        this.floorLayer = new int[this.height][this.width];
+        this.wallLayer = new int[this.height][this.width];
         this.propsLayer = new int[this.height][this.width];
+
+        this.floorTextureArray = new Texture[this.height][this.width];
+        this.wallTextureArray = new Texture[this.height][this.width];
         this.propsArray = new Props[this.height][this.width];
+
+        this.propsLoader = new PropsLoader();
+
         this.floor = new Texture(this.floorPath + "floor_2.png");
         this.wallTop = new Texture(this.wallPath + "wall_top_1.png");
         this.wallRight = new Texture(this.wallPath + "wall_bottom_inner_right.png");
@@ -54,7 +63,6 @@ public class Dungeon {
         this.extract = new Texture(this.floorPath + "stair_nextlevel.png");
         this.wall = new Texture(this.wallPath + "wall_1.png");
         this.rooms = new ArrayList<Room>();
-        this.propsLoader = new PropsLoader();
         this.load();
     }
 
@@ -62,26 +70,26 @@ public class Dungeon {
     {
         for (int i = 0; i != this.height; i++) {
             for (int j = 0; j != this.width; j++) {
-                this.map[i][j] = -1;
+                this.floorLayer[i][j] = -1;
                 this.propsLayer[i][j] = -1;
             }
         }
         for (int i = 0; i != this.howMuchRoom; ) {
             Room r = new Room(this.propsLoader);
 
-            this.map = r.addRoomInMap(this.map, this.width, this.height);
+            r.addFloorAndWall(this.floorLayer, this.wallLayer, this.width, this.height);
             if (r.isRoomAdded == 1) {
-                this.propsLayer = r.addPropsInRoom(this.propsLayer, this.propsArray);
+                r.addProp(this.propsLayer, this.propsArray);
                 i += r.isRoomAdded;
                 this.rooms.add(r);
-
             }
         }
-        this.loadTextureMapArray();
-        this.layerData = new LayerData(this.propsLayer);
+        this.loadFloorTextureArray();
+        this.loadWallTextureArray();
+        this.layerData = new LayerData(this.wallLayer);
     }
 
-    private void loadTextureMapArray()
+    private void loadFloorTextureArray()
     {
         int h = this.height;
         int w = this.width;
@@ -89,18 +97,30 @@ public class Dungeon {
         for (int line = 0; line != h; line++) {
 
             for (int each = 0; each != w; each++) {
-
-                if (this.map[line][each] != -1) {
-
-                    if (this.map[line][each] == -2) this.mapTextureArray[line][each] = this.wallDown;
-                    else if (this.map[line][each] == -3) this.mapTextureArray[line][each] = this.wallRight;
-                    else if (this.map[line][each] == -4) this.mapTextureArray[line][each] = this.wallTop;
-                    else if (this.map[line][each] == -5) this.mapTextureArray[line][each] = this.wallLeft;
-                    else if (this.map[line][each] == 1) this.mapTextureArray[line][each] = this.floor;
-                    else if (this.map[line][each] == 2) this.mapTextureArray[line][each] = this.extract;
-                    else if (this.map[line][each] == -10) this.mapTextureArray[line][each] = this.wall;
+                if (this.floorLayer[line][each] != -1) {
+                    if (this.floorLayer[line][each] == 1)
+                        this.floorTextureArray[line][each] = this.floor;
                 } else
-                    this.mapTextureArray[line][each] = null;
+                    this.floorTextureArray[line][each] = null;
+            }
+        }
+    }
+
+    private void loadWallTextureArray()
+    {
+        int h = this.height;
+        int w = this.width;
+
+        for (int line = 0; line != h; line++) {
+            for (int each = 0; each != w; each++) {
+                if (this.wallLayer[line][each] != -1) {
+                   if (this.wallLayer[line][each] == -2) this.wallTextureArray[line][each] = this.wallDown;
+                    else if (this.wallLayer[line][each] == -3) this.wallTextureArray[line][each] = this.wallRight;
+                    else if (this.wallLayer[line][each] == -4) this.wallTextureArray[line][each] = this.wallTop;
+                    else if (this.wallLayer[line][each] == -5) this.wallTextureArray[line][each] = this.wallLeft;
+                    else if (this.wallLayer[line][each] == -10) this.wallTextureArray[line][each] = this.wall;
+                } else
+                    this.wallTextureArray[line][each] = null;
             }
         }
     }
@@ -168,15 +188,16 @@ public class Dungeon {
 
             for (int each = 0; each != w; each++) {
 
-                if (this.mapTextureArray[line][each] != null) {
-                    if ((line >= yMin && line <= yMax) && (each >= xMin && each <= xMax)) {
-                        batch.draw(this.mapTextureArray[line][each], x, y, tileSize, tileSize);
-                        if (this.propsArray[line][each] != null) {
-                            if (this.propsArray[line][each].isAnimate) {
-                                this.propsArray[line][each].animate(batch, true, x, y, tileSize, tileSize);
-                            } else
-                                batch.draw(this.propsArray[line][each].getTexture(), x, y, tileSize, tileSize);
-                        }
+                if ((line >= yMin && line <= yMax) && (each >= xMin && each <= xMax)) {
+                    if (this.floorTextureArray[line][each] != null)
+                        batch.draw(this.floorTextureArray[line][each], x, y, tileSize, tileSize);
+                    if (this.wallTextureArray[line][each] != null)
+                        batch.draw(this.wallTextureArray[line][each], x, y, tileSize, tileSize);
+                    if (this.propsArray[line][each] != null) {
+                        if (this.propsArray[line][each].isAnimate) {
+                            this.propsArray[line][each].animate(batch, true, x, y, tileSize, tileSize);
+                        } else
+                            batch.draw(this.propsArray[line][each].getTexture(), x, y, tileSize, tileSize);
                     }
                 }
                 x += tileSize;

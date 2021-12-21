@@ -13,7 +13,6 @@ public class DesktopLauncher {
 
 	public static void main (String[] arg) throws IOException {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-
 		GameConfig.loadWindowConfiguration(config, GameConfig.loadConfigFile("config.ini"));
 		config.backgroundFPS = 100000;
 		config.foregroundFPS = 100000;
