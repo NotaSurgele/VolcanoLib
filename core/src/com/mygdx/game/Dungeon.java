@@ -16,6 +16,7 @@ public class Dungeon {
     int[][] floorLayer;
     int[][] propsLayer;
     int[][] wallLayer;
+    int[][] globalLayer;
 
     Props[][] propsArray;
     Texture[][] floorTextureArray;
@@ -86,7 +87,23 @@ public class Dungeon {
         }
         this.loadFloorTextureArray();
         this.loadWallTextureArray();
-        this.layerData = new LayerData(this.wallLayer);
+        this.loadGlobalLayer();
+        this.layerData = new LayerData(this.globalLayer);
+    }
+
+    private void loadGlobalLayer()
+    {
+        this.globalLayer = new int[this.propsLayer.length][this.propsLayer[0].length];
+
+        for (int line = this.propsArray.length - 1; line != 0; line--) {
+            for (int cell = this.propsArray[line].length - 1; cell != 0; cell--) {
+                this.globalLayer[line][cell] = this.floorLayer[line][cell];
+                if (this.wallLayer[line][cell] != -1)
+                    this.globalLayer[line][cell] = this.wallLayer[line][cell];
+                if (this.propsLayer[line][cell] != -1)
+                    this.globalLayer[line][cell] = this.propsLayer[line][cell];
+            }
+        }
     }
 
     private void loadFloorTextureArray()
