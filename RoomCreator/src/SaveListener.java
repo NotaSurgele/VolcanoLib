@@ -22,7 +22,7 @@ public class SaveListener implements ActionListener {
             JSONArray tmp = new JSONArray();
 
             for (int each = 0; each != sizeY; each++) {
-                tmp.add(each, array[each][line]);
+                tmp.add(each, array[line][each]);
             }
             jsonArr.add(line, tmp);
         }

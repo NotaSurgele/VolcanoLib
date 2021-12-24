@@ -23,8 +23,9 @@ public class RoomRetriever {
     {
         int[][] layer = new int[50][50];
         int size = arr.size();
+        int x = 0;
 
-        for (int line = 0; line != size; line++) {
+        for (int line = size - 1; line != 0; line--) {
 
             String s = arr.get(line).toString();
             String clear1 = s.replace("[", "");
@@ -32,8 +33,9 @@ public class RoomRetriever {
             String[] sArray = clear2.split(",");
 
             for (int each = 0; each != sArray.length; each++) {
-                layer[line][each] = Integer.parseInt(sArray[each]);
+                layer[x][each] = Integer.parseInt(sArray[each]);
             }
+            x++;
         }
         return layer;
     }

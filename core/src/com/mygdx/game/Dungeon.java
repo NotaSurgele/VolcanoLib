@@ -47,7 +47,7 @@ public class Dungeon {
 
     public Dungeon() {
         this.floorLayer = new int[this.height][this.width];
-        this.wallLayer = new int[this.height][this.width];
+        this.wallLayer  =  new int[this.height][this.width];
         this.propsLayer = new int[this.height][this.width];
 
         this.floorTextureArray = new Texture[this.height][this.width];
@@ -72,6 +72,7 @@ public class Dungeon {
         for (int i = 0; i != this.height; i++) {
             for (int j = 0; j != this.width; j++) {
                 this.floorLayer[i][j] = -1;
+                this.wallLayer[i][j] = -1;
                 this.propsLayer[i][j] = -1;
             }
         }
@@ -100,7 +101,7 @@ public class Dungeon {
                 this.globalLayer[line][cell] = this.floorLayer[line][cell];
                 if (this.wallLayer[line][cell] != -1)
                     this.globalLayer[line][cell] = this.wallLayer[line][cell];
-                if (this.propsLayer[line][cell] != -1)
+                if (this.propsLayer[line][cell] < -1)
                     this.globalLayer[line][cell] = this.propsLayer[line][cell];
             }
         }
@@ -117,6 +118,8 @@ public class Dungeon {
                 if (this.floorLayer[line][each] != -1) {
                     if (this.floorLayer[line][each] == 1)
                         this.floorTextureArray[line][each] = this.floor;
+                    if (this.floorLayer[line][each] == 2)
+                        this.floorTextureArray[line][each] = this.extract;
                 } else
                     this.floorTextureArray[line][each] = null;
             }
@@ -211,9 +214,9 @@ public class Dungeon {
                     if (this.wallTextureArray[line][each] != null)
                         batch.draw(this.wallTextureArray[line][each], x, y, tileSize, tileSize);
                     if (this.propsArray[line][each] != null) {
-                        if (this.propsArray[line][each].isAnimate) {
+                        if (this.propsArray[line][each].isAnimate)
                             this.propsArray[line][each].animate(batch, true, x, y, tileSize, tileSize);
-                        } else
+                        else
                             batch.draw(this.propsArray[line][each].getTexture(), x, y, tileSize, tileSize);
                     }
                 }
