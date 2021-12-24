@@ -65,6 +65,7 @@ public class RoomCreator {
         frame.getContentPane().add(save);
 
         TexturedButton floor = new TexturedButton(32, 832, "assets/floor_2.png", 1);
+        TexturedButton stairs = new TexturedButton(64, 832, "assets/stair_nextlevel.png", 2);
         TexturedButton eraser = new TexturedButton(96, 832, "assets/eraser.png", -1, true);
         TexturedButton wall_bot = new TexturedButton(128, 832, "assets/wall_bottom_1.png", -4);
         TexturedButton wall_top1 = new TexturedButton(160, 832, "assets/wall_top_1.png", -2);
@@ -75,6 +76,7 @@ public class RoomCreator {
         TexturedButton torch = new TexturedButton(316, 832, "assets/torch.png", 3);
 
         frame.getContentPane().add(floor);
+        frame.getContentPane().add(stairs);
         frame.getContentPane().add(eraser);
         frame.getContentPane().add(wall_bot);
         frame.getContentPane().add(wall_top1);

@@ -63,11 +63,13 @@ public class Room {
         int localX = 0;
         int localY = 0;
 
+        int[][] room = this.layers.get(get);
+
         for (int i = this.roomY; i != (this.roomY + this.ROOMHEIGHT); i++) {
 
             for (int j = this.roomX; j != (this.roomX + this.ROOMWIDTH); j++) {
 
-                array[i][j] = this.layers.get(get)[localY][localX];
+                array[i][j] = room[localY][localX];
                 localX++;
             }
             localX = 0;
@@ -75,7 +77,7 @@ public class Room {
         }
     }
 
-    public void addFloorAndWall(int[][] floor, int[][] wall,int worldWidth, int worldHeight)
+    public void addFloorAndWall(int[][] floor, int[][] wall, int worldWidth, int worldHeight)
     {
         int x = MathUtils.random(0, worldWidth - 1);
         int y = MathUtils.random(0, worldHeight - 1);

@@ -158,7 +158,7 @@ public class Dungeon {
         if (this.stairsCheck(
                 (int)(player.getPositionY() + (player.getHeight() / 2) - 16f) / Dungeon.tileSize,
                 (int)(player.getPositionX() + (player.getWidth() / 2)) / Dungeon.tileSize,
-                    this.propsLayer
+                    this.floorLayer
         )) {
             triggerUI.draw(batch, TriggerUIX, TriggerUIY);
             this.stairsInput(player);
