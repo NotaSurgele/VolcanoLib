@@ -49,7 +49,7 @@ public class RoomRetriever {
             Object tmp = new JSONParser().parse(new FileReader(f));
             JSONObject room = null;
             globalObj = (JSONObject) tmp;
-            int where = MathUtils.random(1, globalObj.size());
+            int where = MathUtils.random(2, globalObj.size());
 
             room = (JSONObject) globalObj.get(String.valueOf(where));
             JSONArray wallLayer = (JSONArray) room.get("Wall");
