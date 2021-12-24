@@ -37,10 +37,11 @@ public class Animator {
         this.animation = new Animation<TextureRegion>(frameDuration, animationFrame);
     }
 
-    public void playAnimation(SpriteBatch batch, float stateTime, boolean loop)
+    public void playAnimation(SpriteBatch batch, float stateTime, boolean loop, float x, float y, float w, float h)
     {
         this.currentFrame = this.animation.getKeyFrame(stateTime, loop);
-        batch.draw(this.currentFrame, 0, 0);
+
+        batch.draw(this.currentFrame, x, y, w, h);
     }
 
     public void stopAnimation(float stateTime)
@@ -50,12 +51,11 @@ public class Animator {
         stateTime = 0f;
     }
 
-    public TextureRegion playAnimationToSprite(Sprite sprite, float stateTime, boolean loop)
+    public void playAnimationToSprite(Sprite sprite, float stateTime, boolean loop)
     {
-        TextureRegion currentFrame = this.animation.getKeyFrame(stateTime, loop);
+        this.currentFrame = this.animation.getKeyFrame(stateTime, loop);
 
         this.setFrameToSprite(sprite, currentFrame);
-        return currentFrame;
     }
 
     //Set method
@@ -107,14 +107,14 @@ public class Animator {
 
     public float getCurrentFrameWidth(float stateTime, boolean isLooping)
     {
-        TextureRegion currentFrame = this.animation.getKeyFrame(stateTime, isLooping);
+        this.currentFrame = this.animation.getKeyFrame(stateTime, isLooping);
 
         return currentFrame.getRegionWidth();
     }
 
     public float getCurrentFrameHeight(float stateTime, boolean isLooping)
     {
-        TextureRegion currentFrame = this.animation.getKeyFrame(stateTime, isLooping);
+        this.currentFrame = this.animation.getKeyFrame(stateTime, isLooping);
 
         return currentFrame.getRegionHeight();
     }
@@ -129,6 +129,11 @@ public class Animator {
         return frame.getRegionHeight();
     }
 
+    public int getKeyFrameIndex(float stateTime)
+    {
+        return this.animation.getKeyFrameIndex(stateTime);
+    }
+
     //Static method
     public static Animator initializeAnimation(Animator animation, String texturePath, int FRAME_COLS, int FRAME_ROWS, float frameDuration)
     {
@@ -138,8 +143,31 @@ public class Animator {
         return animation;
     }
 
+    public static Animator initializeAnimation(Animator animation, Texture t, int FRAME_COLS, int FRAME_ROWS, float frameDuration)
+    {
+        animation = new Animator();
+        animation.createAnimation(t, FRAME_COLS, FRAME_ROWS, frameDuration);
+
+        return animation;
+    }
+
+    //Boolean
+    public boolean isFinished(float stateTime)
+    {
+        return this.animation.isAnimationFinished(stateTime);
+    }
+
+    public boolean isGivenFrame(float stateTime, int givenFrame)
+    {
+        int frame = this.animation.getKeyFrameIndex(stateTime);
+
+        return frame == givenFrame;
+    }
+
     public void dispose()
     {
         this.texture.dispose();
     }
+
+
 }

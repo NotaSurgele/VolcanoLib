@@ -3,11 +3,13 @@ package com.mygdx.game.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class GameConfig {
 
-    final static String configPath = "../../.config/";
+    final static String configPath = ".config/";
 
     public GameConfig() {}
 
@@ -65,7 +67,21 @@ public class GameConfig {
         return readConfigFile();
     }
 
+    public static String readFile(String fileName)  throws IOException
+    {
+        String data = "";
+        FileReader r = null;
 
+        try {
+            r = new FileReader(fileName);
+            for (int ch = 0; (ch = r.read()) != -1; data += (char)ch);
+        } catch (FileNotFoundException e) {
+            System.err.println("An error has occured\nCouldn't read: config.ini");
+            e.printStackTrace();
+        }
+        r.close();
+        return data;
+    }
 
     public static LwjglApplicationConfiguration loadWindowConfiguration(LwjglApplicationConfiguration config, String data)
     {

@@ -17,8 +17,8 @@ public class Menu extends Scene {
     String uiFolder = "ui (new)/";
 
     public Menu (float viewportWidth, float viewportHeight) {
-        this.play = new Button(new Texture(this.uiFolder + "menu_button.png"), 500, 500, 100, 50, "Play");
-        this.quit = new Button(new Texture(this.uiFolder + "menu_button.png"), 500, 300, 100, 50, "Quit");
+        this.play = new Button(new Texture(this.uiFolder + "menu_button.png"), new Texture(this.uiFolder + "menu_button_press.png"), 500, 500, 100, 50, "Play");
+        this.quit = new Button(new Texture(this.uiFolder + "menu_button.png"), new Texture(this.uiFolder + "menu_button_press.png"),500, 300, 100, 50, "Quit");
         this.batch = new SpriteBatch();
     }
 
@@ -40,11 +40,11 @@ public class Menu extends Scene {
     {
         this.batch.begin();
         this.play.render(cursor);
-        this.play.onHoverSetNewTexture(new Texture(this.uiFolder + "menu_button_press.png"));
+        this.play.onHoverSetNewTexture();
         this.play.onClickChangeScene(scene, SCENES.GAME);
         this.quit.render(cursor);
         cursor.setCursorSize(30, 30);
-        this.quit.onHoverSetNewTexture(new Texture(this.uiFolder + "menu_button_press.png"));
+        this.quit.onHoverSetNewTexture();
         this.quit.onClickChangeScene(scene, SCENES.NULL);
         this.batch.end();
     }
