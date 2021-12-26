@@ -7,6 +7,7 @@ public class Brush {
 
     JPanel content;
     BufferedImage currentTexture;
+    Color color;
 
     int[][] drawingLayer;
 
@@ -19,6 +20,11 @@ public class Brush {
     public void setTexture(BufferedImage i)
     {
         this.currentTexture = i;
+    }
+
+    public void setColor(Color c)
+    {
+        this.color = c;
     }
 
     public BufferedImage getTexture()
@@ -59,8 +65,11 @@ public class Brush {
             for (int i = originX; i <= posX; i += RoomCreator.TILESIZE) {
                 for (int j = originY; j <= posY; j += RoomCreator.TILESIZE) {
                     if (i <= RoomCreator.ROOMHEIGHT && j <= RoomCreator.ROOMWIDTH) {
-                        if (this.currentTexture != null)
+                        if (this.currentTexture != null) {
                             g.drawImage(this.currentTexture, i, j, null);
+                            g.setColor(this.color);
+                            g.drawRect(i, j, 16, 16);
+                        }
                         else this.content.repaint(i, j, RoomCreator.TILESIZE, RoomCreator.TILESIZE);
                         if ((i / RoomCreator.TILESIZE >= 0 && i / RoomCreator.TILESIZE <= 50) && (j / RoomCreator.TILESIZE >= 0 && j / RoomCreator.TILESIZE <= 50)) {
                             if (this.drawingLayer != null) this.drawingLayer[j / RoomCreator.TILESIZE][i / RoomCreator.TILESIZE] = this.value;

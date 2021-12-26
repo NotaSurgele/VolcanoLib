@@ -51,9 +51,9 @@ public class RoomCreator {
 
     public void setButton() throws IOException {
 
-        LayerButton wallLayer = new LayerButton("W", 832, 400);
-        LayerButton floorLayer = new LayerButton("F", 832, 432);
-        LayerButton propLayer = new LayerButton("P", 832, 464);
+        LayerButton wallLayer = new LayerButton("W", 832, 400, Color.RED);
+        LayerButton floorLayer = new LayerButton("F", 832, 432, Color.GREEN);
+        LayerButton propLayer = new LayerButton("P", 832, 464, Color.YELLOW);
         Clear clear = new Clear(832, 500, "CL");
         Save save = new Save(815, 200, "Save");
 
