@@ -28,12 +28,20 @@ public class RoomRetriever {
         for (int line = size - 1; line != 0; line--) {
 
             String s = arr.get(line).toString();
-            String clear1 = s.replace("[", "");
-            String clear2 = clear1.replace("]", "");
-            String[] sArray = clear2.split(",");
+            //String clear1 = s.replace("[", "");
+            //String clear2 = clear1.replace("]", "");
+            String[] sArray = s.split(",");
 
-            for (int each = 0; each != sArray.length; each++) {
-                layer[x][each] = Integer.parseInt(sArray[each]);
+            for (int each = 0; each != sArray.length - 1; each++) {
+                String str = null;
+
+                if (sArray[each].contains("["))
+                    str = sArray[each].replace("[", "");
+                else if (sArray[each].contains("]"))
+                    str = sArray[each].replace("]", "");
+                else
+                    str = sArray[each];
+                layer[x][each] = Integer.parseInt(str);
             }
             x++;
         }
@@ -48,13 +56,16 @@ public class RoomRetriever {
         try {
             Object tmp = new JSONParser().parse(new FileReader(f));
             JSONObject room = null;
+
             globalObj = (JSONObject) tmp;
             int where = MathUtils.random(1, globalObj.size());
 
             room = (JSONObject) globalObj.get(String.valueOf(where));
+
             JSONArray wallLayer = (JSONArray) room.get("Wall");
             JSONArray floor = (JSONArray) room.get("Floor");
             JSONArray prop = (JSONArray) room.get("Prop");
+
             layersArrayList.add(this.convertJSONArray(wallLayer));
             layersArrayList.add(this.convertJSONArray(floor));
             layersArrayList.add(this.convertJSONArray(prop));

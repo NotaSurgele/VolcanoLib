@@ -134,9 +134,9 @@ public class Dungeon {
         for (int line = 0; line != h; line++) {
             for (int each = 0; each != w; each++) {
                 if (this.wallLayer[line][each] != -1) {
-                   if (this.wallLayer[line][each] == -2) this.wallTextureArray[line][each] = this.wallDown;
+                   if (this.wallLayer[line][each] == -4) this.wallTextureArray[line][each] = this.wallDown;
                     else if (this.wallLayer[line][each] == -3) this.wallTextureArray[line][each] = this.wallRight;
-                    else if (this.wallLayer[line][each] == -4) this.wallTextureArray[line][each] = this.wallTop;
+                    else if (this.wallLayer[line][each] == -2) this.wallTextureArray[line][each] = this.wallTop;
                     else if (this.wallLayer[line][each] == -5) this.wallTextureArray[line][each] = this.wallLeft;
                     else if (this.wallLayer[line][each] == -10) this.wallTextureArray[line][each] = this.wall;
                 } else

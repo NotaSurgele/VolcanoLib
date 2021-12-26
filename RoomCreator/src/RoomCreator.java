@@ -58,6 +58,7 @@ public class RoomCreator {
         Save save = new Save(815, 200, "Save");
 
         brush.setLayer(floorLayer.layer);
+        brush.setColor(Color.GREEN);
         frame.getContentPane().add(wallLayer);
         frame.getContentPane().add(floorLayer);
         frame.getContentPane().add(propLayer);

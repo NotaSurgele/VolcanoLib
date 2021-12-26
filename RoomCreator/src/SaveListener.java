@@ -93,8 +93,6 @@ public class SaveListener implements ActionListener {
         int[][] floor = ((LayerButton) jp.getComponentAt(832, 432)).getLayer();
         int[][] prop = ((LayerButton) jp.getComponentAt(832, 464)).getLayer();
 
-
-
         this.writeJSONData(wall, floor, prop);
     }
 }
