@@ -5,11 +5,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.volcano.game.*;
 
 public class Game extends Scene {
 
+
+    Texture backgroundImg;
 
     //PLAYER PART
     Sprite sprite;
@@ -17,6 +20,7 @@ public class Game extends Scene {
 
     //SYSTEM PART
     SpriteBatch batch;
+    SpriteBatch HUDBatch;
     public static OrthographicCamera camera;
     public static float deltaTime;
     Debug debug;
@@ -44,6 +48,7 @@ public class Game extends Scene {
 
     public Game(float viewportWidth, float viewportHeight) {
         camera = this.setCamera(false, viewportWidth, viewportHeight);
+        this.backgroundImg = new Texture("Shader/background-image.png");
     }
 
     public OrthographicCamera setCamera(boolean ortho, float viewPortW, float viewPortH)
@@ -68,6 +73,7 @@ public class Game extends Scene {
         this.sprite.setBounds(500, 200, 70, 70);
         this.player = new Player(this.sprite, 70, 70);
         this.batch = new SpriteBatch();
+        this.HUDBatch = new SpriteBatch();
         this.dj = new Dungeon();
         this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 24, 24, "F", "Press F to use !", 0.8f);
         this.debug = new Debug();
@@ -96,19 +102,28 @@ public class Game extends Scene {
         if (!this.isLoaded) return;
         Game.deltaTime = Gdx.graphics.getDeltaTime();
 
-        if (Inventory.inventoryIsOpen)
-            Game.deltaTime *= Game.slowTime;
+        if (Inventory.inventoryIsOpen) Game.deltaTime *= Game.slowTime;
+
         this.batch.setProjectionMatrix(camera.combined);
+
+        //Non HUD object
         this.batch.begin();
         this.debug.cameraZoom(camera);
         this.dj.update(this.batch, this.player, this.triggerUI);
         this.mobSpawner.getDungeon(dj);
         this.mobSpawner.update(this.batch, this.player);
         this.checkCutScene(this.batch);
-        if (STATE == State.NOTHING)
-            this.player.update(this.batch, Game.deltaTime, cursor, this.dj.layerData);
+        if (STATE == State.NOTHING) this.player.update(this.batch, Game.deltaTime, cursor, this.dj.layerData);
         this.cameraHandler();
+        this.batch.draw(this.backgroundImg, 0, 0, camera.viewportWidth, camera.viewportHeight);
         this.batch.end();
+
+        //Static HUD object
+
+        this.HUDBatch.begin();
+        this.HUDBatch.draw(this.backgroundImg, 0, 0, camera.viewportWidth, camera.viewportHeight);
+        cursor.update(this.HUDBatch);
+        this.HUDBatch.end();
     }
 
     public void dispose()

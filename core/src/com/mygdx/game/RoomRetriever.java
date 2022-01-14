@@ -28,8 +28,6 @@ public class RoomRetriever {
         for (int line = size - 1; line != 0; line--) {
 
             String s = arr.get(line).toString();
-            //String clear1 = s.replace("[", "");
-            //String clear2 = clear1.replace("]", "");
             String[] sArray = s.split(",");
 
             for (int each = 0; each != sArray.length - 1; each++) {

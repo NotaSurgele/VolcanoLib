@@ -74,6 +74,17 @@ public class Players {
         camera.position.set(this.cameraPosition);
     }
 
+    public void smoothCameraPlayerFollow(OrthographicCamera camera, float smoothness, boolean shouldFollow)
+    {
+        if (shouldFollow) {
+            Vector3 playerPosition = new Vector3(this.sprite.getX(), this.sprite.getY(), 0);
+            this.cameraPosition = new Vector3(camera.position);
+
+            this.cameraPosition.slerp(playerPosition, smoothness * Gdx.graphics.getDeltaTime());
+            camera.position.set(this.cameraPosition);
+        }
+    }
+
     public void draw(SpriteBatch batch)
     {
         this.sprite.draw(batch);

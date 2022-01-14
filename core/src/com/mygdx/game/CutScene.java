@@ -34,6 +34,7 @@ public class CutScene {
         Game.camera.position.set(Game.camera.position.x, this.y, 0);
 
         if ((int)this.y + 1 != (int)endY) {
+
             this.stateTime += Game.deltaTime;
             this.sprite.setPosition(Game.camera.position.x - 40, endY - 40);
             this.spawningEffect.playAnimationToSprite(this.sprite, this.stateTime, false);
