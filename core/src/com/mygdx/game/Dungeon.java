@@ -35,8 +35,8 @@ public class Dungeon {
     Texture extract;
 
     public static final int tileSize = 32;
-    int width = 250;
-    int height = 250;
+    int width = 300;
+    int height = 300;
 
     ArrayList<Room> rooms;
     int currentRoom = 0;
