@@ -79,7 +79,7 @@ public class Game extends Scene {
         this.player.spawnPoint(this.dj.getChoosenRoomSpawnPoint(0));
         this.mobSpawner = new MobSpawner(this.dj);
         Game.STATE = State.SPAWNING;
-        this.test = new Light(new Texture("Shader/light.png"), 255f, 255f, 0, 1f, 500, 500);
+        this.test = new Light(new Texture("Shader/light.png"), 255f, 255f, 0, 20f, 500, 500);
         camera.position.set(new Vector3(this.player.getPositionVector(), 0));
         this.cutScene = new CutScene();
         this.isLoaded = true;
@@ -110,7 +110,7 @@ public class Game extends Scene {
 
         //Non HUD object
         this.batch.begin();
-        this.batch.setColor(0.5f, 0.5f, 0.5f, 1f);
+        this.batch.setColor(0.4f, 0.4f, 0.4f, 1f);
         this.batch.enableBlending();
         this.debug.cameraZoom(camera);
         this.dj.update(this.batch, this.player, this.triggerUI);
@@ -118,7 +118,7 @@ public class Game extends Scene {
         this.mobSpawner.update(this.batch, this.player);
         this.checkCutScene(this.batch);
         if (STATE == State.NOTHING) this.player.update(this.batch, Game.deltaTime, cursor, this.dj.layerData);
-        this.test.update(this.player.getPositionX(), this.player.getPositionY());
+        this.test.update(this.player.getPositionX(), this.player.getPositionY(), Game.camera);
         this.cameraHandler();
         this.batch.end();
 
