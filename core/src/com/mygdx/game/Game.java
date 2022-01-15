@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,8 +12,6 @@ import com.volcano.game.*;
 
 public class Game extends Scene {
 
-
-    Texture backgroundImg;
 
     //PLAYER PART
     Sprite sprite;
@@ -25,6 +24,7 @@ public class Game extends Scene {
     public static float deltaTime;
     Debug debug;
     MobSpawner mobSpawner;
+    Light test;
 
     TriggerUI triggerUI;
 
@@ -48,7 +48,6 @@ public class Game extends Scene {
 
     public Game(float viewportWidth, float viewportHeight) {
         camera = this.setCamera(false, viewportWidth, viewportHeight);
-        this.backgroundImg = new Texture("Shader/background-image.png");
     }
 
     public OrthographicCamera setCamera(boolean ortho, float viewPortW, float viewPortH)
@@ -80,6 +79,7 @@ public class Game extends Scene {
         this.player.spawnPoint(this.dj.getChoosenRoomSpawnPoint(0));
         this.mobSpawner = new MobSpawner(this.dj);
         Game.STATE = State.SPAWNING;
+        this.test = new Light(new Texture("Shader/light.png"), 255f, 255f, 0, 1f, 500, 500);
         camera.position.set(new Vector3(this.player.getPositionVector(), 0));
         this.cutScene = new CutScene();
         this.isLoaded = true;
@@ -99,6 +99,8 @@ public class Game extends Scene {
 
     public void play(Cursor cursor)
     {
+        Gdx.gl.glBlendFunc(GL30.GL_SRC_ALPHA, GL30.GL_ONE);
+        Gdx.gl.glEnable(GL30.GL_BLEND);
         if (!this.isLoaded) return;
         Game.deltaTime = Gdx.graphics.getDeltaTime();
 
@@ -108,20 +110,20 @@ public class Game extends Scene {
 
         //Non HUD object
         this.batch.begin();
+        this.batch.setColor(0.5f, 0.5f, 0.5f, 1f);
+        this.batch.enableBlending();
         this.debug.cameraZoom(camera);
         this.dj.update(this.batch, this.player, this.triggerUI);
         this.mobSpawner.getDungeon(dj);
         this.mobSpawner.update(this.batch, this.player);
         this.checkCutScene(this.batch);
         if (STATE == State.NOTHING) this.player.update(this.batch, Game.deltaTime, cursor, this.dj.layerData);
+        this.test.update(this.player.getPositionX(), this.player.getPositionY());
         this.cameraHandler();
-        this.batch.draw(this.backgroundImg, 0, 0, camera.viewportWidth, camera.viewportHeight);
         this.batch.end();
 
         //Static HUD object
-
         this.HUDBatch.begin();
-        this.HUDBatch.draw(this.backgroundImg, 0, 0, camera.viewportWidth, camera.viewportHeight);
         cursor.update(this.HUDBatch);
         this.HUDBatch.end();
     }
