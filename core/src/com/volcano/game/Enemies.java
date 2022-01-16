@@ -15,6 +15,7 @@ public abstract class Enemies {
     public Sprite sprite;
     public Vector2 position;
     public Rectangle hitbox;
+    public Light light;
     public float health = 100;
 
     private boolean isKnockback = false;
@@ -28,9 +29,28 @@ public abstract class Enemies {
     float knockbackTime;
     float knockbackForce;
 
+
     public Enemies(Texture t, float w, float h, float m)
     {
         this.setEnnemies(t, w, h, m);
+    }
+
+    public Enemies(Texture t, float w, float h, float m, Light l)
+    {
+        this.setEnnemies(t, w, h, m, l);
+    }
+
+    private void setEnnemies(Texture t, float w, float h, float m, Light l)
+    {
+        this.sprite = new Sprite();
+        this.sprite.setRegion(t);
+        this.sprite.setBounds(0, 0, w, h);
+        this.position = new Vector2(0, 0);
+        this.direction = new Vector2();
+        this.knockback = new Vector2();
+        this.light = l;
+        m = m * 100;
+        this.moveSpeed = m;
     }
 
     private void setEnnemies(Texture t, float w, float h, float m)
@@ -146,6 +166,11 @@ public abstract class Enemies {
     {
         this.hitbox = new Rectangle();
         this.hitbox.set(this.getPosition().x, this.getPosition().y, this.getWidth(), this.getHeight());
+    }
+
+    public void setSpriteColor(float r, float g, float b, float a)
+    {
+        this.sprite.setColor(r, g, b, a);
     }
 
     //Get method

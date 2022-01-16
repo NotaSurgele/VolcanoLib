@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.volcano.game.Animator;
 import com.volcano.game.Cursor;
 import com.volcano.game.LayerData;
+import com.volcano.game.Light;
 
 public class Fireball extends Bullet {
 
@@ -22,8 +23,8 @@ public class Fireball extends Bullet {
     boolean goTo = false;
     boolean isDead = false;
 
-    public Fireball(Texture t, float w, float h, float x, float y) {
-        super(t, w, h, x, y);
+    public Fireball(Texture t, float w, float h, float x, float y, Light l) {
+        super(t, w, h, x, y, l);
         this.spawning = Animator.initializeAnimation(this.spawning, "enemies/blue-mage/Blue-Mage_Fireball_Spawning.png", 5, 1, 0.07f);
         this.ashes = Animator.initializeAnimation(this.ashes, "Weapons/Blue-Fireball.png", 8, 1, 0.07f);
         this.direction = new Vector2(0, 0);
@@ -92,11 +93,14 @@ public class Fireball extends Bullet {
     {
         this.stateTime += Game.deltaTime;
         this.lifeTime += Game.deltaTime;
+        float centeredX = this.position.x + (this.sprite.getWidth() / 2);
+        float centeredY = this.position.y + (this.sprite.getHeight() / 2);
 
         this.checkLifeTime();
         this.checkCharginTime(player);
         this.animationController();
         this.checkPosition(x, y);
         this.sprite.draw(batch);
+        this.bulletLight.update(centeredX, centeredY, Game.camera);
     }
 }

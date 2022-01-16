@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.volcano.game.Collision;
-import com.volcano.game.Cursor;
-import com.volcano.game.LayerData;
-import com.volcano.game.Weapons;
+import com.volcano.game.*;
 import org.graalvm.compiler.loop.MathUtil;
 
 import static java.lang.Math.sqrt;
@@ -20,6 +17,7 @@ public abstract class Bullet {
     Vector2 position;
     Vector2 direction;
     Vector2 origin;
+    Light bulletLight;
 
     float bulletSpeed = 1000f;
 
@@ -27,13 +25,15 @@ public abstract class Bullet {
     float maxLifeTime = 2.0f;
     boolean isDead = false;
 
-    public Bullet(Texture t, float w, float h, Cursor c) {
+    public Bullet(Texture t, float w, float h, Cursor c, Light l) {
         this.setBullet(t, w, h, c);
+        this.bulletLight = l;
     }
 
-    public Bullet(Texture t, float w, float h, float x, float y)
+    public Bullet(Texture t, float w, float h, float x, float y, Light l)
     {
         this.setBullet(t, w, h, x, y);
+        this.bulletLight = l;
     }
 
     private void setBullet(Texture t, float w, float h, Cursor c)
@@ -111,6 +111,7 @@ public abstract class Bullet {
         this.position.x += this.direction.x * this.bulletSpeed * Game.deltaTime;
         this.position.y += this.direction.y * this.bulletSpeed * Game.deltaTime;
         this.sprite.setPosition(this.position.x, this.position.y);
+        this.bulletLight.update(this.position.x, this.position.y, Game.camera);
         this.sprite.draw(batch);
     }
 

@@ -31,6 +31,7 @@ public class Sword extends Weapons {
         this.hitboxRenderer = new ShapeRenderer();
         this.hitboxRenderer.setAutoShapeType(true);
         this.hitbox = new Polygon(new float[] {0, 0, this.getWeaponWidth() - 10, 30, this.getWeaponWidth() - 10, this.getWeaponHeight(), 0, this.getWeaponHeight() - 50});
+        this.setSpriteColor(.4f, .4f, .4f, 1f);
     }
 
     //Set method

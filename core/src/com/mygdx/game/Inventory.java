@@ -29,6 +29,7 @@ public class Inventory {
 
     Sword sword;
     BasicGun basicGun;
+    SpriteBatch batch;
 
     public static int inventoryMaxSize = 4;
     public static ArrayList<Weapons> inventory;
@@ -52,6 +53,7 @@ public class Inventory {
         this.basicGun = new BasicGun(new Texture("Weapons/BasicGun.png"), 50, 50, 0, 0, 0);
         this.addGame();
         this.basic = t;
+        this.batch = new SpriteBatch();
     }
 
     public void addGame()
@@ -148,16 +150,19 @@ public class Inventory {
         this.renderInventoryItems(batch);
     }
 
-    public void update(SpriteBatch batch, Vector2 position, Cursor cursor)
+    public void update(Vector2 position, Cursor cursor)
     {
+        this.batch.begin();
+        this.batch.setProjectionMatrix(Game.camera.combined);
         if (Gdx.input.isKeyJustPressed(Input.Keys.TAB))
             Inventory.inventoryIsOpen = !Inventory.inventoryIsOpen;
         if (Inventory.inventoryIsOpen) {
             this.setCurrentWeapon();
             this.sprite.setPosition(position.x, position.y - 100f);
             this.checkCursorPosition(cursor);
-            this.render(batch);
+            this.render(this.batch);
         }
+        this.batch.end();
     }
 
     public void dispose()

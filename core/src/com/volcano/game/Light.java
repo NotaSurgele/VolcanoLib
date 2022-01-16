@@ -22,11 +22,14 @@ public class Light {
 
     public void update(float x, float y, OrthographicCamera camera)
     {
-        this.batch.setBlendFunction(GL30.GL_DST_COLOR, GL30.GL_SRC_ALPHA);
+        float fixedX = x - (this.w / 2);
+        float fixedY = y - (this.h / 2);
+
         this.batch.enableBlending();
+        this.batch.setBlendFunction(GL30.GL_DST_COLOR, GL30.GL_SRC_ALPHA);
         this.batch.setProjectionMatrix(camera.combined);
         this.batch.begin();
-        this.batch.draw(this.lightShader, x, y, w, h);
+        this.batch.draw(this.lightShader, fixedX, fixedY, w, h);
         this.batch.setBlendFunction(GL30.GL_SRC_ALPHA, GL30.GL_ONE_MINUS_SRC_ALPHA);
         this.batch.end();
     }

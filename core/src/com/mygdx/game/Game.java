@@ -24,8 +24,6 @@ public class Game extends Scene {
     public static float deltaTime;
     Debug debug;
     MobSpawner mobSpawner;
-    Light test;
-
     TriggerUI triggerUI;
 
     //DUNGEON PART
@@ -79,7 +77,6 @@ public class Game extends Scene {
         this.player.spawnPoint(this.dj.getChoosenRoomSpawnPoint(0));
         this.mobSpawner = new MobSpawner(this.dj);
         Game.STATE = State.SPAWNING;
-        this.test = new Light(new Texture("Shader/light.png"), 255f, 255f, 0, 20f, 500, 500);
         camera.position.set(new Vector3(this.player.getPositionVector(), 0));
         this.cutScene = new CutScene();
         this.isLoaded = true;
@@ -118,7 +115,6 @@ public class Game extends Scene {
         this.mobSpawner.update(this.batch, this.player);
         this.checkCutScene(this.batch);
         if (STATE == State.NOTHING) this.player.update(this.batch, Game.deltaTime, cursor, this.dj.layerData);
-        this.test.update(this.player.getPositionX(), this.player.getPositionY(), Game.camera);
         this.cameraHandler();
         this.batch.end();
 

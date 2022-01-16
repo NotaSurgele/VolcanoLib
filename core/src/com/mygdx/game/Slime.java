@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.volcano.game.Animator;
 import com.volcano.game.Enemies;
+import com.volcano.game.Light;
 import com.volcano.game.Sonar;
 
 public class Slime extends Enemies {
@@ -23,8 +24,8 @@ public class Slime extends Enemies {
 
     boolean isChasing = false;
 
-    public Slime(Texture t, float w, float h, float m) {
-        super(t, w, h, m);
+    public Slime(Texture t, float w, float h, float m, Light l) {
+        super(t, w, h, m, l);
         this.setHitbox();
         this.sonar = new Sonar(300f);
         this.idle = Animator.initializeAnimation(this.idle, this.dir + "slime_idle_spritesheet.png", 6, 1, 0.07f);
@@ -66,11 +67,15 @@ public class Slime extends Enemies {
     {
         this.stateTime += Game.deltaTime;
 
+        float centeredX = this.position.x + (this.getWidth() / 2);
+        float centeredY = this.position.y + (this.getHeight() / 2);
+
         this.kill();
         this.setHitboxPosition();
         this.setSonarPosition(this.sonar);
         this.checkKnockback(player);
         this.render(batch);
+        this.light.update(centeredX, centeredY, Game.camera);
     }
 
     private void animationController()

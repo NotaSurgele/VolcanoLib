@@ -17,7 +17,7 @@ public class Player extends Players {
     Animator moving;
     TriggerUI triggerUI;
     Inventory inventory;
-
+    Light light;
     Weapons currentWeapon;
 
     float oldX;
@@ -35,6 +35,7 @@ public class Player extends Players {
         this.moving = Animator.initializeAnimation(this.idle, "heroes/knight/knight_run_spritesheet.png", 6, 1, 0.07f);
         this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 50, 50, "F", "Press F to use !", 0.2f);
         this.inventory = new Inventory(new Texture("ui (new)/Inventory_notSelected.png"), 0, 0, 400, 400);
+        this.light = new Light(new Texture("Shader/light.png"), 255, 255, 0, 1,  500, 500);
         this.idle.playAnimationToSprite(this.sprite, this.stateTime, false);
     }
 
@@ -44,6 +45,7 @@ public class Player extends Players {
         this.moving = Animator.initializeAnimation(this.idle, "heroes/knight/knight_run_spritesheet.png", 6, 1, 0.07f);
         this.triggerUI = new TriggerUI(new Texture("ui (new)/keyboard_input.png"), 50, 50, "F", "Press F to use !", 0.2f);
         this.inventory = new Inventory(new Texture("ui (new)/Inventory_notSelected.png"), 0, 0, 100, 100);
+        this.light = new Light(new Texture("Shader/light.png"), 255, 255, 0, 1,  500, 500);
     }
 
     //Main method
@@ -164,6 +166,8 @@ public class Player extends Players {
     public void update(SpriteBatch batch, float deltaTime, Cursor cursor, LayerData layerData)
     {
         this.stateTime += Game.deltaTime;
+        float centeredX = this.position.x + (this.getWidth() / 2);
+        float centeredY = this.position.y + (this.getHeight() / 2);
 
         this.getOldPosition(layerData);
         this.animationController();
@@ -174,7 +178,8 @@ public class Player extends Players {
         this.flipPlayerWithKeyboard();
         this.draw(batch);
         this.checkWeapons(batch, cursor, layerData);
-        this.inventory.update(batch, this.getPositionVector(), cursor);
+        this.inventory.update(this.getPositionVector(), cursor);
+        this.light.update(centeredX, centeredY, Game.camera);
     }
 
     public void dispose()

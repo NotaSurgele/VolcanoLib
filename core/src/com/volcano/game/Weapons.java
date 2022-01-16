@@ -218,6 +218,11 @@ public class Weapons {
         this.sprite.setRotation(angle);
     }
 
+    public void setSpriteColor(float r, float g, float b, float a)
+    {
+        this.sprite.setColor(r, g, b, a);
+    }
+
     public void draw(SpriteBatch batch)
     {
         this.sprite.draw(batch);

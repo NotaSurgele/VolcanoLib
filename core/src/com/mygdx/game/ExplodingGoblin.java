@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.volcano.game.Animator;
 import com.volcano.game.Enemies;
+import com.volcano.game.Light;
 import com.volcano.game.Sonar;
 
 public class ExplodingGoblin extends Enemies {
@@ -24,8 +25,8 @@ public class ExplodingGoblin extends Enemies {
 
     boolean isChasing = false;
 
-    public ExplodingGoblin(Texture t, float w, float h, float m) {
-        super(t, w, h, m);
+    public ExplodingGoblin(Texture t, float w, float h, float m, Light l) {
+        super(t, w, h, m, l);
         this.setHitbox();
         this.sonar = new Sonar(500f);
         this.idle = Animator.initializeAnimation(this.idle, this.dir + "goblin_idle_spritesheet.png", 6, 1, 0.07f);
@@ -95,6 +96,9 @@ public class ExplodingGoblin extends Enemies {
     public void update(SpriteBatch batch, Player player) {
         this.stateTime += Game.deltaTime;
 
+        float centeredX = this.position.x + (this.getWidth() / 2);
+        float centeredY = this.position.y + (this.getHeight() / 2);
+
         if (this.getHealth() <= 0)
             this.killed();
         if (!this.isHide()) {
@@ -103,6 +107,8 @@ public class ExplodingGoblin extends Enemies {
             this.render(batch);
         }
         this.bomb(batch, player);
+        if (this.light != null)
+            this.light.update(centeredX, centeredY, Game.camera);
     }
 
     public void dispose()

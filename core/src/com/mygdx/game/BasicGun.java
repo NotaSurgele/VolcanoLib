@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.volcano.game.Cursor;
 import com.volcano.game.LayerData;
+import com.volcano.game.Light;
 import com.volcano.game.Weapons;
 
 import java.util.ArrayList;
@@ -15,15 +16,16 @@ public class BasicGun extends Weapons {
 
     public BasicGun(Texture t, float w, float h, float x, float y, float f) {
         super(t, w, h, x, y, f);
+        this.setSpriteColor(.4f, .4f, .4f, 1f);
         this.bulletLoader = new ArrayList<>();
     }
 
     public void update(SpriteBatch batch, Cursor cursor, LayerData layerData)
     {
         this.render(batch, cursor, layerData);
-        if (Gdx.input.isButtonPressed(Control.ATTACK1)) {
+        if (Gdx.input.isButtonJustPressed(Control.ATTACK1)) {
 
-            Bullet b = new Bullet(new Texture("Weapons/Bullet.png"), 16, 16, cursor) {
+            Bullet b = new Bullet(new Texture("Weapons/Bullet.png"), 16, 16, cursor, new Light(new Texture("Shader/light.png"), 255, 255, 0, 1f, 200, 200)) {
                 @Override
                 public void update(SpriteBatch batch, Player player, float x, float y) {}
             };

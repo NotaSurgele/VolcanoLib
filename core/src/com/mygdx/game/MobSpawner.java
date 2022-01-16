@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.volcano.game.Enemies;
+import com.volcano.game.Light;
 import com.volcano.game.Room;
 import com.mygdx.game.Game.State;
 
@@ -14,26 +15,27 @@ public class MobSpawner {
     final int MAXENTITY = 2;
     public static ArrayList<Enemies> spawner;
     Dungeon dj;
+    Texture lightTexture;
 
     public MobSpawner(Dungeon dj) {
         spawner = new ArrayList<>();
+        this.lightTexture = new Texture("Shader/light.png");
         this.dj = dj;
     }
 
     private void entityCreator()
     {
         for (int i = this.MAXENTITY; i != 0; i--) {
-            BlueMage bm = new BlueMage(new Texture("enemies/blue-mage/Blue-Mage-spritesheet.png"), 126, 126, 1f);
+            BlueMage bm = new BlueMage(new Texture("enemies/blue-mage/Blue-Mage-spritesheet.png"), 126, 126, 1f, new Light(this.lightTexture, 255, 255, 0, 1, 500, 500));
             spawner.add(bm);
-            /*BlueMage bm = new BlueMage(new Texture("enemies/blue-mage/Blue-Mage-spritesheet.png"), 126, 126, 1f);
-            spawner.add(bm);*/
-            /*if (i == 1) {
-                ExplodingGoblin eg = new ExplodingGoblin(new Texture("enemies/goblin/goblin_idle_anim_f0.png"), 64, 64, 3f);
+
+            if (i == 1) {
+                ExplodingGoblin eg = new ExplodingGoblin(new Texture("enemies/goblin/goblin_idle_anim_f0.png"), 64, 64, 3f, new Light(this.lightTexture, 255, 255, 0, 1, 500, 500));
                 spawner.add(eg);
             } else {
-                Slime s = new Slime(new Texture("enemies/slime/slime_idle_anim_f0.png"), 32, 32, 1f);
+                Slime s = new Slime(new Texture("enemies/slime/slime_idle_anim_f0.png"), 32, 32, 1f, new Light(this.lightTexture, 255, 255, 0, 1, 500, 500));
                 spawner.add(s);
-            }*/
+            }
         }
     }
 
@@ -62,7 +64,7 @@ public class MobSpawner {
             this.entityCreator();
             for (int i = spawner.size() - 1; i >= 0; i--) {
                 Enemies e = spawner.get(i);
-
+                e.setSpriteColor(.4f, .4f, .4f, 1f);
                 this.setRandomSpawn(e);
             }
             Game.STATE = State.NOTHING;

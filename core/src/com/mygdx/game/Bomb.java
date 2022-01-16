@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.volcano.game.Animator;
 import com.volcano.game.Enemies;
+import com.volcano.game.Light;
 import com.volcano.game.Weapons;
 
 public class Bomb extends Weapons {
@@ -15,6 +16,7 @@ public class Bomb extends Weapons {
     Animator explosion;
 
     ShapeRenderer visualHitbox;
+    Light light;
 
     final String dir = "props_itens/";
     final String effectDir = "effects (new)/";
@@ -37,6 +39,7 @@ public class Bomb extends Weapons {
         this.explosion = Animator.initializeAnimation(this.explosion, this.effectDir + "explosion_anim_spritesheet.png", 7, 1, 0.07f);
         this.STATE = State.NORMAL;
         this.visualHitbox = new ShapeRenderer();
+        this.light = new Light(new Texture("Shader/light.png"), 255, 255, 0, 1, 500, 500);
     }
 
     public void setBombState(State newState)
@@ -117,11 +120,15 @@ public class Bomb extends Weapons {
 
     public void update(SpriteBatch batch, Player player, ExplodingGoblin self)
     {
+        float centeredX = this.position.x + (this.getWeaponWidth() / 2);
+        float centeredY = this.position.y + (this.getWeaponHeight() / 2);
+
         this.setExplosionHitboxPosition(this.getWeaponX() + (this.getWeaponWidth() / 2), this.getWeaponY() + (this.getWeaponHeight() / 2));
         this.checkHit(player, self);
         this.checkState(batch);
         this.animationController();
         this.render(batch);
+        this.light.update(centeredX, centeredY, Game.camera);
     }
 
     public void render(SpriteBatch batch)
