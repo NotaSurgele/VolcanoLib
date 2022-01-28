@@ -26,7 +26,7 @@ public class MobSpawner {
     private void entityCreator()
     {
         for (int i = this.MAXENTITY; i != 0; i--) {
-            BlueMage bm = new BlueMage(new Texture("enemies/blue-mage/Blue-Mage-spritesheet.png"), 126, 126, 1f, new Light(this.lightTexture, 255, 255, 0, 1, 500, 500));
+            BlueMage bm = new BlueMage(new Texture("enemies/blue-mage/Blue-Mage-spritesheet.png"), 126, 126, 1f, new Light(this.lightTexture, 0, 191 / 255f, 255f, 1, 500, 500));
             spawner.add(bm);
 
             if (i == 1) {
