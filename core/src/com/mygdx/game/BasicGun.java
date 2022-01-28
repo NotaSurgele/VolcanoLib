@@ -25,7 +25,8 @@ public class BasicGun extends Weapons {
         this.render(batch, cursor, layerData);
         if (Gdx.input.isButtonJustPressed(Control.ATTACK1)) {
 
-            Bullet b = new Bullet(new Texture("Weapons/Bullet.png"), 16, 16, cursor, new Light(new Texture("Shader/light.png"), 255, 255, 0, 1f, 200, 200)) {
+            Bullet b = new Bullet(new Texture("Weapons/Bullet.png"), 16, 16, cursor,
+                    new Light(new Texture("Shader/light.png"), 255, 255, 0, 1f, 200, 200)) {
                 @Override
                 public void update(SpriteBatch batch, Player player, float x, float y) {}
             };

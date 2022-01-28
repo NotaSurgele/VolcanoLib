@@ -51,12 +51,12 @@ public class Inventory {
         this.screenPosition = new Vector3();
         this.sword = new Sword(new Texture("heroes/knight/weapon_sword_1.png"), 70, 70, 0, 0, 13f);
         this.basicGun = new BasicGun(new Texture("Weapons/BasicGun.png"), 50, 50, 0, 0, 0);
-        this.addGame();
+        this.addInInventory();
         this.basic = t;
         this.batch = new SpriteBatch();
     }
 
-    public void addGame()
+    public void addInInventory()
     {
         Inventory.inventory = new ArrayList<>();
         Inventory.inventory.add(this.sword);

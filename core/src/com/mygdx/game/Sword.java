@@ -63,9 +63,11 @@ public class Sword extends Weapons {
     {
         for (Enemies e : MobSpawner.spawner) {
             if (this.hitbox.contains(e.getPosition().x, e.getPosition().y)) {
-                e.setKnockBackDirection(e.getDirectionVector().add(e.getPosition()));
-                e.setKnockBack(true, this.knockBackForce);
-                e.takeDamage(this.weaponDamage);
+                if (!e.getKnockBack()) {
+                    e.setKnockBackDirection(e.getDirectionVector().add(e.getPosition()));
+                    e.setKnockBack(true, this.knockBackForce);
+                    e.takeDamage(this.weaponDamage);
+                }
             }
         }
     }
