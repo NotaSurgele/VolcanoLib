@@ -157,6 +157,7 @@ public class Inventory {
         if (Gdx.input.isKeyJustPressed(Input.Keys.TAB))
             Inventory.inventoryIsOpen = !Inventory.inventoryIsOpen;
         if (Inventory.inventoryIsOpen) {
+
             this.setCurrentWeapon();
             this.sprite.setPosition(position.x, position.y - 100f);
             this.checkCursorPosition(cursor);

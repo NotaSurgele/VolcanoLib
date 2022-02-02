@@ -87,7 +87,7 @@ public class Players {
 
     public void draw(SpriteBatch batch)
     {
-        this.sprite.setColor(.4f, .4f, .4f, 1f);
+        //this.sprite.setColor(.4f, .4f, .4f, 1f);
         this.sprite.draw(batch);
     }
 

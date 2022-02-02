@@ -2,9 +2,11 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.volcano.game.Animator;
+import com.volcano.game.Light;
 
 public class Props {
 
@@ -19,6 +21,7 @@ public class Props {
     Vector2 position;
     PropsType type;
     String name;
+    Light light;
 
     float stateTime;
 
@@ -31,6 +34,7 @@ public class Props {
         this.position = new Vector2();
         this.type = tp;
         this.isAnimate = false;
+        this.setLight();
     }
 
     public Props(String n, Texture t, int v, PropsType tp, int COLS, int ROWS, float frameDuration) {
@@ -44,6 +48,12 @@ public class Props {
         this.rows = ROWS;
         this.frameDuration = frameDuration;
         this.createAnimation();
+        //this.setLight();
+    }
+
+    private void setLight()
+    {
+        this.light = new Light(new Texture("Shader/light.png"), 255, 255, 0, 1f, 400, 400);
     }
 
     private void createAnimation()
@@ -65,7 +75,7 @@ public class Props {
     {
         this.stateTime += Game.deltaTime;
 
-        this.animation.playAnimation(batch, stateTime, loop, x, y, w ,h);
+        this.animation.playAnimation(batch, stateTime, loop, x, y, w, h);
     }
 
     public Vector2 getArrayPosition()
@@ -96,5 +106,10 @@ public class Props {
     public boolean isAnimate()
     {
         return this.isAnimate;
+    }
+
+    public Light getLight()
+    {
+        return this.light;
     }
 }

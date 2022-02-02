@@ -52,8 +52,8 @@ public class Room {
 
     private void setRoomSpawnPoint()
     {
-        float worldX = (this.roomX + this.ROOMWIDTH / 2f)  * Dungeon.tileSize;
-        float worldY = (this.roomY + this.ROOMHEIGHT / 2f) * Dungeon.tileSize;
+        float worldX = (this.roomX + (this.ROOMWIDTH / 2f))  * Dungeon.tileSize;
+        float worldY = (this.roomY + (this.ROOMHEIGHT / 2f)) * Dungeon.tileSize;
 
         this.spawnPoint = new Vector2(worldX, worldY);
     }
@@ -139,5 +139,18 @@ public class Room {
     public Vector2 getSpawnPoint()
     {
         return this.spawnPoint;
+    }
+
+    public void showRoom()
+    {
+        int[][] layer = this.layers.get(0);
+
+        for (int i = 0; i != this.getWidth(); i++) {
+            for (int j = 0; j != this.getHeight(); j++) {
+                System.out.print(layer[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("_______________________________________________________________");
     }
 }

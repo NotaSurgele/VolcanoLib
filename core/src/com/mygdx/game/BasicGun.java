@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class BasicGun extends Weapons {
 
-    ArrayList<Bullet> bulletLoader;
+    public ArrayList<Bullet> bulletLoader;
 
     public BasicGun(Texture t, float w, float h, float x, float y, float f) {
         super(t, w, h, x, y, f);
@@ -39,6 +39,7 @@ public class BasicGun extends Weapons {
         this.flipWeapon(cursor);
         for (int i = this.bulletLoader.size(); i != 0; i--) {
             Bullet b = this.bulletLoader.get(i - 1);
+
             b.update(batch, layerData);
             if (b.isDead)
                 this.bulletLoader.remove(i - 1);

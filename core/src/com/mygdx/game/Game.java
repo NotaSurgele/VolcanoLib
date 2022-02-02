@@ -108,10 +108,10 @@ public class Game extends Scene {
         //Non HUD object
         this.batch.begin();
         this.batch.setColor(0.4f, 0.4f, 0.4f, 1f);
-        this.batch.enableBlending();
+
         this.debug.cameraZoom(camera);
-        this.dj.update(this.batch, this.player, this.triggerUI);
         this.mobSpawner.getDungeon(dj);
+        this.dj.update(this.batch, this.player, this.triggerUI);
         this.mobSpawner.update(this.batch, this.player);
         this.checkCutScene(this.batch);
         if (STATE == State.NOTHING) this.player.update(this.batch, Game.deltaTime, cursor, this.dj.layerData);

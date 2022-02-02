@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.volcano.game.LayerData;
+import com.volcano.game.Light;
 import com.volcano.game.Room;
 import com.volcano.game.TriggerUI;
 
@@ -156,9 +157,9 @@ public class Dungeon {
         float TriggerUIY = player.getPositionY() + (player.getHeight() / 2);
 
         if (this.stairsCheck(
-                (int)(player.getPositionY() + (player.getHeight() / 2) - 16f) / Dungeon.tileSize,
-                (int)(player.getPositionX() + (player.getWidth() / 2)) / Dungeon.tileSize,
-                    this.floorLayer
+            (int)(player.getPositionY() + (player.getHeight() / 2) - 16f) / Dungeon.tileSize,
+            (int)(player.getPositionX() + (player.getWidth() / 2)) / Dungeon.tileSize,
+                this.floorLayer
         )) {
             triggerUI.draw(batch, TriggerUIX, TriggerUIY);
             this.stairsInput(player);
@@ -198,7 +199,6 @@ public class Dungeon {
         int y = 0;
 
         Room r = this.getCurrentRoom();
-
         for (int line = 0; line != h; line++) {
             int xMin = r.getRoomX();
             int yMin = r.getRoomY();
@@ -207,7 +207,6 @@ public class Dungeon {
             int yMax = (r.getRoomY() + r.getHeight());
 
             for (int each = 0; each != w; each++) {
-
                 if ((line >= yMin && line <= yMax) && (each >= xMin && each <= xMax)) {
                     if (this.floorTextureArray[line][each] != null)
                         batch.draw(this.floorTextureArray[line][each], x, y, tileSize, tileSize);
@@ -218,6 +217,9 @@ public class Dungeon {
                             this.propsArray[line][each].animate(batch, true, x, y, tileSize, tileSize);
                         else
                             batch.draw(this.propsArray[line][each].getTexture(), x, y, tileSize, tileSize);
+                        if (this.propsArray[line][each].getLight() != null) {
+                            this.propsArray[line][each].getLight().update(x, y, Game.camera);
+                        }
                     }
                 }
                 x += tileSize;
@@ -230,6 +232,7 @@ public class Dungeon {
     public void update(SpriteBatch batch, Player player, TriggerUI triggerUI)
     {
         this.draw(batch);
+        //this.rooms.get(0).showRoom();
         this.checkStairs(player, batch, triggerUI);
     }
 
