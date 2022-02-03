@@ -1,5 +1,7 @@
 com/volcano/game/Light.java
  com.volcano.game.Light
+com/volcano/game/MazeGenerator.java
+ com.volcano.game.MazeGenerator
 com/volcano/game/TriggerUI.java
  com.volcano.game.TriggerUI
 com/mygdx/game/Sword.java
@@ -36,8 +38,6 @@ com/volcano/game/LayerData.java
  com.volcano.game.LayerData
 com/volcano/game/Weapons.java
  com.volcano.game.Weapons
-com/volcano/game/MazeGenerator.java
- com.volcano.game.MazeGenerator
 com/volcano/game/Particles.java
  com.volcano.game.Particles
  com.volcano.game.Particles$Particle

@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class Particles {
 
-    private class Particle {
+    static class Particle {
         float x;
         float y;
         Sprite sprite;
@@ -27,7 +27,8 @@ public class Particles {
         Particle(float posX, float posY, Texture t, float maxLifeTime, float w, float h) {
             this.x = posX;
             this.y = posY;
-            this.maxLifeTime = maxLifeTime;
+            this.maxLifeTime = MathUtils.random(1f, maxLifeTime);
+            //this.maxLifeTime = maxLifeTime;
             this.w = w;
             this.h = h;
             this.sprite = new Sprite();
@@ -42,8 +43,8 @@ public class Particles {
             this.y += (directionY * 100f) * Game.deltaTime;
 
             if (this.lifeTime >= 1f)
-                this.alphaFadeOut -= 0.7f * Game.deltaTime;
-            this.sprite.setColor(0, 0, 0, this.alphaFadeOut);
+                this.alphaFadeOut -= (this.maxLifeTime / 2) * Game.deltaTime;
+            this.sprite.setAlpha(this.alphaFadeOut);
             this.sprite.setPosition(x, y);
             this.sprite.setSize(w, h);
             this.sprite.draw(batch);
@@ -82,7 +83,7 @@ public class Particles {
         this.height = h;
         this.batch = new SpriteBatch();
         this.rectEmitter = new Rectangle();
-        this.rectEmitter.setSize(100, 100);
+        this.rectEmitter.setSize(50, 100);
         this.rectEmitter.setPosition(posX - this.rectEmitter.getWidth(), posY);
         this.setParticles(howMany, particleT, lifeTime);
     }
