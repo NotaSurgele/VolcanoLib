@@ -38,6 +38,9 @@ com/volcano/game/Weapons.java
  com.volcano.game.Weapons
 com/volcano/game/MazeGenerator.java
  com.volcano.game.MazeGenerator
+com/volcano/game/Particles.java
+ com.volcano.game.Particles
+ com.volcano.game.Particles$Particle
 com/mygdx/game/MobSpawner.java
  com.mygdx.game.MobSpawner
 com/volcano/game/Button.java

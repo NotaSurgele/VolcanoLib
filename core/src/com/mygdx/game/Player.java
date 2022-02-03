@@ -23,6 +23,8 @@ public class Player extends Players {
     float oldX;
     float oldY;
 
+    Particles particle;
+
     float stateTime;
 
     //Movement System
@@ -41,6 +43,7 @@ public class Player extends Players {
         this.inventory = new Inventory(new Texture("ui (new)/Inventory_notSelected.png"), 0, 0, 400, 400);
         this.light = new Light(new Texture("Shader/light.png"), 255, 255, 0, 1,  500, 500);
         this.idle.playAnimationToSprite(this.sprite, this.stateTime, false);
+        this.particle = new Particles(new Texture("Shader/smoke_shader.png"), 5, 2.0f, 50, 50, this.getPositionX(), this.getPositionY());
     }
 
     public Player(Sprite sprite, Vector2 position) {
@@ -202,6 +205,7 @@ public class Player extends Players {
         this.flipPlayerWithMouse(cursor);
         this.flipPlayerWithKeyboard();
         this.draw(batch);
+        this.particle.draw(0, 1, this.getPositionX(), this.getPositionY(), Game.camera);
         this.checkWeapons(batch, cursor, layerData);
         this.inventory.update(this.getPositionVector(), cursor);
         this.light.update(centeredX, centeredY, Game.camera);
