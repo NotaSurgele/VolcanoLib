@@ -31,6 +31,7 @@ public class Player extends Players {
 
     boolean dash = false;
     float dashTime = 0f;
+    float dashCD = 0.5f;
 
     public Player(Sprite sprite, float x, float y) {
         super(sprite, x, y);
@@ -168,8 +169,12 @@ public class Player extends Players {
 
     private void dash(float speed)
     {
-        if (Gdx.input.isKeyJustPressed(Control.DASH))
-            this.dash = true;
+        if (!this.dash && this.dashCD < 0.5f)
+            this.dashCD += Game.deltaTime;
+        if (this.dashCD >= 0.5f) {
+            if (Gdx.input.isKeyJustPressed(Control.DASH))
+                this.dash = true;
+        }
         if (this.dash) {
             this.dashTime += Game.deltaTime;
             this.moveSpeed = speed;
@@ -178,6 +183,7 @@ public class Player extends Players {
             this.dash = false;
             this.moveSpeed = 150f;
             this.dashTime = 0f;
+            this.dashCD = 0f;
         }
     }
 
