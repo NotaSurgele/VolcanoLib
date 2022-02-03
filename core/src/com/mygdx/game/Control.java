@@ -18,6 +18,7 @@ public class Control {
     public static int RUN;
     public static int ATTACK1;
     public static int ATTACK2;
+    public static int DASH;
 
     public Control() throws IOException {
         this.data = Utils.readFile(".config/input.ini");
@@ -37,6 +38,7 @@ public class Control {
             if (arrayData[i].contains("RUN")) RUN = Integer.parseInt(input[1]);
             if (arrayData[i].contains("ATTACK1")) ATTACK1 = Integer.parseInt(input[1]);
             if (arrayData[i].contains("ATTACK2")) ATTACK2 = Integer.parseInt(input[1]);
+            if (arrayData[i].contains("DASH")) DASH = Integer.parseInt(input[1]);
         }
     }
 

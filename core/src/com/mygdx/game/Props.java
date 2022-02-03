@@ -34,7 +34,7 @@ public class Props {
         this.position = new Vector2();
         this.type = tp;
         this.isAnimate = false;
-        this.setLight();
+        //this.setLight();
     }
 
     public Props(String n, Texture t, int v, PropsType tp, int COLS, int ROWS, float frameDuration) {
@@ -53,7 +53,8 @@ public class Props {
 
     private void setLight()
     {
-        this.light = new Light(new Texture("Shader/light.png"), 255, 255, 0, 1f, 400, 400);
+        if (this.getName().equals("Torch"))
+            this.light = new Light(new Texture("Shader/light.png"), 255, 255, 0, 1f, 400, 400);
     }
 
     private void createAnimation()

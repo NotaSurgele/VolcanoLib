@@ -29,6 +29,9 @@ public class Player extends Players {
     float moveSpeed = 150f;
     float runningSpeed = 100f;
 
+    boolean dash = false;
+    float dashTime = 0f;
+
     public Player(Sprite sprite, float x, float y) {
         super(sprite, x, y);
         this.idle = Animator.initializeAnimation(this.idle, "heroes/knight/knight_idle_spritesheet.png", 6, 1, 0.07f);
@@ -163,12 +166,28 @@ public class Player extends Players {
         }
     }
 
+    private void dash(float speed)
+    {
+        if (Gdx.input.isKeyJustPressed(Control.DASH))
+            this.dash = true;
+        if (this.dash) {
+            this.dashTime += Game.deltaTime;
+            this.moveSpeed = speed;
+        }
+        if (this.dashTime >= 0.12f) {
+            this.dash = false;
+            this.moveSpeed = 150f;
+            this.dashTime = 0f;
+        }
+    }
+
     public void update(SpriteBatch batch, float deltaTime, Cursor cursor, LayerData layerData)
     {
         this.stateTime += Game.deltaTime;
         float centeredX = this.position.x + (this.getWidth() / 2);
         float centeredY = this.position.y + (this.getHeight() / 2);
 
+        this.dash(1000f);
         this.getOldPosition(layerData);
         this.animationController();
         this.Move(this.moveSpeed, runningSpeed, deltaTime);
