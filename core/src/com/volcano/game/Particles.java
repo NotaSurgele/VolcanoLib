@@ -2,6 +2,7 @@ package com.volcano.game;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -15,19 +16,23 @@ public class Particles {
     private class Particle {
         float x;
         float y;
-        Texture t;
+        Sprite sprite;
         float maxLifeTime;
         float w;
         float h;
         float lifeTime;
 
+        float alphaFadeOut = 1f;
+
         Particle(float posX, float posY, Texture t, float maxLifeTime, float w, float h) {
             this.x = posX;
             this.y = posY;
-            this.t = t;
             this.maxLifeTime = maxLifeTime;
             this.w = w;
             this.h = h;
+            this.sprite = new Sprite();
+            this.sprite.setBounds(posX, posY, w, h);
+            this.sprite.setRegion(t);
         }
 
         public void update(float directionX, float directionY, SpriteBatch batch)
@@ -36,7 +41,12 @@ public class Particles {
             this.x += (directionX * 100f) * Game.deltaTime;
             this.y += (directionY * 100f) * Game.deltaTime;
 
-            batch.draw(this.t, this.x, this.y, this.w, this.h);
+            if (this.lifeTime >= 1f)
+                this.alphaFadeOut -= 0.7f * Game.deltaTime;
+            this.sprite.setColor(0, 0, 0, this.alphaFadeOut);
+            this.sprite.setPosition(x, y);
+            this.sprite.setSize(w, h);
+            this.sprite.draw(batch);
         }
 
         public boolean destroy()
@@ -74,10 +84,10 @@ public class Particles {
         this.rectEmitter = new Rectangle();
         this.rectEmitter.setSize(100, 100);
         this.rectEmitter.setPosition(posX - this.rectEmitter.getWidth(), posY);
-        this.setParticles(howMany, particleT, posX, posY, lifeTime);
+        this.setParticles(howMany, particleT, lifeTime);
     }
 
-    private void setParticles(int howMany, Texture toSet, float x, float y, float lifeTime)
+    private void setParticles(int howMany, Texture toSet, float lifeTime)
     {
         for (int i = 0; i != howMany; ) {
             float randX = MathUtils.random(this.rectEmitter.x, this.rectEmitter.x + this.rectEmitter.width);
