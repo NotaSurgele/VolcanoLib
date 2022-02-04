@@ -27,4 +27,23 @@ public class Utils {
         return data;
     }
 
+    public static String readFile(String fileName, boolean breakline) {
+        String data = "";
+
+        try {
+            File myObj = new File(fileName);
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine()) {
+                data += myReader.nextLine();
+                if (breakline)
+                    data += System.lineSeparator();
+            }
+            myReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        return data;
+    }
+
 }
