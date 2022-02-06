@@ -31,11 +31,10 @@ public class Particles {
 
         float alphaFadeOut = 1f;
 
-        Particle(float posX, float posY, Texture t, float maxLifeTime, float w, float h, boolean fadeout) {
+        Particle(float posX, float posY, Texture t, float maxLifeTime, float w, float h, boolean fadeout, float minLifeTime) {
             this.x = posX;
             this.y = posY;
-            //this.maxLifeTime = MathUtils.random(1f, maxLifeTime);
-            this.maxLifeTime = maxLifeTime;
+            this.maxLifeTime = MathUtils.random(minLifeTime, maxLifeTime);
             this.w = w;
             this.h = h;
             this.sprite = new Sprite();
@@ -84,6 +83,7 @@ public class Particles {
     boolean fadeOut = false;
     boolean randomPosition = false;
     float lifeTime = 0f;
+    float minLifeTime = -1f;
     float width = 0f;
     float height = 0f;
     int howMany = 1;
@@ -139,7 +139,7 @@ public class Particles {
                 this.t = new Texture(fileData[i].replaceAll("texture=", ""));
             else if (fileData[i].contains("howmany"))
                 this.howMany = Integer.parseInt(fileData[i].replaceAll("howmany=", ""));
-            else if (fileData[i].contains("lifetime"))
+            else if (fileData[i].contains("lifetime="))
                 this.lifeTime = Float.parseFloat(fileData[i].replaceAll("lifetime=", ""));
             else if (fileData[i].contains("width"))
                 this.width = Integer.parseInt(fileData[i].replaceAll("width=", ""));
@@ -155,8 +155,11 @@ public class Particles {
                 this.directionY = Float.parseFloat(fileData[i].replaceAll("directionY=", ""));
             else if (fileData[i].contains("delay"))
                 this.maxDelay = Float.parseFloat(fileData[i].replaceAll("delay=", ""));
+            else if (fileData[i].contains("lifetime-min="))
+                this.minLifeTime = Float.parseFloat(fileData[i].replaceAll("lifetime-min=", ""));
         }
         this.delayed = (this.maxDelay > 0) ? 1 : this.howMany;
+        this.minLifeTime = (this.minLifeTime != -1f) ? this.minLifeTime : this.lifeTime;
     }
 
     private void setParticles(int howMany, Texture toSet, float lifeTime)
@@ -168,8 +171,8 @@ public class Particles {
             randX = (this.randomPosition) ? MathUtils.random(this.rectEmitter.x, this.rectEmitter.x + this.rectEmitter.width) : this.rectEmitter.x;
             randY = (this.randomPosition) ? MathUtils.random(this.rectEmitter.y, this.rectEmitter.y + this.rectEmitter.height) : this.rectEmitter.y;
 
-            this.particles[i] = new Particle(randX, randY, toSet, lifeTime, this.width, this.height, this.fadeOut);
-            this.cpy[i] = new Particle(randX, randY, toSet, lifeTime, this.width, this.height, this.fadeOut);
+            this.particles[i] = new Particle(randX, randY, toSet, lifeTime, this.width, this.height, this.fadeOut, this.minLifeTime);
+            this.cpy[i] = new Particle(randX, randY, toSet, lifeTime, this.width, this.height, this.fadeOut, this.minLifeTime);
         }
     }
 

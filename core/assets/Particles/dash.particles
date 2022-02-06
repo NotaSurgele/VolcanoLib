@@ -6,3 +6,4 @@ height=30
 fadeout=true
 directionX=1
 directionY=1
+lifetime-min=0.5
