@@ -4,36 +4,36 @@ com/volcano/game/MazeGenerator.java
  com.volcano.game.MazeGenerator
 com/volcano/game/TriggerUI.java
  com.volcano.game.TriggerUI
-com/mygdx/game/Sword.java
- com.mygdx.game.Sword
 com/mygdx/game/Control.java
  com.mygdx.game.Control
+com/volcano/game/Collision.java
+ com.volcano.game.Collision
 com/mygdx/game/RoomRetriever.java
  com.mygdx.game.RoomRetriever
 com/mygdx/game/Props.java
  com.mygdx.game.Props
-com/mygdx/game/Inventory.java
- com.mygdx.game.Inventory
+com/volcano/game/Utils.java
+ com.volcano.game.Utils
 com/mygdx/game/PropsLoader.java
  com.mygdx.game.PropsLoader
 com/volcano/game/Animator.java
  com.volcano.game.Animator
 com/volcano/game/Cursor.java
  com.volcano.game.Cursor
-com/volcano/game/Utils.java
- com.volcano.game.Utils
+com/mygdx/game/Inventory.java
+ com.mygdx.game.Inventory
 com/mygdx/game/PropsType.java
  com.mygdx.game.PropsType
 com/volcano/game/Players.java
  com.volcano.game.Players
-com/volcano/game/Collision.java
- com.volcano.game.Collision
-com/volcano/game/Room.java
- com.volcano.game.Room
+com/mygdx/game/Sword.java
+ com.mygdx.game.Sword
 com/volcano/game/Debug.java
  com.volcano.game.Debug
 com/volcano/game/Sonar.java
  com.volcano.game.Sonar
+com/volcano/game/Room.java
+ com.volcano.game.Room
 com/volcano/game/LayerData.java
  com.volcano.game.LayerData
 com/volcano/game/Weapons.java

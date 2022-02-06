@@ -24,6 +24,7 @@ public class Player extends Players {
     float oldY;
 
     Particles particle;
+    boolean drawParticle = false;
 
     float stateTime;
 
@@ -171,6 +172,25 @@ public class Player extends Players {
         }
     }
 
+    private void checkDashCD()
+    {
+        if (this.dashTime >= 0.13f) {
+            this.dash = false;
+            this.moveSpeed = 150f;
+            this.dashTime = 0f;
+            this.dashCD = 0f;
+        }
+    }
+
+    private void dashing(float speed)
+    {
+        if (this.dash) {
+            this.drawParticle = true;
+            this.dashTime += Game.deltaTime;
+            this.moveSpeed = speed;
+        }
+    }
+
     private void dash(float speed)
     {
         if (!this.dash && this.dashCD < 0.5f)
@@ -179,16 +199,8 @@ public class Player extends Players {
             if (Gdx.input.isKeyJustPressed(Control.DASH))
                 this.dash = true;
         }
-        if (this.dash) {
-            this.dashTime += Game.deltaTime;
-            this.moveSpeed = speed;
-        }
-        if (this.dashTime >= 0.12f) {
-            this.dash = false;
-            this.moveSpeed = 150f;
-            this.dashTime = 0f;
-            this.dashCD = 0f;
-        }
+        this.dashing(speed);
+        this.checkDashCD();
     }
 
     public void update(SpriteBatch batch, float deltaTime, Cursor cursor, LayerData layerData)
@@ -197,7 +209,6 @@ public class Player extends Players {
         float centeredX = this.position.x + (this.getWidth() / 2);
         float centeredY = this.position.y + (this.getHeight() / 2);
 
-        this.dash(1000f);
         this.getOldPosition(layerData);
         this.animationController();
         this.Move(this.moveSpeed, runningSpeed, deltaTime);
@@ -206,10 +217,11 @@ public class Player extends Players {
         this.flipPlayerWithMouse(cursor);
         this.flipPlayerWithKeyboard();
         this.draw(batch);
-        this.particle.draw(0, 1, this.getPositionX(), this.getPositionY(), Game.camera);
         this.checkWeapons(batch, cursor, layerData);
         this.inventory.update(this.getPositionVector(), cursor);
         this.light.update(centeredX, centeredY, Game.camera);
+        this.dash(1000f);
+        this.particle.draw(this.getPositionX(), this.getPositionY(), Game.camera);
     }
 
     public void dispose()

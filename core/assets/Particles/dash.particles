@@ -1,6 +1,8 @@
 texture=shader/smoke_shader.png
 howmany=15
-lifetime=2.0
-width=50
-height=50
+lifetime=2
+width=30
+height=30
 fadeout=true
+directionX=1
+directionY=1
